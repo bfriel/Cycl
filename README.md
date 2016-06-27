@@ -58,8 +58,7 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 ### Phase 2: Flux Architecture with User and Following Implementation (1 day)
 
-**Objective:** Notes can be created, read, edited and destroyed through
-the API.
+**Objective:** Seamless navigation from Dashboard to User and Follower pages.
 
 - [ ] create `Follower` model
 - [ ] seed the database with a small amount of test data
@@ -74,8 +73,7 @@ the API.
 
 ### Phase 3: Create Routes using Google Maps (3 days)
 
-**Objective:** Notes can be created, read, edited and destroyed with the
-user interface.
+**Objective:** Routes can be created and read through the API/User interface.
 
 - [ ] Allow users to create routes using Google Maps API
 - [ ] Routes can be saved along with their mileage, duration, elevation gain, calories burned, description, and picture of route
@@ -97,7 +95,7 @@ user interface.
 
 ### Phase 5: Adding Comments to Routes (1 day)
 
-**Objective:** Existing pages (including signup/signin) will look good.
+**Objective:** Existing route pages will show comments.
 
 - [ ] Allow users to leave comments on a Route Show page
 
