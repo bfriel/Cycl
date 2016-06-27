@@ -12,101 +12,79 @@ because once you start implementing your flux loops, that's precisely
 what you'll need to do.
 
 
-## Note Cycles
+## Route Cycles
 
-### Notes API Request Actions
+### Routes API Request Actions
 
-* `fetchAllNotes`
-  0. invoked from `NotesIndex` `didMount`/`willReceiveProps`
-  0. `GET /api/notes` is called.
-  0. `receiveAllNotes` is set as the callback.
+* `fetchAllRoutes`
+  0. invoked from `RoutesIndex` `didMount`/`willReceiveProps`
+  0. `GET /api/routes` is called.
+  0. `receiveAllRoutes` is set as the callback.
 
-* `createNote`
-  0. invoked from new note button `onClick`
-  0. `POST /api/notes` is called.
-  0. `receiveSingleNote` is set as the callback.
+* `createRoute`
+  0. invoked from Create a Route button `onClick`
+  0. `POST /api/routes` is called.
+  0. `receiveSingleRoute` is set as the callback.
 
-* `fetchSingleNote`
-  0. invoked from `NoteDetail` `didMount`/`willReceiveProps`
-  0. `GET /api/notes/:id` is called.
-  0. `receiveSingleNote` is set as the callback.
+* `fetchSingleRoute`
+  0. invoked from `RouteItem` `didMount`/`willReceiveProps`
+  0. `GET /api/routes/:id` is called.
+  0. `receiveSingleRoute` is set as the callback.
 
-* `updateNote`
-  0. invoked from `NoteForm` `onSubmit`
-  0. `POST /api/notes` is called.
-  0. `receiveSingleNote` is set as the callback.
 
-* `destroyNote`
-  0. invoked from delete note button `onClick`
-  0. `DELETE /api/notes/:id` is called.
-  0. `removeNote` is set as the callback.
+### Routes API Response Actions
 
-### Notes API Response Actions
-
-* `receiveAllNotes`
+* `receiveAllroutes`
   0. invoked from an API callback.
-  0. `Note` store updates `_notes` and emits change.
+  0. `Route` store updates `_routes` and emits change.
 
-* `receiveSingleNote`
+* `receiveSingleRoute`
   0. invoked from an API callback.
-  0. `Note` store updates `_notes[id]` and emits change.
+  0. `Route` store updates `_routes[id]` and emits change.
 
-* `removeNote`
-  0. invoked from an API callback.
-  0. `Note` store removes `_notes[id]` and emits change.
 
 ### Store Listeners
 
-* `NotesIndex` component listens to `Note` store.
-* `NoteDetail` component listens to `Note` store.
+* `RoutesIndex` component listens to `Route` store.
+* `RouteItem` component listens to `Route` store.
 
 
-## Notebook Cycles
+## Followers Cycles
 
-### Notebooks API Request Actions
+### Followers API Request Actions
 
-* `fetchAllNotebooks`
-  0. invoked from `NotebooksIndex` `didMount`/`willReceiveProps`
-  0. `GET /api/notebooks` is called.
-  0. `receiveAllNotebooks` is set as the callback.
+* `fetchAllFollowers`
+  0. invoked from `FollowersIndex` `didMount`/`willReceiveProps`
+  0. `GET /api/followers` is called.
+  0. `receiveAllFollowers` is set as the callback.
 
-* `createNotebook`
-  0. invoked from new notebook button `onClick`
+* `createFollow`
+  0. invoked from follow button `onClick`
   0. `POST /api/notebooks` is called.
   0. `receiveSingleNotebook` is set as the callback.
 
-* `fetchSingleNotebook`
-  0. invoked from `NotebookDetail` `didMount`/`willReceiveProps`
-  0. `GET /api/notebooks/:id` is called.
-  0. `receiveSingleNotebook` is set as the callback.
+* `fetchSingleFollower`
+  0. invoked from `FollowerItem` `didMount`/`willReceiveProps`
+  0. `GET /api/followers/:id` is called.
+  0. `receiveSingleFollower` is set as the callback.
 
-* `updateNotebook`
-  0. invoked from `NotebookForm` `onSubmit`
-  0. `POST /api/notebooks` is called.
-  0. `receiveSingleNotebook` is set as the callback.
+### Followers API Response Actions
 
-* `destroyNotebook`
-  0. invoked from delete notebook button `onClick`
-  0. `DELETE /api/notebooks/:id` is called.
-  0. `removeNotebook` is set as the callback.
-
-### Notebooks API Response Actions
-
-* `receiveAllNotebooks`
+* `receiveAllFollowers`
   0. invoked from an API callback.
-  0. `Notebook` store updates `_notebooks` and emits change.
+  0. `Follower` store updates `_followers` and emits change.
 
-* `receiveSingleNotebook`
+* `receiveSingleFollower`
   0. invoked from an API callback.
-  0. `Notebook` store updates `_notebooks[id]` and emits change.
+  0. `Follower` store updates `_followers[id]` and emits change.
 
-* `removeNotebook`
+* `removeFollower`
   0. invoked from an API callback.
-  0. `Notebook` store removes `_notebooks[id]` and emits change.
+  0. `Follower` store removes `_followers[id]` and emits change.
 
 ### Store Listeners
 
-* `NotebooksIndex` component listens to `Notebook` store.
+* `FollowersIndex` component listens to `Followers` store.
 
 
 ## SearchSuggestion Cycles

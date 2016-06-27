@@ -11,14 +11,15 @@ _**exactly**_ match the nesting of your routes.)
     * **RouteItem**
       * **Comments**
   * CreateRoute
-    * **RouteForm**
-  * Friends
-    * **FriendsIndex**
-      * **UserItem**
+    **RouteForm**
+  * Followers
+    **FollowersIndex**
+      **UserItem**
         * RoutesIndex
           * **RouteItem**
             * **Comments**
-  
+
+
 
 ## Routes
 
@@ -28,4 +29,4 @@ _**exactly**_ match the nesting of your routes.)
   * **component:** `RouteItem` **path:** `routes/:routeId`
     * **component:** `Comments` **path:** `comments`
   * **component:** `UserItem` **path:** `user/:userId`
-    * **component:** `FriendsIndex` **path:** `friends`
+    * **component:** `FollowersIndex` **path:** `followers`
