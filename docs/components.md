@@ -7,26 +7,38 @@ associated routes, so the nesting of your bolded components must
 _**exactly**_ match the nesting of your routes.)
 
 * **App**
-  * RoutesIndex
-    * **RouteItem**
-      * **Comments**
-  * CreateRoute
-    **RouteForm**
-  * Followers
-    **FollowersIndex**
-      **UserItem**
-        * RoutesIndex
+  * **Dashboard**
+    * RoutesIndex
+      * RouteIndexItem
+        * **RouteItem**
+          * RouteItemDetail
+          * RouteItemMap
+          * Comments
+    * **CreateRoute**
+      * RouteForm
+        * RouteFormDetail
+        * RouteFormMap
+    * FollowersIndex
+      * FollowersIndexItem
+        **UserItem**
+          * RoutesIndex
+            * RoutesIndexItem
+              * **RouteItem**
+                * RouteItemDetail
+                * RouteItemMap
+                * Comments
+    * **UserItem**
+      * RoutesIndex
+        * RoutesIndexItem
           * **RouteItem**
-            * **Comments**
-
-
+            * RouteItemDetail
+            * RouteItemMap
+            * Comments
 
 ## Routes
 
 * **component:** `App` **path:** `/`
-  * **component:** `RoutesIndex` **path:** IndexRoute
-  * **component:** `RouteForm` **path:** `routes/create`
-  * **component:** `RouteItem` **path:** `routes/:routeId`
-    * **component:** `Comments` **path:** `comments`
-  * **component:** `UserItem` **path:** `user/:userId`
-    * **component:** `FollowersIndex` **path:** `followers`
+  * **component:** `Dashboard` **path** IndexRoute
+    * **component:** `CreateRoute` **path:** `routes/create`
+    * **component:** `UserItem` **path:** `user/:userId`
+      * **component:** `RouteItem` **path:** `routes/:routeId`
