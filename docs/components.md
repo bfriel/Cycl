@@ -20,7 +20,7 @@ _**exactly**_ match the nesting of your routes.)
         * RouteFormMap
     * FollowersIndex
       * FollowersIndexItem
-        **UserItem**
+        * **UserItem**
           * RoutesIndex
             * RoutesIndexItem
               * **RouteItem**
