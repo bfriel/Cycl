@@ -87,21 +87,21 @@ what you'll need to do.
 * `FollowersIndex` component listens to `Followers` store.
 
 
-## SearchSuggestion Cycles
+## Comments Cycles
 
-* `fetchSearchSuggestions`
-  0. invoked from `NoteSearchBar` `onChange` when there is text
-  0. `GET /api/notes` is called with `text` param.
-  0. `receiveSearchSuggestions` is set as the callback.
+* `fetchAllCommments`
+  0. invoked from `RouteItem` `onComponentDidMount`
+  0. `GET /api/comments` is called with `routeId` param.
+  0. `receiveAllCommments` is set as the callback.
 
-* `receiveSearchSuggestions`
+* `receiveAllComments`
   0. invoked from an API callback.
-  0. `SearchSuggestion` store updates `_suggestions` and emits change.
+  0. `Comments` store updates `_comments` and emits change.
 
-* `removeSearchSuggestions`
-  0. invoked from `NoteSearchBar` `onChange` when empty
-  0. `SearchSuggestion` store resets `_suggestions` and emits change.
+* `createComment`
+  0. invoked from `RouteItem` `onClick` of button
+  0. `Comments` store resets `_comments` and emits change.
 
 ### Store Listeners
 
-* `SearchBarSuggestions` component listens to `SearchSuggestion` store.
+* `Comments` component listens to `Comments` store.

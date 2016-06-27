@@ -26,23 +26,16 @@
 - `POST /api/routes`
 - `GET /api/notes/:id`
 
-### Notebooks
+### Followers
 
-- `GET /api/notebooks`
-- `POST /api/notebooks`
-- `GET /api/notebooks/:id`
-- `PATCH /api/notebooks/:id`
-- `DELETE /api/notebooks/:id`
-- `GET /api/notebooks/:id/notes`
-  - index of all notes for a notebook
-  - accepts pagination params (if I get there)
+- `GET /api/followers`
+- `POST /api/followers`
+- `GET /api/followers/:id`
+- `DELETE /api/followers/:id`
+- `GET /api/followers/:id/routes`
+  - index of all routes for a follower
 
 ### Comments
 
-- A note's tags will be included in the note show template
-- `GET /api/tags`
-  - includes query param for typeahead suggestions
-- `POST /api/notes/:note_id/tags`: add tag to note by name
-  - if note doesn't already exist, it will be created
-- `DELETE /api/notes/:note_id/tags/:tag_name`: remove tag from note by
-  name
+- `POST /api/routes/:routeId/comments`: add comment to route by id
+- `DELETE /api/routes/:routeId/comments/:commentId`: remove comment from route by id
