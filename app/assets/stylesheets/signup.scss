@@ -1,0 +1,26 @@
+.splash {
+  background-image: url(http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467220343/splashpage.jpg);
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+
+}
+
+
+.signup-container{
+  width: 500px;
+  height: 500px;
+  border-radius: 10px;
+  background-color: rgba(255,255,255,0.9);
+  float: left;
+  position: relative;
+  margin-left: 20px;
+  margin-top: 200px;
+}
+
+
+.signup-form-box {
+  background-color: blue;
+  border-radius: 10px;
+  margin: auto;
+}

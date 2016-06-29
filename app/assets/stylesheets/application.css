@@ -13,3 +13,55 @@
  *= require_tree .
  *= require_self
  */
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+.app-container {
+  height: 100%;
+}
+
+ input[type=text] {
+   background: white;
+   width: 65%;
+   font-size: 35px;
+   margin-bottom: 20px;
+   color: black;
+   font-family: inherit;
+   font-weight: inherit;
+ }
+ input[type=password] {
+   background: white;
+   width: 65%;
+   font-size: 35px;
+   margin-bottom: 20px;
+   color: black;
+   font-family: inherit;
+   font-weight: inherit;
+ }
+
+ input[type=submit] {
+   width: 40%;
+   font-size: 35px;
+   margin: 0 auto;
+   margin-top: 20px;
+   color: yellow;
+   font-family: inherit;
+   font-weight: 700;
+   text-align: center;
+   border: 5px solid white;
+   border-radius: 10px;
+ }
+
+ label {
+   font-weight: 600;
+ }

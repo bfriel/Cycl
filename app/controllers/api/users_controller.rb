@@ -17,7 +17,6 @@ class Api::UsersController < ApplicationController
   def index
     @users = User.all
     @current_user = current_user
-    render :index
   end
 
   def show

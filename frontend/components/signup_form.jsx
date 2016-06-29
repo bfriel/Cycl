@@ -73,83 +73,87 @@ const LoginForm = React.createClass({
 	render() {
 
 		return (
-			<div className="signup-container">
-				<form onSubmit={this.handleSubmit} className="signup-form-box">
-	        <h3>Sign Up</h3>
-					<br/>
+			<div className="splash">
+				<div className="signup-container">
+					<form className="signup-form-box" onSubmit={this.handleSubmit}>
+		        <h3>Sign Up</h3>
+						<br/>
 
-	        { this.fieldErrors("base") }
-					<div className="signup-form">
-		        <br />
+		        { this.fieldErrors("base") }
 
-						<label for="user_username"> Username: </label>
-		          { this.fieldErrors("username") }
-							<input type="text"
-		            value={this.state.username}
-		            onChange={this.update("username")}
-								className="signup-input"
-								id="user_username" />
+						<div className="signup-form">
+
+			        <br />
+
+							<label for="user_username"> Username: </label>
+			          { this.fieldErrors("username") }
+								<input type="text"
+			            value={this.state.username}
+			            onChange={this.update("username")}
+									className="signup-input"
+									id="user_username" />
 
 
-		        <br />
+			        <br />
 
-						<label for="user_password"> Password: </label>
-		          { this.fieldErrors("password") }
-		          <input type="password"
-		            value={this.state.password}
-		            onChange={this.update("password")}
-								className="signup-input"
-								id="user_password" />
+							<label for="user_password"> Password: </label>
+			          { this.fieldErrors("password") }
+			          <input type="password"
+			            value={this.state.password}
+			            onChange={this.update("password")}
+									className="signup-input"
+									id="user_password" />
 
-            <br />
+	            <br />
 
-              <label for="user_height"> Height: </label>
-              <select onChange={this.update("height")} className="signup-input" id="user_height">
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-              </select>
+	              <label for="user_height"> Height: </label>
+	              <select onChange={this.update("height")} className="signup-input" id="user_height">
+	                <option value="4">4</option>
+	                <option value="5">5</option>
+	                <option value="6">6</option>
+	                <option value="7">7</option>
+	              </select>
 
-            <br />
+	            <br />
 
-              <label for="user_weight"> Weight: </label>
-              <input type="number"
-              value={this.state.weight}
-              onChange={this.update("weight")}
-              min="0"
-              max="500"
-              step="1"
-              className="signup-input"
-              id="user_weight" />
+	              <label for="user_weight"> Weight: </label>
+	              <input type="number"
+	              value={this.state.weight}
+	              onChange={this.update("weight")}
+	              min="0"
+	              max="500"
+	              step="1"
+	              className="signup-input"
+	              id="user_weight" />
 
-            <br />
+	            <br />
 
-              <label for="user_gender"> Gender: </label>
-              <input type="radio"
-                onChange={this.update("gender")}
-                value="M"
-                className="signup-input"
-                id="user_gender" />Male
-              <input type="radio"
-                onChange={this.update("gender")}
-                value="F"
-                className="signup-input"
-                id="user_gender" />Female
+	              <label for="user_gender"> Gender: </label>
+	              <input type="radio"
+	                onChange={this.update("gender")}
+	                value="M"
+	                className="signup-input"
+	                id="user_gender" />Male
+	              <input type="radio"
+	                onChange={this.update("gender")}
+	                value="F"
+	                className="signup-input"
+	                id="user_gender" />Female
 
-            <br />
+	            <br />
 
-              <label for="birthdate"> Birthdate: </label>
-              <input type="date"
-                     onChange={this.update("birthdate")}
-                     id="user_birthdate"
-                     className="signup-input" />
+	              <label for="birthdate"> Birthdate: </label>
+	              <input type="date"
+	                     onChange={this.update("birthdate")}
+	                     id="user_birthdate"
+	                     className="signup-input" />
 
-		        <br />
-						<input type="submit" value="Sign Up!" />
-					</div>
-					Already have an account? <Link to="/login">Sign In!</Link>
-				</form>
+			        <br />
+							<input type="submit" value="Sign Up!" />
+						</div>
+						Already have an account? <Link to="/login">Log In!</Link>
+					</form>
+				</div>
 			</div>
 		);
 	}

@@ -37,17 +37,7 @@ const LoginForm = React.createClass({
 
 	handleSubmit(e) {
 		e.preventDefault();
-
-		const formData = {
-			username: this.state.username,
-			password: this.state.password
-		};
-
-    if (this.props.location.pathname === "/login") {
-      SessionActions.logIn(formData);
-    } else {
-      SessionActions.signUp(formData);
-    }
+    SessionActions.logIn(this.state);
 	},
 
   fieldErrors(field) {

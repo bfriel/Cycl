@@ -35,14 +35,12 @@ const App = React.createClass({
 
   render: function () {
     return (
-      <div>
+      <div className="app-container">
         <header>
           <Link to="/" className="header-link"><h1>Cycl</h1></Link>
           { this.greeting() }
         </header>
-       {this.props.children}
-
-        Hello from the app
+        {this.props.children}
       </div>
     );
   }

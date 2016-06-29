@@ -6,7 +6,7 @@ const React = require('react'),
       hashHistory = require('react-router').hashHistory,
       App = require('./components/app'),
       Feed = require('./components/feed'),
-      UserPage = require('./components/userPage'),
+      UserPage = require('./components/user_page'),
       LoginForm = require('./components/login_form'),
       SignupForm = require('./components/signup_form'),
       SessionStore = require('./stores/session_store'),
@@ -15,8 +15,8 @@ const React = require('react'),
 const routes = (
   <Route path="/" component={App}>
     <IndexRoute component={Feed}/>
-    <Route path="/login" component={ LoginForm } />
-    <Route path="/signup" component={ SignupForm } />
+    <Route path="/login" component={LoginForm} />
+    <Route path="/signup" component={SignupForm} />
     <Route path="user/:userId" component={UserPage} onEnter={ _ensureLoggedIn } />
   </Route>
 );
@@ -30,7 +30,7 @@ function _ensureLoggedIn(nextState, replace) {
 
 document.addEventListener("DOMContentLoaded", () => {
   if (window.currentUser) {
-  SessionActions.receiveCurrentUser(window.currentUser);
+    SessionActions.receiveCurrentUser(window.currentUser);
   }
 
   ReactDOM.render(
