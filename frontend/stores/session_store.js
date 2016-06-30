@@ -20,7 +20,7 @@ const _logout = function() {
 };
 
 
-SessionStore.__onDispatch = payload => {
+SessionStore.__onDispatch = (payload) => {
   switch(payload.actionType) {
     case SessionConstants.LOGIN:
       _login(payload.currentUser);

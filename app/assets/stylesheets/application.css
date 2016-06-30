@@ -11,13 +11,16 @@
  * file per style scope.
  *
  *= require reset
- *= require_self
  *= require login
  *= require signup
+ *= require navbar
+ *= require_self
  */
 
 html {
   height: 100%;
+  background-image: url(http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467264827/background_qddvbs.jpg);
+  background-size: cover;
 }
 
 body {
@@ -46,26 +49,22 @@ body {
 
 .app-container {
   height: 100%;
-  background-image: url(http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467220343/splashpage.jpg);
-  background-size: cover;
   width: 100%;
 }
 
  input[type=text] {
-   background: white;
    width: 65%;
    font-size: 35px;
    margin-bottom: 20px;
-   color: black;
+   color: white;
    font-family: inherit;
    font-weight: inherit;
  }
  input[type=password] {
-   background: white;
    width: 65%;
    font-size: 35px;
    margin-bottom: 20px;
-   color: black;
+   color: white;
    font-family: inherit;
    font-weight: inherit;
  }
@@ -85,4 +84,12 @@ body {
 
  label {
    font-weight: 600;
+ }
+
+ .landing-title {
+   font-size: 120px;
+   text-shadow: 2px 2px;
+   font-weight: 300;
+   margin: 0 auto;
+   width: 100%;
  }

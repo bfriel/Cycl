@@ -24,7 +24,6 @@ const SessionActions = {
 
   logOut() {
     SessionApiUtil.logOut(SessionActions.removeCurrentUser);
-
   },
 
   fetchCurrentUser(complete){

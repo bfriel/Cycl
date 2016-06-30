@@ -47,16 +47,19 @@
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ReactDOM = __webpack_require__(38),
-	    Router = __webpack_require__(168).Router,
+	    ReactDOM = __webpack_require__(38);
+	//Router
+	var Router = __webpack_require__(168).Router,
 	    Route = __webpack_require__(168).Route,
 	    IndexRoute = __webpack_require__(168).IndexRoute,
-	    hashHistory = __webpack_require__(168).hashHistory,
-	    App = __webpack_require__(230),
+	    hashHistory = __webpack_require__(168).hashHistory;
+	//Components
+	var App = __webpack_require__(230),
 	    Feed = __webpack_require__(258),
 	    UserPage = __webpack_require__(263),
-	    LoginForm = __webpack_require__(260),
-	    SignupForm = __webpack_require__(262),
+	    LoginForm = __webpack_require__(260);
+	//Flux
+	var SignupForm = __webpack_require__(262),
 	    SessionStore = __webpack_require__(231),
 	    SessionActions = __webpack_require__(254);
 	
@@ -25960,13 +25963,15 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(1);
-	var Link = __webpack_require__(168).Link;
-	var SessionStore = __webpack_require__(231);
-	var SessionActions = __webpack_require__(254);
-	var SignupForm = __webpack_require__(262);
-	var LoginForm = __webpack_require__(260);
-	var NavBar = __webpack_require__(264);
+	var React = __webpack_require__(1),
+	    Link = __webpack_require__(168).Link;
+	//Components
+	var SignupForm = __webpack_require__(262),
+	    LoginForm = __webpack_require__(260),
+	    NavBar = __webpack_require__(264);
+	//Flux
+	var SessionStore = __webpack_require__(231),
+	    SessionActions = __webpack_require__(254);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -25976,61 +25981,39 @@
 	  _handleLogOut: function _handleLogOut() {
 	    SessionActions.logOut();
 	  },
-	  greeting: function greeting() {
-	    if (SessionStore.isUserLoggedIn()) {
-	      return React.createElement(
-	        'hgroup',
-	        { className: 'header-group' },
-	        React.createElement(
-	          'h2',
-	          { className: 'header-name' },
-	          'Hi, ',
-	          SessionStore.currentUser().username,
-	          '!'
-	        ),
-	        React.createElement('input', { className: 'header-button', type: 'submit', value: 'logout', onClick: this._handleLogOut })
-	      );
-	    } else if (!["/login", "/signup"].includes(this.props.location.pathname)) {
-	      return React.createElement(
-	        'nav',
-	        { className: 'login-signup' },
-	        React.createElement(
-	          Link,
-	          { to: '/login', activeClassName: 'current' },
-	          'Login'
-	        ),
-	        ' or ',
-	        React.createElement(
-	          Link,
-	          { to: '/signup', activeClassName: 'current' },
-	          'Sign up!'
-	        )
-	      );
-	    }
-	  },
 	
+	
+	  // greeting() {
+	  //   if (SessionStore.isUserLoggedIn()) {
+	  //   	return (
+	  //   		<hgroup className="header-group">
+	  //   			<h2 className="header-name">Hi, {SessionStore.currentUser().username}!</h2>
+	  //   			<input className="header-button" type="submit" value="logout" onClick={ this._handleLogOut } />
+	  //   		</hgroup>
+	  //   	);
+	  //   } else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
+	  //     return (
+	  //       <nav className="login-signup">
+	  //         <Link to="/login" activeClassName="current">Login</Link>
+	  //         &nbsp;or&nbsp;
+	  //         <Link to="/signup" activeClassName="current">Sign up!</Link>
+	  //       </nav>
+	  //     );
+	  //   }
+	  // },
 	
 	  render: function render() {
+	    var navbar = '';
+	    if (SessionStore.isUserLoggedIn()) {
+	      navbar = React.createElement(NavBar, null);
+	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'app-container' },
 	      React.createElement(
-	        'nav',
-	        { className: 'nav-bar' },
-	        React.createElement(
-	          'header',
-	          null,
-	          React.createElement(
-	            Link,
-	            { to: '/', className: 'header-link' },
-	            React.createElement(
-	              'h1',
-	              null,
-	              'Cycl'
-	            )
-	          ),
-	          this.greeting()
-	        )
+	        'header',
+	        null,
+	        navbar
 	      ),
 	      this.props.children
 	    );
@@ -33491,64 +33474,68 @@
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var Link = __webpack_require__(168).Link;
 	var SessionStore = __webpack_require__(231);
 	var SessionActions = __webpack_require__(254);
 	
 	var NavBar = React.createClass({
 	  displayName: 'NavBar',
-	  componentDidMount: function componentDidMount() {
-	    SessionStore.addListener(this.forceUpdate.bind(this));
-	  },
 	  _handleLogOut: function _handleLogOut() {
 	    SessionActions.logOut();
 	  },
-	  greeting: function greeting() {
-	    if (SessionStore.isUserLoggedIn()) {
-	      return React.createElement(
-	        'hgroup',
-	        { className: 'header-group' },
-	        React.createElement(
-	          'h2',
-	          { className: 'header-name' },
-	          'Hi, ',
-	          SessionStore.currentUser().username,
-	          '!'
-	        ),
-	        React.createElement('input', { className: 'header-button', type: 'submit', value: 'logout', onClick: this._handleLogOut })
-	      );
-	    } else if (!["/login", "/signup"].includes(this.props.location.pathname)) {
-	      return React.createElement(
-	        'nav',
-	        { className: 'login-signup' },
-	        React.createElement(
-	          Link,
-	          { to: '/login', activeClassName: 'current' },
-	          'Login'
-	        ),
-	        ' or ',
-	        React.createElement(
-	          Link,
-	          { to: '/signup', activeClassName: 'current' },
-	          'Sign up!'
-	        )
-	      );
-	    }
-	  },
 	  render: function render() {
 	    return React.createElement(
-	      'header',
+	      'div',
 	      null,
 	      React.createElement(
-	        Link,
-	        { to: '/', className: 'header-link' },
+	        'nav',
+	        { id: 'navbar' },
 	        React.createElement(
-	          'h1',
-	          null,
-	          'Cycl'
+	          'div',
+	          { id: 'cycl-title' },
+	          'CYCL'
+	        ),
+	        React.createElement(
+	          'div',
+	          { id: 'left' },
+	          React.createElement(
+	            'div',
+	            { id: 'username' },
+	            SessionStore.currentUser().username
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'dropdown' },
+	            React.createElement(
+	              'button',
+	              { className: 'dropbtn' },
+	              React.createElement(
+	                'div',
+	                { id: 'menu' },
+	                React.createElement('img', { src: 'http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467267735/down-arrow_wwwzde.png' })
+	              )
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'dropdown-content' },
+	              React.createElement(
+	                'a',
+	                { href: '#' },
+	                'PROFILE'
+	              ),
+	              React.createElement(
+	                'a',
+	                { href: '#' },
+	                'SETTINGS'
+	              ),
+	              React.createElement(
+	                'a',
+	                { onClick: this._handleLogOut },
+	                'LOGOUT'
+	              )
+	            )
+	          )
 	        )
-	      ),
-	      this.greeting()
+	      )
 	    );
 	  }
 	});

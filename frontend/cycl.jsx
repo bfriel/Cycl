@@ -1,14 +1,17 @@
 const React = require('react'),
-      ReactDOM = require('react-dom'),
-      Router = require('react-router').Router,
+      ReactDOM = require('react-dom');
+//Router
+const Router = require('react-router').Router,
       Route = require('react-router').Route,
       IndexRoute = require('react-router').IndexRoute,
-      hashHistory = require('react-router').hashHistory,
-      App = require('./components/app'),
+      hashHistory = require('react-router').hashHistory;
+//Components
+const App = require('./components/app'),
       Feed = require('./components/feed'),
       UserPage = require('./components/user_page'),
-      LoginForm = require('./components/login_form'),
-      SignupForm = require('./components/signup_form'),
+      LoginForm = require('./components/login_form');
+//Flux
+const SignupForm = require('./components/signup_form'),
       SessionStore = require('./stores/session_store'),
       SessionActions = require('./actions/session_actions');
 
@@ -26,6 +29,8 @@ function _ensureLoggedIn(nextState, replace) {
       replace('/signup');
     }
 }
+
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
