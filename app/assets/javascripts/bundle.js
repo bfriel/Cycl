@@ -26030,11 +26030,11 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var React = __webpack_require__(1);
-	var Link = __webpack_require__(168).Link;
-	var SessionActions = __webpack_require__(232);
-	var SessionStore = __webpack_require__(241);
-	var ErrorStore = __webpack_require__(259);
+	var React = __webpack_require__(1),
+	    Link = __webpack_require__(168).Link;
+	var SessionActions = __webpack_require__(232),
+	    SessionStore = __webpack_require__(241),
+	    ErrorStore = __webpack_require__(259);
 	
 	var SignupForm = React.createClass({
 		displayName: 'SignupForm',
@@ -33218,11 +33218,11 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var React = __webpack_require__(1);
-	var Link = __webpack_require__(168).Link;
-	var SessionActions = __webpack_require__(232);
-	var SessionStore = __webpack_require__(241);
-	var ErrorStore = __webpack_require__(259);
+	var React = __webpack_require__(1),
+	    Link = __webpack_require__(168).Link;
+	var SessionActions = __webpack_require__(232),
+	    SessionStore = __webpack_require__(241),
+	    ErrorStore = __webpack_require__(259);
 	
 	var LoginForm = React.createClass({
 		displayName: 'LoginForm',
@@ -33409,8 +33409,22 @@
 	          { id: 'right' },
 	          React.createElement(
 	            'div',
-	            { id: 'username' },
-	            SessionStore.currentUser().username
+	            { className: 'navbar-buttons' },
+	            React.createElement(
+	              'a',
+	              { href: '#' },
+	              'Feed'
+	            ),
+	            React.createElement(
+	              'a',
+	              { href: '#', id: 'last' },
+	              'Create a Route'
+	            ),
+	            React.createElement(
+	              'a',
+	              { href: '#' },
+	              SessionStore.currentUser().username
+	            )
 	          ),
 	          React.createElement(
 	            'div',

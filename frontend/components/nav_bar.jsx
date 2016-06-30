@@ -25,8 +25,10 @@ const NavBar = React.createClass({
             </div>
 
             <div id='right'>
-              <div id='username'>
-                {SessionStore.currentUser().username}
+              <div className="navbar-buttons">
+                <a href="#">Feed</a>
+                <a href="#" id="last">Create a Route</a>
+                <a href="#">{SessionStore.currentUser().username}</a>
               </div>
               <div className="dropdown">
                 <button className="dropbtn">

@@ -1,10 +1,10 @@
 "use strict";
 
-const React = require('react');
-const Link = require('react-router').Link;
-const SessionActions = require('../actions/session_actions');
-const SessionStore = require('../stores/session_store');
-const ErrorStore = require('../stores/error_store');
+const React = require('react'),
+ 		  Link = require('react-router').Link;
+const SessionActions = require('../actions/session_actions'),
+      SessionStore = require('../stores/session_store'),
+      ErrorStore = require('../stores/error_store');
 
 const SignupForm = React.createClass({
 
