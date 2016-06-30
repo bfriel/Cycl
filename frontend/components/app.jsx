@@ -2,6 +2,9 @@ const React = require('react');
 const Link = require('react-router').Link;
 const SessionStore = require('../stores/session_store');
 const SessionActions = require('../actions/session_actions');
+const SignupForm = require('./signup_form');
+const LoginForm = require('./login_form');
+const NavBar = require('./nav_bar');
 
 const App = React.createClass({
 
@@ -36,10 +39,12 @@ const App = React.createClass({
   render: function () {
     return (
       <div className="app-container">
-        <header>
-          <Link to="/" className="header-link"><h1>Cycl</h1></Link>
-          { this.greeting() }
-        </header>
+        <nav className="nav-bar">
+          <header>
+            <Link to="/" className="header-link"><h1>Cycl</h1></Link>
+            { this.greeting() }
+          </header>
+        </nav>
         {this.props.children}
       </div>
     );

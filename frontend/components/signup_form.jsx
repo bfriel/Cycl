@@ -6,7 +6,7 @@ const SessionActions = require('../actions/session_actions');
 const SessionStore = require('../stores/session_store');
 const ErrorStore = require('../stores/error_store');
 
-const LoginForm = React.createClass({
+const SignupForm = React.createClass({
 
 	contextTypes: {
 		router: React.PropTypes.object.isRequired
@@ -73,8 +73,11 @@ const LoginForm = React.createClass({
 	render() {
 
 		return (
-			<div className="splash">
-				<div className="signup-container">
+			<div className="signup-page-container">
+				<div className="landing-title">
+					<h1>Cycl</h1>
+				</div>
+				<div className="signup-form-container">
 					<form className="signup-form-box" onSubmit={this.handleSubmit}>
 		        <h3>Sign Up</h3>
 						<br/>
@@ -159,4 +162,4 @@ const LoginForm = React.createClass({
 	}
 });
 
-module.exports = LoginForm;
+module.exports = SignupForm;

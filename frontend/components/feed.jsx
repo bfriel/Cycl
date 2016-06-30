@@ -4,7 +4,6 @@ const Feed = React.createClass({
   render: function () {
     return (
       <div>
-        Hello from the feed
       </div>
     );
   }

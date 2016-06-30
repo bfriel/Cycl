@@ -8,6 +8,7 @@
     "test": "test"
   },
   "scripts": {
+    "postinstall": "./node_modules/.bin/webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +18,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "6.2.1",
+    "npm": "3.9.3"
+  },
   "bugs": {
     "url": "https://github.com/bfriel/Cycl/issues"
   },

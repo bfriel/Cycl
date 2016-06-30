@@ -63,7 +63,7 @@
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
-	  React.createElement(IndexRoute, { component: Feed }),
+	  React.createElement(IndexRoute, { component: Feed, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: '/login', component: LoginForm }),
 	  React.createElement(Route, { path: '/signup', component: SignupForm }),
 	  React.createElement(Route, { path: 'user/:userId', component: UserPage, onEnter: _ensureLoggedIn })
@@ -71,7 +71,7 @@
 	
 	function _ensureLoggedIn(nextState, replace) {
 	  if (!SessionStore.isUserLoggedIn()) {
-	    replace('/login');
+	    replace('/signup');
 	  }
 	}
 	
@@ -25964,6 +25964,9 @@
 	var Link = __webpack_require__(168).Link;
 	var SessionStore = __webpack_require__(231);
 	var SessionActions = __webpack_require__(254);
+	var SignupForm = __webpack_require__(262);
+	var LoginForm = __webpack_require__(260);
+	var NavBar = __webpack_require__(264);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -26012,18 +26015,22 @@
 	      'div',
 	      { className: 'app-container' },
 	      React.createElement(
-	        'header',
-	        null,
+	        'nav',
+	        { className: 'nav-bar' },
 	        React.createElement(
-	          Link,
-	          { to: '/', className: 'header-link' },
+	          'header',
+	          null,
 	          React.createElement(
-	            'h1',
-	            null,
-	            'Cycl'
-	          )
-	        ),
-	        this.greeting()
+	            Link,
+	            { to: '/', className: 'header-link' },
+	            React.createElement(
+	              'h1',
+	              null,
+	              'Cycl'
+	            )
+	          ),
+	          this.greeting()
+	        )
 	      ),
 	      this.props.children
 	    );
@@ -33010,11 +33017,7 @@
 	  displayName: 'Feed',
 	
 	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      'Hello from the feed'
-	    );
+	    return React.createElement('div', null);
 	  }
 	});
 	
@@ -33101,52 +33104,65 @@
 	
 					return React.createElement(
 							'div',
-							{ className: 'login-container' },
+							{ className: 'login-page-container' },
 							React.createElement(
-									'form',
-									{ onSubmit: this.handleSubmit, className: 'login-form-box' },
+									'div',
+									{ className: 'landing-title' },
 									React.createElement(
-											'h3',
+											'h1',
 											null,
-											'Log In'
-									),
-									React.createElement('br', null),
-									this.fieldErrors("base"),
+											'Cycl'
+									)
+							),
+							React.createElement(
+									'div',
+									{ className: 'login-form-container' },
 									React.createElement(
-											'div',
-											{ className: 'login-form' },
-											React.createElement('br', null),
+											'form',
+											{ onSubmit: this.handleSubmit, className: 'login-form-box' },
 											React.createElement(
-													'label',
-													{ 'for': 'user_username' },
-													' Username: '
+													'h3',
+													null,
+													'Log In'
 											),
-											this.fieldErrors("username"),
-											React.createElement('input', { type: 'text',
-													value: this.state.username,
-													onChange: this.update("username"),
-													className: 'login-input',
-													id: 'user_username' }),
 											React.createElement('br', null),
+											this.fieldErrors("base"),
 											React.createElement(
-													'label',
-													{ 'for': 'user_password' },
-													' Password: '
+													'div',
+													{ className: 'login-form' },
+													React.createElement('br', null),
+													React.createElement(
+															'label',
+															{ 'for': 'user_username' },
+															' Username: '
+													),
+													this.fieldErrors("username"),
+													React.createElement('input', { type: 'text',
+															value: this.state.username,
+															onChange: this.update("username"),
+															className: 'login-input',
+															id: 'user_username' }),
+													React.createElement('br', null),
+													React.createElement(
+															'label',
+															{ 'for': 'user_password' },
+															' Password: '
+													),
+													this.fieldErrors("password"),
+													React.createElement('input', { type: 'password',
+															value: this.state.password,
+															onChange: this.update("password"),
+															className: 'login-input',
+															id: 'user_password' }),
+													React.createElement('br', null),
+													React.createElement('input', { type: 'submit', value: 'Log In!' })
 											),
-											this.fieldErrors("password"),
-											React.createElement('input', { type: 'password',
-													value: this.state.password,
-													onChange: this.update("password"),
-													className: 'login-input',
-													id: 'user_password' }),
-											React.createElement('br', null),
-											React.createElement('input', { type: 'submit', value: 'Log In!' })
-									),
-									'New to Cycl? ',
-									React.createElement(
-											Link,
-											{ to: '/signup' },
-											'Sign Up!'
+											'New to Cycl? ',
+											React.createElement(
+													Link,
+													{ to: '/signup' },
+													'Sign Up!'
+											)
 									)
 							)
 					);
@@ -33227,8 +33243,8 @@
 	var SessionStore = __webpack_require__(231);
 	var ErrorStore = __webpack_require__(261);
 	
-	var LoginForm = React.createClass({
-			displayName: 'LoginForm',
+	var SignupForm = React.createClass({
+			displayName: 'SignupForm',
 	
 	
 			contextTypes: {
@@ -33307,10 +33323,19 @@
 	
 					return React.createElement(
 							'div',
-							{ className: 'splash' },
+							{ className: 'signup-page-container' },
 							React.createElement(
 									'div',
-									{ className: 'signup-container' },
+									{ className: 'landing-title' },
+									React.createElement(
+											'h1',
+											null,
+											'Cycl'
+									)
+							),
+							React.createElement(
+									'div',
+									{ className: 'signup-form-container' },
 									React.createElement(
 											'form',
 											{ className: 'signup-form-box', onSubmit: this.handleSubmit },
@@ -33435,7 +33460,7 @@
 			}
 	});
 	
-	module.exports = LoginForm;
+	module.exports = SignupForm;
 
 /***/ },
 /* 263 */
@@ -33458,6 +33483,77 @@
 	});
 	
 	module.exports = UserPage;
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var Link = __webpack_require__(168).Link;
+	var SessionStore = __webpack_require__(231);
+	var SessionActions = __webpack_require__(254);
+	
+	var NavBar = React.createClass({
+	  displayName: 'NavBar',
+	  componentDidMount: function componentDidMount() {
+	    SessionStore.addListener(this.forceUpdate.bind(this));
+	  },
+	  _handleLogOut: function _handleLogOut() {
+	    SessionActions.logOut();
+	  },
+	  greeting: function greeting() {
+	    if (SessionStore.isUserLoggedIn()) {
+	      return React.createElement(
+	        'hgroup',
+	        { className: 'header-group' },
+	        React.createElement(
+	          'h2',
+	          { className: 'header-name' },
+	          'Hi, ',
+	          SessionStore.currentUser().username,
+	          '!'
+	        ),
+	        React.createElement('input', { className: 'header-button', type: 'submit', value: 'logout', onClick: this._handleLogOut })
+	      );
+	    } else if (!["/login", "/signup"].includes(this.props.location.pathname)) {
+	      return React.createElement(
+	        'nav',
+	        { className: 'login-signup' },
+	        React.createElement(
+	          Link,
+	          { to: '/login', activeClassName: 'current' },
+	          'Login'
+	        ),
+	        ' or ',
+	        React.createElement(
+	          Link,
+	          { to: '/signup', activeClassName: 'current' },
+	          'Sign up!'
+	        )
+	      );
+	    }
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'header',
+	      null,
+	      React.createElement(
+	        Link,
+	        { to: '/', className: 'header-link' },
+	        React.createElement(
+	          'h1',
+	          null,
+	          'Cycl'
+	        )
+	      ),
+	      this.greeting()
+	    );
+	  }
+	});
+	
+	module.exports = NavBar;
 
 /***/ }
 /******/ ]);

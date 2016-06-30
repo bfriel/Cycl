@@ -10,8 +10,10 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
+ *= require reset
  *= require_self
+ *= require login
+ *= require signup
  */
 
 html {
@@ -26,8 +28,27 @@ body {
   height: 100%;
 }
 
+.nav-bar {
+  background-color: black;
+  width: 100%;
+  height: 50px;
+}
+
+.header-link {
+  width: 100px;
+  float: left;
+}
+
+.login-signup {
+  width: 300px;
+  float: right;
+}
+
 .app-container {
   height: 100%;
+  background-image: url(http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467220343/splashpage.jpg);
+  background-size: cover;
+  width: 100%;
 }
 
  input[type=text] {

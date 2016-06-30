@@ -63,38 +63,43 @@ const LoginForm = React.createClass({
 	render() {
 
 		return (
-			<div className="login-container">
-				<form onSubmit={this.handleSubmit} className="login-form-box">
-	        <h3>Log In</h3>
-					<br/>
+			<div className="login-page-container">
+				<div className="landing-title">
+					<h1>Cycl</h1>
+				</div>
+				<div className="login-form-container">
+					<form onSubmit={this.handleSubmit} className="login-form-box">
+		        <h3>Log In</h3>
+						<br/>
 
-	        { this.fieldErrors("base") }
-					<div className="login-form">
-		        <br />
-						<label for="user_username"> Username: </label>
-		          { this.fieldErrors("username") }
-							<input type="text"
-		            value={this.state.username}
-		            onChange={this.update("username")}
-								className="login-input"
-								id="user_username" />
-
-
-		        <br />
-						<label for="user_password"> Password: </label>
-		          { this.fieldErrors("password") }
-		          <input type="password"
-		            value={this.state.password}
-		            onChange={this.update("password")}
-								className="login-input"
-								id="user_password"/>
+		        { this.fieldErrors("base") }
+						<div className="login-form">
+			        <br />
+							<label for="user_username"> Username: </label>
+			          { this.fieldErrors("username") }
+								<input type="text"
+			            value={this.state.username}
+			            onChange={this.update("username")}
+									className="login-input"
+									id="user_username" />
 
 
-		        <br />
-						<input type="submit" value="Log In!" />
-					</div>
-					New to Cycl? <Link to="/signup">Sign Up!</Link>
-				</form>
+			        <br />
+							<label for="user_password"> Password: </label>
+			          { this.fieldErrors("password") }
+			          <input type="password"
+			            value={this.state.password}
+			            onChange={this.update("password")}
+									className="login-input"
+									id="user_password"/>
+
+
+			        <br />
+							<input type="submit" value="Log In!" />
+						</div>
+						New to Cycl? <Link to="/signup">Sign Up!</Link>
+					</form>
+				</div>
 			</div>
 		);
 	}

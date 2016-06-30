@@ -14,7 +14,7 @@ const React = require('react'),
 
 const routes = (
   <Route path="/" component={App}>
-    <IndexRoute component={Feed}/>
+    <IndexRoute component={Feed} onEnter={ _ensureLoggedIn }/>
     <Route path="/login" component={LoginForm} />
     <Route path="/signup" component={SignupForm} />
     <Route path="user/:userId" component={UserPage} onEnter={ _ensureLoggedIn } />
@@ -23,7 +23,7 @@ const routes = (
 
 function _ensureLoggedIn(nextState, replace) {
     if (!SessionStore.isUserLoggedIn()) {
-      replace('/login');
+      replace('/signup');
     }
 }
 
