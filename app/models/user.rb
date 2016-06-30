@@ -6,10 +6,6 @@
 #  username        :string           not null
 #  password_digest :string           not null
 #  session_token   :string           not null
-#  height          :integer          not null
-#  weight          :integer          not null
-#  gender          :string           not null
-#  birthdate       :date             not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -17,11 +13,9 @@
 class User < ActiveRecord::Base
   attr_reader :password
 
-  validates :username, :password_digest, :session_token,
-            :weight, :birthdate, :gender, presence: true
+  validates :username, :password_digest, :session_token, presence: true
   validates :password, length:  { minimum: 6, allow_nil: true }
   validates :session_token, :username, uniqueness: true
-  validates :gender, inclusion: { in: %w(M F) }
 
   after_initialize :ensure_session_token
 

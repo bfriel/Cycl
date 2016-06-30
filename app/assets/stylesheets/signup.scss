@@ -1,17 +1,46 @@
 
 .signup-form-container{
-  width: 500px;
-  height: 500px;
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, .7);
-  color: white;
-  float: left;
-  position: relative;
-  margin-left: 20px;
-  margin-top: 200px;
+  margin: 0 auto;
+  width : 700px;
+  padding: 20px;
+  font-size: 40px;
 }
 
 
 .signup-form-box {
-  margin: auto;
+  border: white 5px solid;
+  border-radius: 10px;
+  font-weight: 100;
+}
+
+.signup-form {
+  margin-top: -100px;
+}
+
+.signup-form > label {
+  margin-left: 20px;
+  font-weight: 100;
+}
+
+
+.signup-form-box > h3 {
+  text-align: center;
+  font-weight: 100;
+}
+
+.signup-form > input[type="submit"] {
+  display: flex;
+  justify-content: center;
+  font-weight: 100;
+}
+
+.switch-form {
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.list-errors {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
 }

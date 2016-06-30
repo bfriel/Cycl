@@ -15,11 +15,7 @@ const SignupForm = React.createClass({
   getInitialState() {
     return {
       username: "",
-      password: "",
-      height: 0,
-      weight: 0,
-      gender: "",
-      birthdate: Date.now()
+      password: ""
     };
   },
 
@@ -46,11 +42,10 @@ const SignupForm = React.createClass({
 
   fieldErrors(field) {
     let errors = ErrorStore.formErrors(this.formType());
-
     if (!errors[field]) { return; }
 
     let messages = errors[field].map( (errorMsg, i) => {
-      return <li key={ i }>{ errorMsg }</li>;
+      return <li key={ i }>{ field }: { errorMsg } </li>;
     });
 
     return <ul>{ messages }</ul>;
@@ -61,13 +56,7 @@ const SignupForm = React.createClass({
   },
 
   update(property) {
-    if (property === "height" || property === "weight") {
-      return (e) => this.setState({[property]: parseInt(e.target.value)});
-    } else if (property === "date") {
-      return (e) => this.setState({[property]: new Date(e.target.value)});
-    } else {
-      return (e) => this.setState({[property]: e.target.value});
-    }
+    return (e) => this.setState({[property]: e.target.value});
   },
 
 	render() {
@@ -79,6 +68,8 @@ const SignupForm = React.createClass({
 				</div>
 				<div className="list-errors">
 					{ this.fieldErrors("base") }
+					{ this.fieldErrors("username") }
+					{ this.fieldErrors("password") }
 				</div>
 				<div className="signup-form-container">
 					<form className="signup-form-box" onSubmit={this.handleSubmit}>
@@ -90,10 +81,10 @@ const SignupForm = React.createClass({
 			        <br />
 
 							<label for="user_username"> Username: </label>
-			          { this.fieldErrors("username") }
 								<input type="text"
 			            value={this.state.username}
 			            onChange={this.update("username")}
+									autoFocus
 									className="signup-input"
 									id="user_username" />
 
@@ -101,7 +92,6 @@ const SignupForm = React.createClass({
 			        <br />
 
 							<label for="user_password"> Password: </label>
-			          { this.fieldErrors("password") }
 			          <input type="password"
 			            value={this.state.password}
 			            onChange={this.update("password")}
@@ -110,52 +100,11 @@ const SignupForm = React.createClass({
 
 	            <br />
 
-	              <label for="user_height"> Height: </label>
-	              <select onChange={this.update("height")} className="signup-input" id="user_height">
-	                <option value="4">4</option>
-	                <option value="5">5</option>
-	                <option value="6">6</option>
-	                <option value="7">7</option>
-	              </select>
-
-	            <br />
-
-	              <label for="user_weight"> Weight: </label>
-	              <input type="number"
-	              value={this.state.weight}
-	              onChange={this.update("weight")}
-	              min="0"
-	              max="500"
-	              step="1"
-	              className="signup-input"
-	              id="user_weight" />
-
-	            <br />
-
-	              <label for="user_gender"> Gender: </label>
-	              <input type="radio"
-	                onChange={this.update("gender")}
-	                value="M"
-	                className="signup-input"
-	                id="user_gender" />Male
-	              <input type="radio"
-	                onChange={this.update("gender")}
-	                value="F"
-	                className="signup-input"
-	                id="user_gender" />Female
-
-	            <br />
-
-	              <label for="birthdate"> Birthdate: </label>
-	              <input type="date"
-	                     onChange={this.update("birthdate")}
-	                     id="user_birthdate"
-	                     className="signup-input" />
-
-			        <br />
 							<input type="submit" value="Sign Up!" />
 						</div>
-						Already have an account? <Link to="/login">Log In!</Link>
+						<div className="switch-form">
+							Already have an account? <Link to="/login">Log In!</Link>
+						</div>
 					</form>
 				</div>
 			</div>

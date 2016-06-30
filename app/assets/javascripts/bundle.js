@@ -26037,224 +26037,145 @@
 	var ErrorStore = __webpack_require__(259);
 	
 	var SignupForm = React.createClass({
-			displayName: 'SignupForm',
+		displayName: 'SignupForm',
 	
 	
-			contextTypes: {
-					router: React.PropTypes.object.isRequired
-			},
+		contextTypes: {
+			router: React.PropTypes.object.isRequired
+		},
 	
-			getInitialState: function getInitialState() {
-					return {
-							username: "",
-							password: "",
-							height: 0,
-							weight: 0,
-							gender: "",
-							birthdate: Date.now()
-					};
-			},
-			componentDidMount: function componentDidMount() {
-					this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-					this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
-			},
-			componentWillUnmount: function componentWillUnmount() {
-					this.errorListener.remove();
-					this.sessionListener.remove();
-			},
-			redirectIfLoggedIn: function redirectIfLoggedIn() {
-					if (SessionStore.isUserLoggedIn()) {
-							this.context.router.push("/");
-					}
-			},
-			handleSubmit: function handleSubmit(e) {
-					e.preventDefault();
-					SessionActions.signUp(this.state);
-			},
-			fieldErrors: function fieldErrors(field) {
-					var errors = ErrorStore.formErrors(this.formType());
-	
-					if (!errors[field]) {
-							return;
-					}
-	
-					var messages = errors[field].map(function (errorMsg, i) {
-							return React.createElement(
-									'li',
-									{ key: i },
-									errorMsg
-							);
-					});
-	
-					return React.createElement(
-							'ul',
-							null,
-							messages
-					);
-			},
-			formType: function formType() {
-					return this.props.location.pathname.slice(1);
-			},
-			update: function update(property) {
-					var _this = this;
-	
-					if (property === "height" || property === "weight") {
-							return function (e) {
-									return _this.setState(_defineProperty({}, property, parseInt(e.target.value)));
-							};
-					} else if (property === "date") {
-							return function (e) {
-									return _this.setState(_defineProperty({}, property, new Date(e.target.value)));
-							};
-					} else {
-							return function (e) {
-									return _this.setState(_defineProperty({}, property, e.target.value));
-							};
-					}
-			},
-			render: function render() {
-	
-					return React.createElement(
-							'div',
-							{ className: 'signup-page-container' },
-							React.createElement(
-									'div',
-									{ className: 'landing-title' },
-									React.createElement(
-											'h1',
-											null,
-											'Cycl'
-									)
-							),
-							React.createElement(
-									'div',
-									{ className: 'list-errors' },
-									this.fieldErrors("base")
-							),
-							React.createElement(
-									'div',
-									{ className: 'signup-form-container' },
-									React.createElement(
-											'form',
-											{ className: 'signup-form-box', onSubmit: this.handleSubmit },
-											React.createElement(
-													'h3',
-													null,
-													'Sign Up'
-											),
-											React.createElement('br', null),
-											React.createElement(
-													'div',
-													{ className: 'signup-form' },
-													React.createElement('br', null),
-													React.createElement(
-															'label',
-															{ 'for': 'user_username' },
-															' Username: '
-													),
-													this.fieldErrors("username"),
-													React.createElement('input', { type: 'text',
-															value: this.state.username,
-															onChange: this.update("username"),
-															className: 'signup-input',
-															id: 'user_username' }),
-													React.createElement('br', null),
-													React.createElement(
-															'label',
-															{ 'for': 'user_password' },
-															' Password: '
-													),
-													this.fieldErrors("password"),
-													React.createElement('input', { type: 'password',
-															value: this.state.password,
-															onChange: this.update("password"),
-															className: 'signup-input',
-															id: 'user_password' }),
-													React.createElement('br', null),
-													React.createElement(
-															'label',
-															{ 'for': 'user_height' },
-															' Height: '
-													),
-													React.createElement(
-															'select',
-															{ onChange: this.update("height"), className: 'signup-input', id: 'user_height' },
-															React.createElement(
-																	'option',
-																	{ value: '4' },
-																	'4'
-															),
-															React.createElement(
-																	'option',
-																	{ value: '5' },
-																	'5'
-															),
-															React.createElement(
-																	'option',
-																	{ value: '6' },
-																	'6'
-															),
-															React.createElement(
-																	'option',
-																	{ value: '7' },
-																	'7'
-															)
-													),
-													React.createElement('br', null),
-													React.createElement(
-															'label',
-															{ 'for': 'user_weight' },
-															' Weight: '
-													),
-													React.createElement('input', { type: 'number',
-															value: this.state.weight,
-															onChange: this.update("weight"),
-															min: '0',
-															max: '500',
-															step: '1',
-															className: 'signup-input',
-															id: 'user_weight' }),
-													React.createElement('br', null),
-													React.createElement(
-															'label',
-															{ 'for': 'user_gender' },
-															' Gender: '
-													),
-													React.createElement('input', { type: 'radio',
-															onChange: this.update("gender"),
-															value: 'M',
-															className: 'signup-input',
-															id: 'user_gender' }),
-													'Male',
-													React.createElement('input', { type: 'radio',
-															onChange: this.update("gender"),
-															value: 'F',
-															className: 'signup-input',
-															id: 'user_gender' }),
-													'Female',
-													React.createElement('br', null),
-													React.createElement(
-															'label',
-															{ 'for': 'birthdate' },
-															' Birthdate: '
-													),
-													React.createElement('input', { type: 'date',
-															onChange: this.update("birthdate"),
-															id: 'user_birthdate',
-															className: 'signup-input' }),
-													React.createElement('br', null),
-													React.createElement('input', { type: 'submit', value: 'Sign Up!' })
-											),
-											'Already have an account? ',
-											React.createElement(
-													Link,
-													{ to: '/login' },
-													'Log In!'
-											)
-									)
-							)
-					);
+		getInitialState: function getInitialState() {
+			return {
+				username: "",
+				password: ""
+			};
+		},
+		componentDidMount: function componentDidMount() {
+			this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+			this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+		},
+		componentWillUnmount: function componentWillUnmount() {
+			this.errorListener.remove();
+			this.sessionListener.remove();
+		},
+		redirectIfLoggedIn: function redirectIfLoggedIn() {
+			if (SessionStore.isUserLoggedIn()) {
+				this.context.router.push("/");
 			}
+		},
+		handleSubmit: function handleSubmit(e) {
+			e.preventDefault();
+			SessionActions.signUp(this.state);
+		},
+		fieldErrors: function fieldErrors(field) {
+			var errors = ErrorStore.formErrors(this.formType());
+			if (!errors[field]) {
+				return;
+			}
+	
+			var messages = errors[field].map(function (errorMsg, i) {
+				return React.createElement(
+					'li',
+					{ key: i },
+					field,
+					': ',
+					errorMsg,
+					' '
+				);
+			});
+	
+			return React.createElement(
+				'ul',
+				null,
+				messages
+			);
+		},
+		formType: function formType() {
+			return this.props.location.pathname.slice(1);
+		},
+		update: function update(property) {
+			var _this = this;
+	
+			return function (e) {
+				return _this.setState(_defineProperty({}, property, e.target.value));
+			};
+		},
+		render: function render() {
+	
+			return React.createElement(
+				'div',
+				{ className: 'signup-page-container' },
+				React.createElement(
+					'div',
+					{ className: 'landing-title' },
+					React.createElement(
+						'h1',
+						null,
+						'Cycl'
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'list-errors' },
+					this.fieldErrors("base"),
+					this.fieldErrors("username"),
+					this.fieldErrors("password")
+				),
+				React.createElement(
+					'div',
+					{ className: 'signup-form-container' },
+					React.createElement(
+						'form',
+						{ className: 'signup-form-box', onSubmit: this.handleSubmit },
+						React.createElement(
+							'h3',
+							null,
+							'Sign Up'
+						),
+						React.createElement('br', null),
+						React.createElement(
+							'div',
+							{ className: 'signup-form' },
+							React.createElement('br', null),
+							React.createElement(
+								'label',
+								{ 'for': 'user_username' },
+								' Username: '
+							),
+							React.createElement('input', { type: 'text',
+								value: this.state.username,
+								onChange: this.update("username"),
+								autoFocus: true,
+								className: 'signup-input',
+								id: 'user_username' }),
+							React.createElement('br', null),
+							React.createElement(
+								'label',
+								{ 'for': 'user_password' },
+								' Password: '
+							),
+							React.createElement('input', { type: 'password',
+								value: this.state.password,
+								onChange: this.update("password"),
+								className: 'signup-input',
+								id: 'user_password' }),
+							React.createElement('br', null),
+							React.createElement('input', { type: 'submit', value: 'Sign Up!' })
+						),
+						React.createElement(
+							'div',
+							{ className: 'switch-form' },
+							'Already have an account? ',
+							React.createElement(
+								Link,
+								{ to: '/login' },
+								'Log In!'
+							)
+						)
+					)
+				)
+			);
+		}
 	});
 	
 	module.exports = SignupForm;
