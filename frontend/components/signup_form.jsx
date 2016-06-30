@@ -40,6 +40,12 @@ const SignupForm = React.createClass({
     SessionActions.signUp(this.state);
 	},
 
+	_guestLogin(e) {
+		e.preventDefault();
+		const demoUser = {username: 'Haley', password: 'password'};
+		SessionActions.logIn(demoUser);
+	},
+
   fieldErrors(field) {
     let errors = ErrorStore.formErrors(this.formType());
     if (!errors[field]) { return; }
@@ -101,6 +107,7 @@ const SignupForm = React.createClass({
 	            <br />
 
 							<input type="submit" value="Sign Up!" />
+							<input type="submit" value="Continue as Guest" onClick={this._guestLogin} />
 						</div>
 						<div className="switch-form">
 							Already have an account? <Link to="/login">Log In!</Link>

@@ -26067,6 +26067,11 @@
 			e.preventDefault();
 			SessionActions.signUp(this.state);
 		},
+		_guestLogin: function _guestLogin(e) {
+			e.preventDefault();
+			var demoUser = { username: 'Haley', password: 'password' };
+			SessionActions.logIn(demoUser);
+		},
 		fieldErrors: function fieldErrors(field) {
 			var errors = ErrorStore.formErrors(this.formType());
 			if (!errors[field]) {
@@ -26160,7 +26165,8 @@
 								className: 'signup-input',
 								id: 'user_password' }),
 							React.createElement('br', null),
-							React.createElement('input', { type: 'submit', value: 'Sign Up!' })
+							React.createElement('input', { type: 'submit', value: 'Sign Up!' }),
+							React.createElement('input', { type: 'submit', value: 'Continue as Guest', onClick: this._guestLogin })
 						),
 						React.createElement(
 							'div',
@@ -33249,6 +33255,11 @@
 			e.preventDefault();
 			SessionActions.logIn(this.state);
 		},
+		_guestLogin: function _guestLogin(e) {
+			e.preventDefault();
+			var demoUser = { username: 'Haley', password: 'password' };
+			SessionActions.logIn(demoUser);
+		},
 		fieldErrors: function fieldErrors(field) {
 			var errors = ErrorStore.formErrors(this.formType());
 	
@@ -33340,7 +33351,8 @@
 								className: 'login-input',
 								id: 'user_password' }),
 							React.createElement('br', null),
-							React.createElement('input', { type: 'submit', value: 'Log In!' })
+							React.createElement('input', { type: 'submit', value: 'Log In!' }),
+							React.createElement('input', { type: 'submit', value: 'Continue as Guest', onClick: this._guestLogin })
 						),
 						React.createElement(
 							'div',
