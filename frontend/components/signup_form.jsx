@@ -45,11 +45,11 @@ const SignupForm = React.createClass({
 	},
 
   fieldErrors(field) {
-    const errors = ErrorStore.formErrors(this.formType());
+    let errors = ErrorStore.formErrors(this.formType());
 
     if (!errors[field]) { return; }
 
-    const messages = errors[field].map( (errorMsg, i) => {
+    let messages = errors[field].map( (errorMsg, i) => {
       return <li key={ i }>{ errorMsg }</li>;
     });
 
@@ -77,12 +77,13 @@ const SignupForm = React.createClass({
 				<div className="landing-title">
 					<h1>Cycl</h1>
 				</div>
+				<div className="list-errors">
+					{ this.fieldErrors("base") }
+				</div>
 				<div className="signup-form-container">
 					<form className="signup-form-box" onSubmit={this.handleSubmit}>
 		        <h3>Sign Up</h3>
 						<br/>
-
-		        { this.fieldErrors("base") }
 
 						<div className="signup-form">
 

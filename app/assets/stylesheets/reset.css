@@ -41,10 +41,12 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-
-
 .group:after {
   content: "";
   display: block;
   clear: both;
+}
+
+body, html {
+  height: 100%;
 }

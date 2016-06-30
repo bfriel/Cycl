@@ -1,9 +1,15 @@
-const React = require('react');
+const React = require('react'),
+      hashHistory = require('react-router').hashHistory,
+      Link = require('react-router').Link;
 const SessionStore = require('../stores/session_store');
 const SessionActions = require('../actions/session_actions');
 
 
 const NavBar = React.createClass({
+
+  _goHome(){
+    hashHistory.push("/");
+  },
 
   _handleLogOut(){
     SessionActions.logOut();
@@ -14,11 +20,11 @@ const NavBar = React.createClass({
         <div>
           <nav id='navbar'>
 
-            <div id='cycl-title'>
+            <div className="nav-title" onClick={this._goHome}>
               CYCL
             </div>
 
-            <div id='left'>
+            <div id='right'>
               <div id='username'>
                 {SessionStore.currentUser().username}
               </div>

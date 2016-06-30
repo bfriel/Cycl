@@ -67,12 +67,14 @@ const LoginForm = React.createClass({
 				<div className="landing-title">
 					<h1>Cycl</h1>
 				</div>
+				<div className="list-errors">
+					{ this.fieldErrors("base") }
+				</div>
 				<div className="login-form-container">
 					<form onSubmit={this.handleSubmit} className="login-form-box">
 		        <h3>Log In</h3>
 						<br/>
 
-		        { this.fieldErrors("base") }
 						<div className="login-form">
 			        <br />
 							<label for="user_username"> Username: </label>
@@ -80,6 +82,7 @@ const LoginForm = React.createClass({
 								<input type="text"
 			            value={this.state.username}
 			            onChange={this.update("username")}
+									autoFocus
 									className="login-input"
 									id="user_username" />
 
@@ -97,7 +100,9 @@ const LoginForm = React.createClass({
 			        <br />
 							<input type="submit" value="Log In!" />
 						</div>
-						New to Cycl? <Link to="/signup">Sign Up!</Link>
+						<div className="switch-form">
+							New to Cycl? <Link to="/signup">Sign Up!</Link>
+						</div>
 					</form>
 				</div>
 			</div>

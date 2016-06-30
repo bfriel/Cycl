@@ -16,7 +16,7 @@ nav#navbar {
     border-bottom: white 1px solid
 }
 
-div#left {
+div#right {
   display: flex;
   align-items: center;
 }
@@ -75,6 +75,10 @@ header {
 }
 
 a {
+  cursor: pointer;
+}
+
+.nav-title {
   cursor: pointer;
 }
 
