@@ -1,0 +1,68 @@
+.create-route-page {
+ width: 1200px;
+ margin: auto;
+ margin-top: 50px;
+}
+
+.block-for-map {
+  float: left;
+  height: 600px;
+  width: 800px;
+  margin-left: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, .7);
+}
+
+.map-tools {
+  float: right;
+  width: 300px;
+  height: 600px;
+  margin: 20px;
+  border-radius: 10px;
+  background: #fff;
+  background-color: rgba(0, 0, 0, .7);
+  color: #eeeedd;
+}
+
+.route-info-pane {
+  float: left;
+  width: 1160px;
+  height: 200px;
+  margin: 20px;
+  border-radius: 10px;
+  background: #fff;
+  background-color: rgba(0, 0, 0, .7);
+  overflow: hidden;
+}
+
+.map-tools .table {
+  width: 250px;
+}
+
+.map {
+  height: 600px;
+  width: 800px;
+  border-radius: 10px;
+}
+
+#elevation-chart {
+  background-color: rgba(238, 238, 221, 1);
+}
+
+.instructions {
+  text-align: center;
+  width: 1160px;
+  float: left;
+  margin: 20px;
+  border-radius: 10px;
+  height: 70px;
+  background-color: rgba(0, 0, 0, .7);
+  color: white;
+}
+
+.instructions h5 {
+  margin-left: 15px;
+  font-size: 22px;
+  font-family: 'Open Sans Condensed', sans-serif;
+}

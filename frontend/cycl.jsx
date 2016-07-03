@@ -9,6 +9,7 @@ const Router = require('react-router').Router,
 const App = require('./components/app'),
       Feed = require('./components/feed'),
       UserPage = require('./components/user_page'),
+      CreateRide = require('./components/map/create_ride'),
       LoginForm = require('./components/login_form');
 //Flux
 const SignupForm = require('./components/signup_form'),
@@ -20,6 +21,7 @@ const routes = (
     <IndexRoute component={Feed} onEnter={ _ensureLoggedIn }/>
     <Route path="/login" component={LoginForm} />
     <Route path="/signup" component={SignupForm} />
+    <Route path="create_ride" component={CreateRide} />
     <Route path="user/:userId" component={UserPage} onEnter={ _ensureLoggedIn } />
   </Route>
 );

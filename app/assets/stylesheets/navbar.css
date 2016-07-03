@@ -80,17 +80,19 @@ a {
 
 .nav-title {
   cursor: pointer;
+  font-size: 33px;
 }
 
 
 .navbar-buttons > a {
   color: white;
   border-left: 1px solid white;
-  padding: 10px;
+  padding: 9px;
 }
 
-a#last {
-  border-right: 1px solid white;
+.navbar-buttons > a:hover {
+  background-color: white;
+  color: rgb(48, 87, 145);
 }
 
 div#site-name > img {

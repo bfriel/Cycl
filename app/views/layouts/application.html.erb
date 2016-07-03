@@ -1,12 +1,29 @@
 <!DOCTYPE html>
-<link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
 <html>
 <head>
   <title>Cycl</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
-  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+
+  <script type="text/javascript">
+    window.GOOGLE_KEYS = {
+      GOOGLE_MAPS: "AIzaSyBazQ2K5CsQzLEu3F3a1DRhpWWOzVAD1qA",
+      GOOGLE_ROAD: "AIzaSyCj1pjRTm_yDI1vUEtNEQKKmMxn7Vktn0o"
+    }
+  </script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBazQ2K5CsQzLEu3F3a1DRhpWWOzVAD1qA"
+          charset="utf-8">
+  </script>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script type="text/javascript">
+      google.charts.load('current', {packages: ['corechart']});
+      google.charts.setOnLoadCallback();
+  </script>
 </head>
 <body>
 

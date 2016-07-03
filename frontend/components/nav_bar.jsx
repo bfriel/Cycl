@@ -11,6 +11,10 @@ const NavBar = React.createClass({
     hashHistory.push("/");
   },
 
+  _createRide(){
+    hashHistory.push("create_ride");
+  },
+
   _handleLogOut(){
     SessionActions.logOut();
   },
@@ -26,8 +30,8 @@ const NavBar = React.createClass({
 
             <div id='right'>
               <div className="navbar-buttons">
+                <a onClick={this._createRide}>Create a Route</a>
                 <a href="#">Feed</a>
-                <a href="#" id="last">Create a Route</a>
                 <a href="#">{SessionStore.currentUser().username}</a>
               </div>
               <div className="dropdown">

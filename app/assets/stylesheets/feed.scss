@@ -1,0 +1,20 @@
+.intro-message {
+  float: left;
+  font-weight: 100;
+  margin-left: 20px;
+}
+
+.feed-side-bar {
+  float: right;
+}
+
+.feed-side-bar-item {
+  width: 300px;
+  height: 270px;
+  margin: 20px;
+  border-radius: 10px;
+  background-color: gray;
+  text-align: center;
+  display: block;
+  box-sizing: border-box;
+}

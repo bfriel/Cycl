@@ -15,16 +15,20 @@
  *= require login
  *= require signup
  *= require navbar
+ *= require feed
+ *= require create_route
  */
 
 html {
-  background-image: url(http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467264827/background_qddvbs.jpg);
-  background-size: cover;
 }
 
 body {
   font-family: 'Roboto', sans-serif;
   color: white;
+  background-image: url(http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467264827/background_qddvbs.jpg);
+  background-size: cover;
+  background-position: center center;;
+  background-attachment: fixed;
 }
 
 .nav-bar {

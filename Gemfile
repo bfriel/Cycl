@@ -23,6 +23,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'bcrypt'
 
+gem 'bootstrap-sass'
+
+gem 'newrelic_rpm'
+
+gem 'figaro'
+
 gem 'cloudinary'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

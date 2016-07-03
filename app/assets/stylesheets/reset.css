@@ -47,6 +47,6 @@ input[type="submit"] {
   clear: both;
 }
 
-body, html {
+body, html, #root {
   height: 100%;
 }

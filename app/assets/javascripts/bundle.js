@@ -56,7 +56,8 @@
 	//Components
 	var App = __webpack_require__(230),
 	    Feed = __webpack_require__(262),
-	    UserPage = __webpack_require__(263),
+	    UserPage = __webpack_require__(265),
+	    CreateRide = __webpack_require__(266),
 	    LoginForm = __webpack_require__(260);
 	//Flux
 	var SignupForm = __webpack_require__(231),
@@ -69,6 +70,7 @@
 	  React.createElement(IndexRoute, { component: Feed, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: '/login', component: LoginForm }),
 	  React.createElement(Route, { path: '/signup', component: SignupForm }),
+	  React.createElement(Route, { path: 'create_ride', component: CreateRide }),
 	  React.createElement(Route, { path: 'user/:userId', component: UserPage, onEnter: _ensureLoggedIn })
 	);
 	
@@ -33389,6 +33391,9 @@
 	  _goHome: function _goHome() {
 	    hashHistory.push("/");
 	  },
+	  _createRide: function _createRide() {
+	    hashHistory.push("create_ride");
+	  },
 	  _handleLogOut: function _handleLogOut() {
 	    SessionActions.logOut();
 	  },
@@ -33412,13 +33417,13 @@
 	            { className: 'navbar-buttons' },
 	            React.createElement(
 	              'a',
-	              { href: '#' },
-	              'Feed'
+	              { onClick: this._createRide },
+	              'Create a Route'
 	            ),
 	            React.createElement(
 	              'a',
-	              { href: '#', id: 'last' },
-	              'Create a Route'
+	              { href: '#' },
+	              'Feed'
 	            ),
 	            React.createElement(
 	              'a',
@@ -33473,12 +33478,49 @@
 	'use strict';
 	
 	var React = __webpack_require__(1);
+	var UserInfoPane = __webpack_require__(263),
+	    AllUsersPane = __webpack_require__(264);
 	
 	var Feed = React.createClass({
 	  displayName: 'Feed',
-	
 	  render: function render() {
-	    return React.createElement('div', null);
+	    return React.createElement(
+	      'div',
+	      { className: 'feed-container' },
+	      React.createElement(
+	        'div',
+	        { className: 'intro-message' },
+	        React.createElement(
+	          'h3',
+	          null,
+	          'Welcome to Cycl!'
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          'As a warmup, check out some recent rides from the Cycl community below'
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          'When you\'re read to start mapping, click on the Create a Route button above!'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'feed-side-bar' },
+	        React.createElement(
+	          'div',
+	          { className: 'feed-side-bar-item' },
+	          React.createElement(UserInfoPane, null)
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'feed-side-bar-item' },
+	          React.createElement(AllUsersPane, null)
+	        )
+	      )
+	    );
 	  }
 	});
 	
@@ -33486,6 +33528,48 @@
 
 /***/ },
 /* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var UserInfo = React.createClass({
+	  displayName: 'UserInfo',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      'UserPane'
+	    );
+	  }
+	});
+	
+	module.exports = UserInfo;
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var AllUsers = React.createClass({
+	  displayName: 'AllUsers',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      'AllUsersPane'
+	    );
+	  }
+	});
+	
+	module.exports = AllUsers;
+
+/***/ },
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33505,6 +33589,744 @@
 	});
 	
 	module.exports = UserPage;
+
+/***/ },
+/* 266 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var ElevationChart = __webpack_require__(267),
+	    CreateRideMap = __webpack_require__(273),
+	    RideInfo = __webpack_require__(275);
+	
+	var CreateRide = React.createClass({
+	  displayName: 'CreateRide',
+	
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'create-route-page clear-fix' },
+	      React.createElement(
+	        'div',
+	        { className: 'instructions clear-fix' },
+	        React.createElement(
+	          'h5',
+	          null,
+	          'Click on the map below to start mapping your ride!'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'block-for-map' },
+	        React.createElement(CreateRideMap, null)
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'map-tools' },
+	        React.createElement(RideInfo, null)
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'route-info-pane' },
+	        React.createElement(ElevationChart, null)
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CreateRide;
+
+/***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
+	    ElevationStore = __webpack_require__(268),
+	    DirectionsStore = __webpack_require__(270),
+	    GoogleApiUtil = __webpack_require__(271);
+	
+	var ElevationChart = React.createClass({
+	  displayName: 'ElevationChart',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      elevation: ElevationStore.elevations()
+	    };
+	  },
+	
+	  componentDidMount: function componentDidMount() {
+	    this.directionsListener = DirectionsStore.addListener(this._fetchElevation);
+	    this.elevationListener = ElevationStore.addListener(this._elevationChange);
+	  },
+	
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.directionsListener.remove();
+	    this.elevationListener.remove();
+	  },
+	
+	  _fetchElevation: function _fetchElevation() {
+	    var waypoints = DirectionsStore.directions().routes[0].overview_path;
+	
+	    this._getElevation(waypoints);
+	  },
+	
+	  _getElevation: function _getElevation(path) {
+	    var distance = DirectionsStore.distance();
+	    var elevator = new google.maps.ElevationService();
+	
+	    elevator.getElevationAlongPath({
+	      path: path,
+	      samples: distance * 25
+	    }, this.receiveElevation);
+	  },
+	
+	  receiveElevation: function receiveElevation(elevations, status) {
+	    if (status === 'OK') {
+	      this.plotElevation(elevations);
+	      GoogleApiUtil.receiveElevation(elevations);
+	    } else {
+	      console.log("elevation error: " + status);
+	    }
+	  },
+	
+	  plotElevation: function plotElevation(elevations) {
+	    var chartDiv = document.getElementById('elevation-chart');
+	
+	    var dataArray = this.convertToArray(elevations);
+	
+	    var data = new google.visualization.arrayToDataTable(dataArray);
+	    var chart = new google.visualization.LineChart(chartDiv);
+	
+	    chart.draw(data, {
+	      height: 200,
+	      legend: 'none',
+	      titleY: 'Elevation (m)',
+	      titleX: 'Distance (mi)'
+	    });
+	  },
+	
+	  convertToArray: function convertToArray(elevations) {
+	    var data = [['Distance', 'Elevation']];
+	    var distance = DirectionsStore.distance();
+	    var increment = distance / elevations.length;
+	    var reversedElevation = elevations.reverse();
+	
+	    reversedElevation.forEach(function (elevation, idx) {
+	      data.push([idx * increment, elevation.elevation]);
+	    });
+	
+	    return data;
+	  },
+	
+	  _elevationChange: function _elevationChange() {
+	    this.setState({
+	      elevation: ElevationStore.elevations()
+	    });
+	  },
+	
+	  render: function render() {
+	    return React.createElement('div', { id: 'elevation-chart' });
+	  }
+	});
+	
+	module.exports = ElevationChart;
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
+	
+	var _elevations = {};
+	var _elevationGain = 0;
+	var ElevationStore = new Store(AppDispatcher);
+	
+	ElevationStore.elevations = function () {
+	  return _elevations;
+	};
+	
+	ElevationStore.gain = function () {
+	  return _elevationGain;
+	};
+	
+	ElevationStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case RideConstants.RECIVE_ELEVATION_DATA:
+	      updateElevations(payload.data);
+	      break;
+	    case RideConstants.RESET_CHART:
+	      resetElevation();
+	      break;
+	    case RideConstants.REMOVE_ROUTE:
+	      resetElevation();
+	      break;
+	  }
+	};
+	
+	var updateElevations = function updateElevations(elevation) {
+	  _elevations = elevation;
+	  computeGain(elevation);
+	  ElevationStore.__emitChange();
+	};
+	
+	var computeGain = function computeGain(elevations) {
+	  var gain = 0;
+	  for (var i = 1; i < elevations.length - 1; i++) {
+	    if (elevations[i - 1].elevation < elevations[i].elevation) {
+	      gain += elevations[i].elevation - elevations[i - 1].elevation;
+	    }
+	  }
+	
+	  _elevationGain = gain;
+	};
+	
+	var resetElevation = function resetElevation() {
+	  _elevations = {};
+	  _elevationGain = 0;
+	  ElevationStore.__emitChange();
+	};
+	
+	module.exports = ElevationStore;
+
+/***/ },
+/* 269 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var RideConstants = {
+	  RIDES_RECEIVED: "RIDES_RECEIVED",
+	  CURRENT_USER_INFO: "CURRENT_USER_INFO",
+	  NEW_WORKOUT: "NEW_WORKOUT",
+	  UPDATE_USER: "UPDATE_USER",
+	  LOGGED_OUT: "LOGGED_OUT",
+	  CURRENT_USER_TOTALS: "CURRENT_USER_TOTALS",
+	  USER_TOTALS: "USER_TOTALS",
+	  RECEIVE_USER: "RECEIVE_USER",
+	  ADD_FOLLOWINGS: "ADD_FOLLOWINGS",
+	  REMOVE_FOLLOWING: "REMOVE_FOLLOWING",
+	  UPDATE_DIRECTIONS: "UPDATE_DIRECTIONS",
+	  REST_CHART: "REST_CHART",
+	  RECIVE_ELEVATION_DATA: "RECIVE_ELEVATION_DATA",
+	  ADD_ROUTE: "ADD_ROUTE",
+	  STORE_MARKERS: "STORE_MARKERS",
+	  RECIVE_SAVED_ROUTES: "RECIVE_SAVED_ROUTES",
+	  SHOW_OLD_ROUTE: "SHOW_OLD_ROUTE",
+	  REMOVE_ROUTE: "REMOVE_ROUTE",
+	  RECIVE_ALL_USERS: "RECIVE_ALL_USERS"
+	};
+	
+	module.exports = RideConstants;
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
+	
+	var _directions = {};
+	var _distance = 0;
+	var _markers = [];
+	var DirectionsStore = new Store(AppDispatcher);
+	
+	DirectionsStore.directions = function () {
+	  return _directions;
+	};
+	
+	DirectionsStore.distance = function () {
+	  return _distance;
+	};
+	
+	DirectionsStore.markers = function () {
+	  return _markers;
+	};
+	
+	DirectionsStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case RideConstants.UPDATE_DIRECTIONS:
+	      updateDirections(payload.directions);
+	      break;
+	    case RideConstants.STORE_MARKERS:
+	      updateMarkers(payload.markers);
+	      break;
+	    case RideConstants.REMOVE_ROUTE:
+	      resetRoute();
+	      break;
+	  }
+	};
+	
+	var resetRoute = function resetRoute() {
+	  _distance = 0;
+	  DirectionsStore.__emitChange();
+	};
+	
+	var updateDirections = function updateDirections(directions) {
+	  _directions = directions;
+	  _distance = directions.routes[0].legs[0].distance.value / 1609;
+	  DirectionsStore.__emitChange();
+	};
+	
+	var updateMarkers = function updateMarkers(markers) {
+	  _markers = markers;
+	};
+	
+	module.exports = DirectionsStore;
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var GoogleApiActions = __webpack_require__(272);
+	
+	var GoogleApiUtil = {
+	  getDirections: function getDirections(start, end, waypoints) {
+	    var request = {
+	      origin: start,
+	      destination: end,
+	      travelMode: google.maps.TravelMode.BICYCLING,
+	      waypoints: waypoints,
+	      optimizeWaypoints: false,
+	      provideRouteAlternatives: false
+	    };
+	    var directionsService = new google.maps.DirectionsService();
+	
+	    directionsService.route(request, function (result, status) {
+	      GoogleApiActions.setDirections(result, status);
+	    });
+	  },
+	
+	  getSnappedPos: function getSnappedPos(lat, lng, callback) {
+	    $.get('https://roads.googleapis.com/v1/snapToRoads', {
+	      key: window.GOOGLE_KEYS.GOOGLE_ROAD,
+	      path: lat + "," + lng
+	    }, function (data) {
+	
+	      callback(data);
+	    });
+	  },
+	
+	  resetElevation: function resetElevation() {
+	    GoogleApiActions.resetElevation();
+	  },
+	
+	  receiveElevation: function receiveElevation(elevations) {
+	    ApiActions.reciveElevationData(elevations);
+	  },
+	
+	  storeMarkers: function storeMarkers(markers) {
+	    GoogleApiActions.storeMarkers(markers);
+	  }
+	};
+	
+	module.exports = GoogleApiUtil;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
+	
+	var GoogleApiActions = {
+	  setDirections: function setDirections(result, status) {
+	    if (status === "OK") {
+	      AppDispatcher.dispatch({
+	        actionType: RideConstants.UPDATE_DIRECTIONS,
+	        directions: result
+	      });
+	    }
+	  },
+	
+	  storeMarkers: function storeMarkers(markers) {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.STORE_MARKERS,
+	      markers: markers
+	    });
+	  }
+	};
+	
+	module.exports = GoogleApiActions;
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
+	    ReactDOM = __webpack_require__(38);
+	var GoogleApiUtil = __webpack_require__(271),
+	    DirectionStore = __webpack_require__(270),
+	    OldRideStore = __webpack_require__(274);
+	
+	var CreateRideMap = React.createClass({
+	  displayName: 'CreateRideMap',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      markers: [],
+	      directions: DirectionStore.directions()
+	    };
+	  },
+	
+	  componentDidMount: function componentDidMount() {
+	    var map = ReactDOM.findDOMNode(this.refs.map);
+	    var bikeLayer = new google.maps.BicyclingLayer();
+	    var mapOptions = {
+	      center: { lat: 37.7758, lng: -122.435 },
+	      zoom: 12,
+	      mapTypeId: google.maps.MapTypeId.TERRAIN
+	    };
+	
+	    this.map = new google.maps.Map(map, mapOptions);
+	    bikeLayer.setMap(this.map);
+	
+	    var displayOptions = {
+	      suppressMarkers: true,
+	      preserveViewport: true
+	    };
+	
+	    this.directionsDisplay = new google.maps.DirectionsRenderer(displayOptions);
+	    this.clickListener = google.maps.event.addListener(this.map, 'click', this.handleClick);
+	    this.directionsListener = DirectionStore.addListener(this.updateDirections);
+	    this.oldRideListener = OldRideStore.addListener(this.showOldRide);
+	  },
+	
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.clickListener.remove();
+	    this.directionsListener.remove();
+	    this.oldRideListener.remove();
+	  },
+	
+	  showOldRide: function showOldRide() {
+	    this.removeAllMarkers();
+	
+	    if (Object.keys(OldRideStore.ride()).length === 0) {
+	      return;
+	    }
+	
+	    var oldRide = JSON.parse(OldRideStore.ride().ride_path);
+	
+	    var markers = [];
+	    var marker = void 0;
+	
+	    for (var i = 0; i < oldRide.length; i++) {
+	      var latLng = { lat: oldRide[i][0], lng: oldRide[i][1] };
+	
+	      if (i === 0) {
+	        marker = this.placeEndMarker(latLng);
+	      } else if (i === oldRide.length - 1) {
+	        marker = this.placeStartMarker(latLng);
+	      } else {
+	        marker = this.placeMiddleMarker(latLng);
+	      }
+	
+	      markers.push(marker);
+	    }
+	
+	    this.setState({ markers: markers }, this.getDirections);
+	  },
+	
+	  handleClick: function handleClick(e) {
+	    if (this.state.markers.length === 10) {
+	      return;
+	    }
+	    var lat = e.latLng.lat();
+	    var lng = e.latLng.lng();
+	
+	    this.getCorrectedClickPos(lat, lng);
+	  },
+	
+	  getCorrectedClickPos: function getCorrectedClickPos(lat, lng) {
+	    GoogleApiUtil.getSnappedPos(lat, lng, this.snappedPos);
+	  },
+	
+	  snappedPos: function snappedPos(data) {
+	    var position = data.snappedPoints[0].location;
+	    var lat = position.latitude;
+	    var lng = position.longitude;
+	
+	    this.placeNewMarker(lat, lng);
+	  },
+	
+	  updateDirections: function updateDirections() {
+	    this.setState({ directions: DirectionStore.directions() });
+	    this.renderDirections();
+	  },
+	
+	  renderDirections: function renderDirections() {
+	    this.directionsDisplay.setDirections(this.state.directions);
+	  },
+	
+	  ICONS: {
+	    start: "assets/start_marker.png",
+	    middle: "assets/middle_marker.png",
+	    end: "assets/stop_marker.png"
+	  },
+	
+	  placeNewMarker: function placeNewMarker(lat, lng) {
+	    var markers = this.state.markers;
+	    var latLng = { lat: lat, lng: lng };
+	    var marker = void 0;
+	    var oldMarker = void 0;
+	    var oldLatLng = void 0;
+	
+	    if (markers.length === 0) {
+	      marker = this.placeStartMarker(latLng);
+	    } else if (markers.length === 1) {
+	      marker = this.placeEndMarker(latLng);
+	    } else if (markers.length > 1) {
+	      oldMarker = markers[0];
+	      this.removeMarker(oldMarker);
+	      markers.shift();
+	      oldLatLng = {
+	        lat: oldMarker.position.lat(),
+	        lng: oldMarker.position.lng()
+	      };
+	
+	      markers.unshift(this.placeMiddleMarker(oldLatLng));
+	      marker = this.placeEndMarker(latLng);
+	    }
+	
+	    markers.unshift(marker);
+	    this.setState({ markers: markers });
+	
+	    if (markers.length > 1) {
+	      this.getDirections();
+	    }
+	  },
+	
+	  placeStartMarker: function placeStartMarker(latLng) {
+	    return new google.maps.Marker({
+	      position: latLng,
+	      icon: this.ICONS.start,
+	      map: this.map
+	    });
+	  },
+	
+	  placeMiddleMarker: function placeMiddleMarker(latLng) {
+	    return new google.maps.Marker({
+	      position: latLng,
+	      icon: this.ICONS.middle,
+	      map: this.map
+	    });
+	  },
+	
+	  placeEndMarker: function placeEndMarker(latLng) {
+	    return new google.maps.Marker({
+	      position: latLng,
+	      icon: this.ICONS.end,
+	      map: this.map
+	    });
+	  },
+	
+	  removeMarker: function removeMarker(marker) {
+	    marker.setMap(null);
+	  },
+	
+	  getDirections: function getDirections() {
+	    var waypoints = this.createWaypoints();
+	    var start = waypoints[0].location;
+	    var end = waypoints[waypoints.length - 1].location;
+	    waypoints.pop();
+	    waypoints.shift();
+	
+	    GoogleApiUtil.getDirections(start, end, waypoints);
+	    this.directionsDisplay.setMap(this.map);
+	    GoogleApiUtil.storeMarkers(this.state.markers);
+	  },
+	
+	  createWaypoints: function createWaypoints() {
+	    var markers = this.state.markers;
+	    var waypoints = [];
+	
+	    markers.forEach(function (marker) {
+	      var latLng = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+	
+	      waypoints.push({
+	        location: latLng,
+	        stopover: false
+	      });
+	    });
+	    return waypoints;
+	  },
+	
+	  removeAllMarkers: function removeAllMarkers() {
+	    this.directionsDisplay.setMap(null);
+	    // ApiUtil.resetMapData();
+	
+	    this.state.markers.forEach(function (marker) {
+	      marker.setMap(null);
+	    });
+	
+	    this.setState({ markers: [] });
+	  },
+	
+	  render: function render() {
+	    return React.createElement('div', { className: 'map', ref: 'map' });
+	  }
+	});
+	
+	module.exports = CreateRideMap;
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
+	
+	var _oldRide = {};
+	var OldRideStore = new Store(AppDispatcher);
+	
+	OldRideStore.route = function () {
+	  return _oldRide;
+	};
+	
+	OldRideStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case RideConstants.SHOW_OLD_ROUTE:
+	      updateOldRide(payload.route);
+	      break;
+	    case RideConstants.REMOVE_ROUTE:
+	      removeRide();
+	      break;
+	  }
+	};
+	
+	var updateOldRide = function updateOldRide(route) {
+	  _oldRide = route;
+	  OldRideStore.__emitChange();
+	};
+	
+	var removeRide = function removeRide() {
+	  _oldRide = {};
+	  OldRideStore.__emitChange();
+	};
+	
+	module.exports = OldRideStore;
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
+	    ElevationChart = __webpack_require__(267),
+	    DirectionsStore = __webpack_require__(270),
+	    ElevationStore = __webpack_require__(268);
+	
+	var RideInfo = React.createClass({
+	  displayName: 'RideInfo',
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      distance: 0,
+	      gain: 0
+	    };
+	  },
+	
+	  componentDidMount: function componentDidMount() {
+	    this.distanceListener = DirectionsStore.addListener(this._updateDistance);
+	    this.elevationListener = ElevationStore.addListener(this._updateElevation);
+	  },
+	
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.distanceListener.remove();
+	    this.elevationListener.remove();
+	  },
+	
+	  _updateDistance: function _updateDistance() {
+	    this.setState({ distance: DirectionsStore.distance().toFixed(2) });
+	  },
+	
+	  _updateElevation: function _updateElevation() {
+	    this.setState({ gain: ElevationStore.gain().toFixed(0) });
+	  },
+	
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'route-stats' },
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Route Stats'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'container' },
+	        React.createElement(
+	          'table',
+	          { className: 'table' },
+	          React.createElement(
+	            'tbody',
+	            null,
+	            React.createElement(
+	              'tr',
+	              null,
+	              React.createElement(
+	                'th',
+	                null,
+	                'Distance'
+	              ),
+	              React.createElement(
+	                'td',
+	                null,
+	                this.state.distance,
+	                ' miles'
+	              )
+	            ),
+	            React.createElement(
+	              'tr',
+	              null,
+	              React.createElement(
+	                'th',
+	                null,
+	                'Elevation Gain'
+	              ),
+	              React.createElement(
+	                'td',
+	                null,
+	                (this.state.gain * 3.28).toFixed(0),
+	                ' feet'
+	              )
+	            ),
+	            React.createElement(
+	              'tr',
+	              null,
+	              React.createElement('td', null),
+	              React.createElement('td', null)
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = RideInfo;
 
 /***/ }
 /******/ ]);
