@@ -1,8 +1,8 @@
 # Cycl
 
-[Heroku link][heroku] **Note:** This will link to my production site (cycl.tech)
+[Live Link][heroku]
 
-[heroku]: http://www.herokuapp.com
+[heroku]: http://www.cycl.tech
 
 ## Minimum Viable Product
 
@@ -15,7 +15,7 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
-- [ ] Dashboard of completed routes
+- [ ] Feed of completed routes
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
@@ -43,55 +43,54 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 ## Implementation Timeline
 
-### Phase 1: Backend setup and Front End User Authentication (1 day, W1 Tu 6pm)
+### Phase 1: Backend setup and Front End User Authentication (2 days)
 
 **Objective:** Functioning rails project with Authentication. Set up on Heroku
 
-- [ ] create new project
-- [ ] create `User` model
-- [ ] authentication
-- [ ] user signup/signin pages
-- [ ] blank landing page after signin
+- [ ] Create new project
+- [ ] Create `User` model
+- [ ] Authentication
+- [ ] User signup/signin pages
+- [ ] Styled landing page with Navbar after login
 
 * [Phase One][phase-one]
 [phase-one]: docs/phases/phase1.md
 
-### Phase 2: Flux Architecture with User and Following Implementation (1 day)
+### Phase 2: Create Routes using Google Maps (2 days)
 
-**Objective:** Seamless navigation from Dashboard to User and Follower pages.
-
-- [ ] create `Follower` model
-- [ ] seed the database with a small amount of test data
-- [ ] CRUD API for routes (`FollowersController`)
-- [ ] jBuilder views for users
-- [ ] setup Webpack & Flux scaffold
-- [ ] setup `APIUtil` to interact with the API
-- [ ] test out API interaction in the console
-
-* [Phase Two][phase-two]
-[phase-two]: docs/phases/phase2.md
-
-### Phase 3: Create Routes using Google Maps (3 days)
-
-**Objective:** Routes can be created and read through the API/User interface.
+**Objective:** Routes can be created through the API/User interface.
 
 - [ ] Allow users to create routes using Google Maps API
 - [ ] Routes can be saved along with their mileage, duration, elevation gain, calories burned, description, and picture of route
 - [ ] Routes can be reused
+- [ ] Create Route page is styled
+
+* [Phase Two][phase-three]
+[phase-three]: docs/phases/phase3.md
+
+### Phase 3: Save Routes to Feed and User Page (2 days)
+
+**Objective:** Routes can be viewed through the API/User interface.
+
+- [ ] Saved Routes appear automatically on User Page
+- [ ] Feed shows routes of all folowees
+- [ ] Feed and User Page are styled
 
 * [Phase Three][phase-three]
 [phase-three]: docs/phases/phase3.md
 
-### Phase 4: Styling (3 days)
+### Phase 4: Following Implementation (1 day)
 
-**Objective:** Existing pages (including signup/signin) will look good.
+**Objective:** Seamless navigation from Dashboard to User and Follower pages.
 
-- [ ] Create an aesthetic splash page
-- [ ] Make sure seed data is adequate
-- [ ] Style uniformly
+- [ ] Create `Follower` model
+- [ ] Seed the database with a small amount of test data
+- [ ] CRUD API for routes (`FollowersController`)
+- [ ] jBuilder views for users
+- [ ] Setup Webpack & Flux scaffold
+- [ ] Setup `APIUtil` to interact with the API
+- [ ] Test out API interaction in the console
 
-* [Phase Four][phase-four]
-[phase-four]: docs/phases/phase4.md
 
 ### Phase 5: Adding Comments to Routes (1 day)
 
@@ -101,3 +100,10 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 * [Phase Five][phase-five]
 [phase-five]: docs/phases/phase5.md
+
+### Bonus Phase
+
+  - [ ] Cheers for friends
+  - [ ] Search for rides by location
+  - [ ] Goals
+  - [ ] Ranking system for current users

@@ -2,43 +2,35 @@
 
 **Bolded** components are associated with routes.
 
-(:exclamation: Remember, the bolded components are created by their
-associated routes, so the nesting of your bolded components must
-_**exactly**_ match the nesting of your routes.)
-
 * **App**
-  * **Dashboard**
-    * RoutesIndex
-      * RouteIndexItem
-        * **RouteItem**
-          * RouteItemDetail
-          * RouteItemMap
+  * **SignupForm**
+  * **LoginForm**
+  * **Feed**
+    * RidesIndex
+      * RideIndexItem
+        * **RideItem**
+          * RideItemDetail
+          * RideItemMap
           * Comments
-    * **CreateRoute**
-      * RouteForm
-        * RouteFormDetail
-        * RouteFormMap
-    * FollowersIndex
-      * FollowersIndexItem
+    * **CreateRide**
+      * RideInfo
+      * ElevationChart
+      * CreateRideMap
+    * FolloweesIndex
+      * FolloweesIndexItem
         * **UserItem**
-          * RoutesIndex
-            * RoutesIndexItem
-              * **RouteItem**
-                * RouteItemDetail
-                * RouteItemMap
-                * Comments
     * **UserItem**
-      * RoutesIndex
-        * RoutesIndexItem
-          * **RouteItem**
-            * RouteItemDetail
-            * RouteItemMap
-            * Comments
+      * FolloweesIndex
+      * RidesIndex
+        * RidesIndexItem
+          * **RideItem**
 
 ## Routes
 
 * **component:** `App` **path:** `/`
-  * **component:** `Dashboard` **path** IndexRoute
-    * **component:** `CreateRoute` **path:** `routes/create`
+  * **component:** `Signup` **path** `signup`
+  * **component:** `Login` **path** `login`
+  * **component:** `Feed` **path** IndexRoute
+    * **component:** `CreateRide` **path:** `rides/create`
     * **component:** `UserItem` **path:** `user/:userId`
-      * **component:** `RouteItem` **path:** `routes/:routeId`
+      * **component:** `RideItem` **path:** `rides/:rideId`
