@@ -29,9 +29,9 @@
 
 ### Followers
 
-- `GET /api/followers`
-- `POST /api/followers`
-- `GET /api/followers/:id`
-- `DELETE /api/followers/:id`
-- `GET /api/followers/:id/routes`
-  - index of all routes for a follower
+- `GET /api/followees`
+- `POST /api/followees`
+- `GET /api/followees/:id`
+- `DELETE /api/followees/:id`
+- `GET /api/followees/:id/rides`
+  - index of all routes for a followee
