@@ -16,7 +16,7 @@
  *= require signup
  *= require navbar
  *= require feed
- *= require create_route
+ *= require create_ride
  */
 
 html {

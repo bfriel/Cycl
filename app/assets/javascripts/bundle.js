@@ -33604,11 +33604,10 @@
 	
 	var CreateRide = React.createClass({
 	  displayName: 'CreateRide',
-	
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'create-route-page clear-fix' },
+	      { className: 'create-ride-page clear-fix' },
 	      React.createElement(
 	        'div',
 	        { className: 'instructions clear-fix' },
@@ -33630,7 +33629,7 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'route-info-pane' },
+	        { className: 'ride-info-pane' },
 	        React.createElement(ElevationChart, null)
 	      )
 	    );
@@ -33652,29 +33651,24 @@
 	
 	var ElevationChart = React.createClass({
 	  displayName: 'ElevationChart',
-	
 	  getInitialState: function getInitialState() {
 	    return {
 	      elevation: ElevationStore.elevations()
 	    };
 	  },
-	
 	  componentDidMount: function componentDidMount() {
 	    this.directionsListener = DirectionsStore.addListener(this._fetchElevation);
 	    this.elevationListener = ElevationStore.addListener(this._elevationChange);
 	  },
-	
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.directionsListener.remove();
 	    this.elevationListener.remove();
 	  },
-	
 	  _fetchElevation: function _fetchElevation() {
 	    var waypoints = DirectionsStore.directions().routes[0].overview_path;
 	
 	    this._getElevation(waypoints);
 	  },
-	
 	  _getElevation: function _getElevation(path) {
 	    var distance = DirectionsStore.distance();
 	    var elevator = new google.maps.ElevationService();
@@ -33684,7 +33678,6 @@
 	      samples: distance * 25
 	    }, this.receiveElevation);
 	  },
-	
 	  receiveElevation: function receiveElevation(elevations, status) {
 	    if (status === 'OK') {
 	      this.plotElevation(elevations);
@@ -33693,7 +33686,6 @@
 	      console.log("elevation error: " + status);
 	    }
 	  },
-	
 	  plotElevation: function plotElevation(elevations) {
 	    var chartDiv = document.getElementById('elevation-chart');
 	
@@ -33709,7 +33701,6 @@
 	      titleX: 'Distance (mi)'
 	    });
 	  },
-	
 	  convertToArray: function convertToArray(elevations) {
 	    var data = [['Distance', 'Elevation']];
 	    var distance = DirectionsStore.distance();
@@ -33722,13 +33713,11 @@
 	
 	    return data;
 	  },
-	
 	  _elevationChange: function _elevationChange() {
 	    this.setState({
 	      elevation: ElevationStore.elevations()
 	    });
 	  },
-	
 	  render: function render() {
 	    return React.createElement('div', { id: 'elevation-chart' });
 	  }
@@ -33978,14 +33967,12 @@
 	
 	var CreateRideMap = React.createClass({
 	  displayName: 'CreateRideMap',
-	
 	  getInitialState: function getInitialState() {
 	    return {
 	      markers: [],
 	      directions: DirectionStore.directions()
 	    };
 	  },
-	
 	  componentDidMount: function componentDidMount() {
 	    var map = ReactDOM.findDOMNode(this.refs.map);
 	    var bikeLayer = new google.maps.BicyclingLayer();
@@ -34008,13 +33995,11 @@
 	    this.directionsListener = DirectionStore.addListener(this.updateDirections);
 	    this.oldRideListener = OldRideStore.addListener(this.showOldRide);
 	  },
-	
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.clickListener.remove();
 	    this.directionsListener.remove();
 	    this.oldRideListener.remove();
 	  },
-	
 	  showOldRide: function showOldRide() {
 	    this.removeAllMarkers();
 	
@@ -34043,7 +34028,6 @@
 	
 	    this.setState({ markers: markers }, this.getDirections);
 	  },
-	
 	  handleClick: function handleClick(e) {
 	    if (this.state.markers.length === 10) {
 	      return;
@@ -34053,11 +34037,9 @@
 	
 	    this.getCorrectedClickPos(lat, lng);
 	  },
-	
 	  getCorrectedClickPos: function getCorrectedClickPos(lat, lng) {
 	    GoogleApiUtil.getSnappedPos(lat, lng, this.snappedPos);
 	  },
-	
 	  snappedPos: function snappedPos(data) {
 	    var position = data.snappedPoints[0].location;
 	    var lat = position.latitude;
@@ -34065,15 +34047,14 @@
 	
 	    this.placeNewMarker(lat, lng);
 	  },
-	
 	  updateDirections: function updateDirections() {
 	    this.setState({ directions: DirectionStore.directions() });
 	    this.renderDirections();
 	  },
-	
 	  renderDirections: function renderDirections() {
 	    this.directionsDisplay.setDirections(this.state.directions);
 	  },
+	
 	
 	  ICONS: {
 	    start: "assets/start_marker.png",
@@ -34112,7 +34093,6 @@
 	      this.getDirections();
 	    }
 	  },
-	
 	  placeStartMarker: function placeStartMarker(latLng) {
 	    return new google.maps.Marker({
 	      position: latLng,
@@ -34120,7 +34100,6 @@
 	      map: this.map
 	    });
 	  },
-	
 	  placeMiddleMarker: function placeMiddleMarker(latLng) {
 	    return new google.maps.Marker({
 	      position: latLng,
@@ -34128,7 +34107,6 @@
 	      map: this.map
 	    });
 	  },
-	
 	  placeEndMarker: function placeEndMarker(latLng) {
 	    return new google.maps.Marker({
 	      position: latLng,
@@ -34136,11 +34114,9 @@
 	      map: this.map
 	    });
 	  },
-	
 	  removeMarker: function removeMarker(marker) {
 	    marker.setMap(null);
 	  },
-	
 	  getDirections: function getDirections() {
 	    var waypoints = this.createWaypoints();
 	    var start = waypoints[0].location;
@@ -34152,7 +34128,6 @@
 	    this.directionsDisplay.setMap(this.map);
 	    GoogleApiUtil.storeMarkers(this.state.markers);
 	  },
-	
 	  createWaypoints: function createWaypoints() {
 	    var markers = this.state.markers;
 	    var waypoints = [];
@@ -34167,7 +34142,6 @@
 	    });
 	    return waypoints;
 	  },
-	
 	  removeAllMarkers: function removeAllMarkers() {
 	    this.directionsDisplay.setMap(null);
 	    // ApiUtil.resetMapData();
@@ -34178,7 +34152,6 @@
 	
 	    this.setState({ markers: [] });
 	  },
-	
 	  render: function render() {
 	    return React.createElement('div', { className: 'map', ref: 'map' });
 	  }
@@ -34239,36 +34212,30 @@
 	
 	var RideInfo = React.createClass({
 	  displayName: 'RideInfo',
-	
 	  getInitialState: function getInitialState() {
 	    return {
 	      distance: 0,
 	      gain: 0
 	    };
 	  },
-	
 	  componentDidMount: function componentDidMount() {
 	    this.distanceListener = DirectionsStore.addListener(this._updateDistance);
 	    this.elevationListener = ElevationStore.addListener(this._updateElevation);
 	  },
-	
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.distanceListener.remove();
 	    this.elevationListener.remove();
 	  },
-	
 	  _updateDistance: function _updateDistance() {
 	    this.setState({ distance: DirectionsStore.distance().toFixed(2) });
 	  },
-	
 	  _updateElevation: function _updateElevation() {
 	    this.setState({ gain: ElevationStore.gain().toFixed(0) });
 	  },
-	
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'route-stats' },
+	      { className: 'ride-stats' },
 	      React.createElement(
 	        'h3',
 	        null,

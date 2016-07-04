@@ -4,34 +4,34 @@ const React = require('react'),
       ElevationStore = require('../../stores/elevation');
 
 const RideInfo = React.createClass({
-  getInitialState: function () {
+  getInitialState() {
     return {
       distance: 0,
       gain: 0
     };
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     this.distanceListener = DirectionsStore.addListener(this._updateDistance);
     this.elevationListener = ElevationStore.addListener(this._updateElevation);
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     this.distanceListener.remove();
     this.elevationListener.remove();
   },
 
-  _updateDistance: function () {
+  _updateDistance() {
     this.setState({ distance: DirectionsStore.distance().toFixed(2) });
   },
 
-  _updateElevation: function () {
+  _updateElevation() {
     this.setState({ gain: ElevationStore.gain().toFixed(0) });
   },
 
-  render: function () {
+  render() {
     return (
-      <div className="route-stats">
+      <div className="ride-stats">
         <h3>Route Stats</h3>
         <div className="container">
           <table className="table">

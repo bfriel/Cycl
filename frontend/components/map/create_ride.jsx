@@ -5,9 +5,9 @@ const ElevationChart = require('./elevation_chart'),
       RideInfo = require('./ride_info');
 
 const CreateRide = React.createClass({
-  render: function () {
+  render() {
     return (
-      <div className="create-route-page clear-fix">
+      <div className="create-ride-page clear-fix">
         <div className="instructions clear-fix">
             <h5>Click on the map below to start mapping your ride!</h5>
         </div>
@@ -17,7 +17,7 @@ const CreateRide = React.createClass({
         <div className="map-tools">
           <RideInfo />
         </div>
-        <div className="route-info-pane">
+        <div className="ride-info-pane">
           <ElevationChart />
         </div>
       </div>

@@ -5,31 +5,31 @@ const React = require('react'),
 
 
 const ElevationChart = React.createClass({
-  getInitialState: function () {
+  getInitialState() {
     return {
       elevation: ElevationStore.elevations()
     };
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     this.directionsListener = DirectionsStore.addListener(this._fetchElevation);
     this.elevationListener = ElevationStore.addListener(this._elevationChange);
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     this.directionsListener.remove();
     this.elevationListener.remove();
   },
 
-  _fetchElevation: function () {
-    var waypoints = DirectionsStore.directions().routes[0].overview_path;
+  _fetchElevation() {
+    let waypoints = DirectionsStore.directions().routes[0].overview_path;
 
     this._getElevation(waypoints);
   },
 
-  _getElevation: function (path) {
-    var distance = DirectionsStore.distance();
-    var elevator = new google.maps.ElevationService();
+  _getElevation(path) {
+    let distance = DirectionsStore.distance();
+    let elevator = new google.maps.ElevationService();
 
     elevator.getElevationAlongPath({
       path: path,
@@ -37,7 +37,7 @@ const ElevationChart = React.createClass({
     }, this.receiveElevation);
   },
 
-  receiveElevation: function (elevations, status) {
+  receiveElevation(elevations, status) {
     if (status === 'OK') {
       this.plotElevation(elevations);
       GoogleApiUtil.receiveElevation(elevations);
@@ -46,13 +46,13 @@ const ElevationChart = React.createClass({
     }
   },
 
-  plotElevation: function (elevations) {
-    var chartDiv = document.getElementById('elevation-chart');
+  plotElevation(elevations) {
+    let chartDiv = document.getElementById('elevation-chart');
 
-    var dataArray = this.convertToArray(elevations);
+    let dataArray = this.convertToArray(elevations);
 
-    var data = new google.visualization.arrayToDataTable(dataArray);
-    var chart = new google.visualization.LineChart(chartDiv);
+    let data = new google.visualization.arrayToDataTable(dataArray);
+    let chart = new google.visualization.LineChart(chartDiv);
 
     chart.draw(data, {
       height: 200,
@@ -62,11 +62,11 @@ const ElevationChart = React.createClass({
     });
   },
 
-  convertToArray: function (elevations) {
-    var data = [['Distance', 'Elevation']];
-    var distance = DirectionsStore.distance();
-    var increment = distance / elevations.length;
-    var reversedElevation = elevations.reverse();
+  convertToArray(elevations) {
+    let data = [['Distance', 'Elevation']];
+    let distance = DirectionsStore.distance();
+    let increment = distance / elevations.length;
+    let reversedElevation = elevations.reverse();
 
     reversedElevation.forEach(function (elevation, idx) {
       data.push([idx * increment, elevation.elevation]);
@@ -75,13 +75,13 @@ const ElevationChart = React.createClass({
     return data;
   },
 
-  _elevationChange: function () {
+  _elevationChange() {
     this.setState({
       elevation: ElevationStore.elevations()
     });
   },
 
-  render: function () {
+  render() {
     return (
       <div id="elevation-chart">
 

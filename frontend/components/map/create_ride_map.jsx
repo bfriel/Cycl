@@ -5,14 +5,14 @@ const GoogleApiUtil = require('../../util/google_api_util'),
       OldRideStore = require('../../stores/old_ride');
 
 const CreateRideMap = React.createClass({
-  getInitialState: function () {
+  getInitialState() {
     return {
       markers: [],
       directions: DirectionStore.directions()
     };
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     const map = ReactDOM.findDOMNode(this.refs.map);
     const bikeLayer = new google.maps.BicyclingLayer();
     const mapOptions = {
@@ -35,13 +35,13 @@ const CreateRideMap = React.createClass({
     this.oldRideListener = OldRideStore.addListener(this.showOldRide);
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount() {
     this.clickListener.remove();
     this.directionsListener.remove();
     this.oldRideListener.remove();
   },
 
-  showOldRide: function () {
+  showOldRide() {
     this.removeAllMarkers();
 
     if (Object.keys(OldRideStore.ride()).length === 0) {
@@ -70,7 +70,7 @@ const CreateRideMap = React.createClass({
     this.setState({ markers: markers }, this.getDirections);
   },
 
-  handleClick: function (e) {
+  handleClick(e) {
     if (this.state.markers.length === 10) {
       return;
     }
@@ -80,11 +80,11 @@ const CreateRideMap = React.createClass({
     this.getCorrectedClickPos(lat, lng);
   },
 
-  getCorrectedClickPos: function (lat, lng) {
+  getCorrectedClickPos(lat, lng) {
     GoogleApiUtil.getSnappedPos(lat, lng, this.snappedPos);
   },
 
-  snappedPos: function (data) {
+  snappedPos(data) {
     let position = data.snappedPoints[0].location;
     let lat = position.latitude;
     let lng = position.longitude;
@@ -92,12 +92,12 @@ const CreateRideMap = React.createClass({
     this.placeNewMarker(lat, lng);
   },
 
-  updateDirections: function () {
+  updateDirections() {
     this.setState({ directions: DirectionStore.directions() });
     this.renderDirections();
   },
 
-  renderDirections: function () {
+  renderDirections() {
     this.directionsDisplay.setDirections(this.state.directions);
   },
 
@@ -107,7 +107,7 @@ const CreateRideMap = React.createClass({
     end: "assets/stop_marker.png"
   },
 
-  placeNewMarker: function (lat, lng) {
+  placeNewMarker(lat, lng) {
     let markers = this.state.markers;
     let latLng = { lat: lat, lng: lng };
     let marker;
@@ -139,7 +139,7 @@ const CreateRideMap = React.createClass({
     }
   },
 
-  placeStartMarker: function (latLng) {
+  placeStartMarker(latLng) {
     return new google.maps.Marker({
       position: latLng,
       icon: this.ICONS.start,
@@ -147,7 +147,7 @@ const CreateRideMap = React.createClass({
     });
   },
 
-  placeMiddleMarker: function (latLng) {
+  placeMiddleMarker(latLng) {
     return new google.maps.Marker({
       position: latLng,
       icon: this.ICONS.middle,
@@ -155,7 +155,7 @@ const CreateRideMap = React.createClass({
     });
   },
 
-  placeEndMarker: function (latLng) {
+  placeEndMarker(latLng) {
     return new google.maps.Marker({
       position: latLng,
       icon: this.ICONS.end,
@@ -163,11 +163,11 @@ const CreateRideMap = React.createClass({
     });
   },
 
-  removeMarker: function (marker) {
+  removeMarker(marker) {
     marker.setMap(null);
   },
 
-  getDirections: function () {
+  getDirections() {
     let waypoints = this.createWaypoints();
     let start = waypoints[0].location;
     let end = waypoints[waypoints.length - 1].location;
@@ -179,11 +179,11 @@ const CreateRideMap = React.createClass({
     GoogleApiUtil.storeMarkers(this.state.markers);
   },
 
-  createWaypoints: function () {
+  createWaypoints() {
     let markers = this.state.markers;
     let waypoints = [];
 
-    markers.forEach(function (marker) {
+    markers.forEach( (marker) => {
       let latLng = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
 
       waypoints.push({
@@ -194,18 +194,18 @@ const CreateRideMap = React.createClass({
     return waypoints;
   },
 
-  removeAllMarkers: function () {
+  removeAllMarkers() {
     this.directionsDisplay.setMap(null);
     // ApiUtil.resetMapData();
 
-    this.state.markers.forEach(function (marker) {
+    this.state.markers.forEach( (marker) => {
       marker.setMap(null);
     });
 
     this.setState({ markers: [] });
   },
 
-  render: function () {
+  render() {
     return (
       <div className='map' ref='map'>
       </div>
