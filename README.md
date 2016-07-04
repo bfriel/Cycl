@@ -47,11 +47,11 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 **Objective:** Functioning rails project with Authentication. Set up on Heroku
 
-- [ ] create new project
-- [ ] create `User` model
-- [ ] authentication
-- [ ] user signup/signin pages
-- [ ] blank landing page after signin
+- [ ] Create new project
+- [ ] Create `User` model
+- [ ] Authentication
+- [ ] User signup/signin pages
+- [ ] Styled landing page with Navbar after login
 
 * [Phase One][phase-one]
 [phase-one]: docs/phases/phase1.md
@@ -63,6 +63,7 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 - [ ] Allow users to create routes using Google Maps API
 - [ ] Routes can be saved along with their mileage, duration, elevation gain, calories burned, description, and picture of route
 - [ ] Routes can be reused
+- [ ] Create Route page is styled
 
 * [Phase Two][phase-three]
 [phase-three]: docs/phases/phase3.md
@@ -73,6 +74,7 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 - [ ] Saved Routes appear automatically on User Page
 - [ ] Feed shows routes of all folowees
+- [ ] Feed and User Page are styled
 
 * [Phase Three][phase-three]
 [phase-three]: docs/phases/phase3.md
@@ -81,13 +83,13 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 **Objective:** Seamless navigation from Dashboard to User and Follower pages.
 
-- [ ] create `Follower` model
-- [ ] seed the database with a small amount of test data
+- [ ] Create `Follower` model
+- [ ] Seed the database with a small amount of test data
 - [ ] CRUD API for routes (`FollowersController`)
 - [ ] jBuilder views for users
-- [ ] setup Webpack & Flux scaffold
-- [ ] setup `APIUtil` to interact with the API
-- [ ] test out API interaction in the console
+- [ ] Setup Webpack & Flux scaffold
+- [ ] Setup `APIUtil` to interact with the API
+- [ ] Test out API interaction in the console
 
 
 ### Phase 5: Adding Comments to Routes (1 day)
@@ -98,3 +100,10 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 * [Phase Five][phase-five]
 [phase-five]: docs/phases/phase5.md
+
+### Bonus Phase
+
+  - [ ] Cheers for friends
+  - [ ] Search for rides by location
+  - [ ] Goals
+  - [ ] Ranking system for current users
