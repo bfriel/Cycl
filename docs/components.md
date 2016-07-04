@@ -16,11 +16,11 @@
       * RideInfo
       * ElevationChart
       * CreateRideMap
-    * FollowersIndex
-      * FollowersIndexItem
+    * FolloweesIndex
+      * FolloweesIndexItem
         * **UserItem**
     * **UserItem**
-      * FollowersIndex
+      * FolloweesIndex
       * RidesIndex
         * RidesIndexItem
           * **RideItem**
