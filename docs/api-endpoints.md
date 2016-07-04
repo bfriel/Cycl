@@ -6,6 +6,8 @@
 
 - `GET /` - loads React web app, Index Route is routes index page
 
+## JSON API
+
 ### Users
 
 - `GET /users/new`
@@ -18,13 +20,12 @@
 - `POST /session`
 - `DELETE /session`
 
-## JSON API
+### Rides
 
-### Routes
-
-- `GET /api/routes`
-- `POST /api/routes`
-- `GET /api/notes/:id`
+- `GET /api/rides`
+- `POST /api/rides`
+- `GET /api/rides/:id`
+  - will fetch all comments for a given ride as well as ability to make a POST request to make new comment
 
 ### Followers
 
@@ -34,8 +35,3 @@
 - `DELETE /api/followers/:id`
 - `GET /api/followers/:id/routes`
   - index of all routes for a follower
-
-### Comments
-
-- `POST /api/routes/:routeId/comments`: add comment to route by id
-- `DELETE /api/routes/:routeId/comments/:commentId`: remove comment from route by id
