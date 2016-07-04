@@ -2,10 +2,11 @@ const Store = require('flux/utils').Store,
       AppDispatcher = require('../dispatcher/dispatcher'),
       RideConstants = require('../constants/ride_constants');
 
-var _directions = {};
-var _distance = 0;
-var _markers = [];
-var DirectionsStore = new Store(AppDispatcher);
+let _directions = {};
+let _distance = 0;
+let _markers = [];
+
+const DirectionsStore = new Store(AppDispatcher);
 
 DirectionsStore.directions = function () {
   return _directions;
@@ -33,19 +34,20 @@ DirectionsStore.__onDispatch = function (payload) {
   }
 };
 
-var resetRoute = function () {
-  _distance = 0;
-  DirectionsStore.__emitChange();
-};
 
-var updateDirections = function (directions) {
+function updateDirections(directions) {
   _directions = directions;
   _distance = directions.routes[0].legs[0].distance.value / 1609;
   DirectionsStore.__emitChange();
-};
+}
 
-var updateMarkers = function (markers) {
+function updateMarkers(markers) {
   _markers = markers;
-};
+}
+
+function resetRoute() {
+  _distance = 0;
+  DirectionsStore.__emitChange();
+}
 
 module.exports = DirectionsStore;

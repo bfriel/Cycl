@@ -1,7 +1,7 @@
 const GoogleApiActions = require('../actions/google_api_actions');
 
 const GoogleApiUtil = {
-  getDirections: function (start, end, waypoints) {
+  getDirections(start, end, waypoints) {
     var request = {
       origin: start,
       destination: end,
@@ -10,14 +10,14 @@ const GoogleApiUtil = {
       optimizeWaypoints: false,
       provideRouteAlternatives: false
     };
-    var directionsService = new google.maps.DirectionsService();
+    let directionsService = new google.maps.DirectionsService();
 
     directionsService.route(request, function (result, status) {
       GoogleApiActions.setDirections(result, status);
     });
   },
 
-  getSnappedPos: function (lat, lng, callback) {
+  getSnappedPos(lat, lng, callback) {
     $.get('https://roads.googleapis.com/v1/snapToRoads', {
       key: window.GOOGLE_KEYS.GOOGLE_ROAD,
       path: lat + "," + lng
@@ -27,15 +27,15 @@ const GoogleApiUtil = {
     });
   },
 
-  resetElevation: function () {
+  resetElevation() {
     GoogleApiActions.resetElevation();
   },
 
-  receiveElevation: function (elevations) {
-    ApiActions.reciveElevationData(elevations);
+  receiveElevation(elevations) {
+    GoogleApiActions.reciveElevationData(elevations);
   },
 
-  storeMarkers: function (markers) {
+  storeMarkers(markers) {
     GoogleApiActions.storeMarkers(markers);
   }
 };

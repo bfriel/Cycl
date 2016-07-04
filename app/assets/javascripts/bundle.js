@@ -58,10 +58,10 @@
 	    Feed = __webpack_require__(262),
 	    UserPage = __webpack_require__(265),
 	    CreateRide = __webpack_require__(266),
+	    SignupForm = __webpack_require__(231),
 	    LoginForm = __webpack_require__(260);
 	//Flux
-	var SignupForm = __webpack_require__(231),
-	    SessionStore = __webpack_require__(241),
+	var SessionStore = __webpack_require__(241),
 	    SessionActions = __webpack_require__(232);
 	
 	var routes = React.createElement(
@@ -33737,6 +33737,7 @@
 	
 	var _elevations = {};
 	var _elevationGain = 0;
+	
 	var ElevationStore = new Store(AppDispatcher);
 	
 	ElevationStore.elevations = function () {
@@ -33749,7 +33750,7 @@
 	
 	ElevationStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
-	    case RideConstants.RECIVE_ELEVATION_DATA:
+	    case RideConstants.RECEIVE_ELEVATION_DATA:
 	      updateElevations(payload.data);
 	      break;
 	    case RideConstants.RESET_CHART:
@@ -33761,13 +33762,13 @@
 	  }
 	};
 	
-	var updateElevations = function updateElevations(elevation) {
+	function updateElevations(elevation) {
 	  _elevations = elevation;
 	  computeGain(elevation);
 	  ElevationStore.__emitChange();
-	};
+	}
 	
-	var computeGain = function computeGain(elevations) {
+	function computeGain(elevations) {
 	  var gain = 0;
 	  for (var i = 1; i < elevations.length - 1; i++) {
 	    if (elevations[i - 1].elevation < elevations[i].elevation) {
@@ -33776,13 +33777,13 @@
 	  }
 	
 	  _elevationGain = gain;
-	};
+	}
 	
-	var resetElevation = function resetElevation() {
+	function resetElevation() {
 	  _elevations = {};
 	  _elevationGain = 0;
 	  ElevationStore.__emitChange();
-	};
+	}
 	
 	module.exports = ElevationStore;
 
@@ -33794,24 +33795,24 @@
 	
 	var RideConstants = {
 	  RIDES_RECEIVED: "RIDES_RECEIVED",
-	  CURRENT_USER_INFO: "CURRENT_USER_INFO",
-	  NEW_WORKOUT: "NEW_WORKOUT",
-	  UPDATE_USER: "UPDATE_USER",
-	  LOGGED_OUT: "LOGGED_OUT",
-	  CURRENT_USER_TOTALS: "CURRENT_USER_TOTALS",
-	  USER_TOTALS: "USER_TOTALS",
+	  NEW_RIDE: "NEW_RIDE",
+	  ADD_ROUTE: "ADD_ROUTE",
+	  RECEIVE_SAVED_ROUTES: "RECEIVE_SAVED_ROUTES",
+	  STORE_MARKERS: "STORE_MARKERS",
+	  SHOW_OLD_ROUTE: "SHOW_OLD_ROUTE",
+	  REMOVE_ROUTE: "REMOVE_ROUTE",
+	  RECEIVE_ELEVATION_DATA: "RECEIVE_ELEVATION_DATA",
 	  RECEIVE_USER: "RECEIVE_USER",
+	  CURRENT_USER_INFO: "CURRENT_USER_INFO",
+	  UPDATE_USER: "UPDATE_USER",
+	  CURRENT_USER_TOTALS: "CURRENT_USER_TOTALS",
+	  LOGGED_OUT: "LOGGED_OUT",
+	  USER_TOTALS: "USER_TOTALS",
 	  ADD_FOLLOWINGS: "ADD_FOLLOWINGS",
 	  REMOVE_FOLLOWING: "REMOVE_FOLLOWING",
 	  UPDATE_DIRECTIONS: "UPDATE_DIRECTIONS",
 	  REST_CHART: "REST_CHART",
-	  RECIVE_ELEVATION_DATA: "RECIVE_ELEVATION_DATA",
-	  ADD_ROUTE: "ADD_ROUTE",
-	  STORE_MARKERS: "STORE_MARKERS",
-	  RECIVE_SAVED_ROUTES: "RECIVE_SAVED_ROUTES",
-	  SHOW_OLD_ROUTE: "SHOW_OLD_ROUTE",
-	  REMOVE_ROUTE: "REMOVE_ROUTE",
-	  RECIVE_ALL_USERS: "RECIVE_ALL_USERS"
+	  RECEIVE_ALL_USERS: "RECEIVE_ALL_USERS"
 	};
 	
 	module.exports = RideConstants;
@@ -33829,6 +33830,7 @@
 	var _directions = {};
 	var _distance = 0;
 	var _markers = [];
+	
 	var DirectionsStore = new Store(AppDispatcher);
 	
 	DirectionsStore.directions = function () {
@@ -33857,20 +33859,20 @@
 	  }
 	};
 	
-	var resetRoute = function resetRoute() {
-	  _distance = 0;
-	  DirectionsStore.__emitChange();
-	};
-	
-	var updateDirections = function updateDirections(directions) {
+	function updateDirections(directions) {
 	  _directions = directions;
 	  _distance = directions.routes[0].legs[0].distance.value / 1609;
 	  DirectionsStore.__emitChange();
-	};
+	}
 	
-	var updateMarkers = function updateMarkers(markers) {
+	function updateMarkers(markers) {
 	  _markers = markers;
-	};
+	}
+	
+	function resetRoute() {
+	  _distance = 0;
+	  DirectionsStore.__emitChange();
+	}
 	
 	module.exports = DirectionsStore;
 
@@ -33898,7 +33900,6 @@
 	      GoogleApiActions.setDirections(result, status);
 	    });
 	  },
-	
 	  getSnappedPos: function getSnappedPos(lat, lng, callback) {
 	    $.get('https://roads.googleapis.com/v1/snapToRoads', {
 	      key: window.GOOGLE_KEYS.GOOGLE_ROAD,
@@ -33908,15 +33909,12 @@
 	      callback(data);
 	    });
 	  },
-	
 	  resetElevation: function resetElevation() {
 	    GoogleApiActions.resetElevation();
 	  },
-	
 	  receiveElevation: function receiveElevation(elevations) {
-	    ApiActions.reciveElevationData(elevations);
+	    GoogleApiActions.reciveElevationData(elevations);
 	  },
-	
 	  storeMarkers: function storeMarkers(markers) {
 	    GoogleApiActions.storeMarkers(markers);
 	  }
@@ -33942,11 +33940,21 @@
 	      });
 	    }
 	  },
-	
 	  storeMarkers: function storeMarkers(markers) {
 	    AppDispatcher.dispatch({
 	      actionType: RideConstants.STORE_MARKERS,
 	      markers: markers
+	    });
+	  },
+	  resetElevation: function resetElevation() {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.RESET_CHART
+	    });
+	  },
+	  reciveElevationData: function reciveElevationData(response) {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.RECEIVE_ELEVATION_DATA,
+	      data: response
 	    });
 	  }
 	};
@@ -33961,6 +33969,7 @@
 	
 	var React = __webpack_require__(1),
 	    ReactDOM = __webpack_require__(38);
+	
 	var GoogleApiUtil = __webpack_require__(271),
 	    DirectionStore = __webpack_require__(270),
 	    OldRideStore = __webpack_require__(274);
@@ -34170,6 +34179,7 @@
 	    RideConstants = __webpack_require__(269);
 	
 	var _oldRide = {};
+	
 	var OldRideStore = new Store(AppDispatcher);
 	
 	OldRideStore.route = function () {
@@ -34187,15 +34197,15 @@
 	  }
 	};
 	
-	var updateOldRide = function updateOldRide(route) {
+	function updateOldRide(route) {
 	  _oldRide = route;
 	  OldRideStore.__emitChange();
-	};
+	}
 	
-	var removeRide = function removeRide() {
+	function removeRide() {
 	  _oldRide = {};
 	  OldRideStore.__emitChange();
-	};
+	}
 	
 	module.exports = OldRideStore;
 

@@ -2,7 +2,8 @@ const Store = require('flux/utils').Store,
       AppDispatcher = require('../dispatcher/dispatcher'),
       RideConstants = require('../constants/ride_constants');
 
-var _oldRide= {};
+let _oldRide= {};
+
 const OldRideStore = new Store(AppDispatcher);
 
 OldRideStore.route = function () {
@@ -20,14 +21,14 @@ OldRideStore.__onDispatch = function (payload) {
   }
 };
 
-var updateOldRide= function (route) {
+function updateOldRide(route) {
   _oldRide= route;
   OldRideStore.__emitChange();
-};
+}
 
-var removeRide= function () {
+function removeRide() {
   _oldRide= {};
   OldRideStore.__emitChange();
-};
+}
 
 module.exports = OldRideStore;

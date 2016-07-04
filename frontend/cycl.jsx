@@ -10,10 +10,10 @@ const App = require('./components/app'),
       Feed = require('./components/feed'),
       UserPage = require('./components/user_page'),
       CreateRide = require('./components/map/create_ride'),
+      SignupForm = require('./components/signup_form'),
       LoginForm = require('./components/login_form');
 //Flux
-const SignupForm = require('./components/signup_form'),
-      SessionStore = require('./stores/session_store'),
+const SessionStore = require('./stores/session_store'),
       SessionActions = require('./actions/session_actions');
 
 const routes = (

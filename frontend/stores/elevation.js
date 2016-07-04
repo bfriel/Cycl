@@ -2,8 +2,9 @@ const Store = require('flux/utils').Store,
       AppDispatcher = require('../dispatcher/dispatcher'),
       RideConstants = require('../constants/ride_constants');
 
-var _elevations = {};
-var _elevationGain = 0;
+let _elevations = {};
+let _elevationGain = 0;
+
 const ElevationStore = new Store(AppDispatcher);
 
 ElevationStore.elevations = function () {
@@ -16,7 +17,7 @@ ElevationStore.gain = function () {
 
 ElevationStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
-    case RideConstants.RECIVE_ELEVATION_DATA:
+    case RideConstants.RECEIVE_ELEVATION_DATA:
       updateElevations(payload.data);
       break;
     case RideConstants.RESET_CHART:
@@ -28,13 +29,13 @@ ElevationStore.__onDispatch = function (payload) {
   }
 };
 
-var updateElevations = function (elevation) {
+function updateElevations(elevation) {
   _elevations = elevation;
   computeGain(elevation);
   ElevationStore.__emitChange();
-};
+}
 
-var computeGain = function (elevations) {
+function computeGain(elevations) {
   var gain = 0;
   for (var i = 1; i < elevations.length - 1; i++) {
     if (elevations[i - 1].elevation < elevations[i].elevation) {
@@ -43,12 +44,12 @@ var computeGain = function (elevations) {
   }
 
   _elevationGain = gain;
-};
+}
 
-var resetElevation = function () {
+function resetElevation() {
   _elevations = {};
   _elevationGain = 0;
   ElevationStore.__emitChange();
-};
+}
 
 module.exports = ElevationStore;
