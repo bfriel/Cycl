@@ -1,4 +1,4 @@
-# Phase 3: Google Maps API / Routes (2 days)
+# Phase 2/3: Google Maps API / Routes
 
 ## Rails
 ### Models
