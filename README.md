@@ -58,7 +58,7 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 ### Phase 2: Create Routes using Google Maps (2 days)
 
-**Objective:** Routes can be created and read through the API/User interface.
+**Objective:** Routes can be created through the API/User interface.
 
 - [ ] Allow users to create routes using Google Maps API
 - [ ] Routes can be saved along with their mileage, duration, elevation gain, calories burned, description, and picture of route
@@ -69,11 +69,10 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 ### Phase 3: Save Routes to Feed and User Page (2 days)
 
-**Objective:** Routes can be created and read through the API/User interface.
+**Objective:** Routes can be viewed through the API/User interface.
 
-- [ ] Allow users to create routes using Google Maps API
-- [ ] Routes can be saved along with their mileage, duration, elevation gain, calories burned, description, and picture of route
-- [ ] Routes can be reused
+- [ ] Saved Routes appear automatically on User Page
+- [ ] Feed shows routes of all folowees
 
 * [Phase Three][phase-three]
 [phase-three]: docs/phases/phase3.md
