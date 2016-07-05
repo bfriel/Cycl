@@ -84,7 +84,9 @@ const ElevationChart = React.createClass({
   render() {
     return (
       <div id="elevation-chart">
-
+        <p id="pre-chart-message">
+          Begin mapping to show your ride's elevation chart
+        </p>
       </div>
     );
   }

@@ -22,7 +22,6 @@
   border-radius: 10px;
   background: #fff;
   background-color: rgba(0, 0, 0, .7);
-  color: #eeeedd;
 }
 
 .elev-chart {
@@ -47,7 +46,11 @@
 }
 
 #elevation-chart {
-  background-color: rgba(238, 238, 221, 1);
+}
+
+#pre-chart-message {
+  margin-top: 100px;
+  text-align: center;
 }
 
 .instructions {

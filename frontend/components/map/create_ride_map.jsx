@@ -1,6 +1,6 @@
 const React = require('react'),
       ReactDOM = require('react-dom');
-      
+
 const GoogleApiUtil = require('../../util/google_api_util'),
       DirectionStore = require('../../stores/directions'),
       OldRideStore = require('../../stores/old_ride');

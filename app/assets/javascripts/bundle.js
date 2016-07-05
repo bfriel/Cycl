@@ -26677,15 +26677,15 @@
 	var _currentUser = {};
 	var _currentUserHasBeenFetched = false;
 	
-	var _login = function _login(currentUser) {
+	function _login(currentUser) {
 	  _currentUser = currentUser;
 	  _currentUserHasBeenFetched = true;
-	};
+	}
 	
-	var _logout = function _logout() {
+	function _logout() {
 	  _currentUser = {};
 	  _currentUserHasBeenFetched = true;
-	};
+	}
 	
 	SessionStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
@@ -33386,13 +33386,17 @@
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory,
 	    Link = __webpack_require__(168).Link;
-	var SessionStore = __webpack_require__(241);
-	var SessionActions = __webpack_require__(232);
+	
+	var SessionStore = __webpack_require__(241),
+	    SessionActions = __webpack_require__(232);
 	
 	var NavBar = React.createClass({
 	  displayName: 'NavBar',
 	  _goHome: function _goHome() {
 	    hashHistory.push("/");
+	  },
+	  _goProfile: function _goProfile() {
+	    hashHistory.push("user/" + SessionStore.currentUser().id);
 	  },
 	  _createRide: function _createRide() {
 	    hashHistory.push("create_ride");
@@ -33425,12 +33429,12 @@
 	            ),
 	            React.createElement(
 	              'a',
-	              { href: '#' },
+	              { onClick: this._goHome },
 	              'Feed'
 	            ),
 	            React.createElement(
 	              'a',
-	              { href: '#' },
+	              { onClick: this._goProfile },
 	              SessionStore.currentUser().username
 	            )
 	          ),
@@ -33451,7 +33455,7 @@
 	              { className: 'dropdown-content' },
 	              React.createElement(
 	                'a',
-	                { href: '#' },
+	                { onClick: this._goProfile },
 	                'PROFILE'
 	              ),
 	              React.createElement(
@@ -33606,18 +33610,51 @@
 	    var rides = this.state.rides.map(function (ride) {
 	      return React.createElement(
 	        'div',
-	        { key: ride.id },
-	        ride.ride_name
+	        { className: 'completed-ride', key: ride.id },
+	        React.createElement(
+	          'div',
+	          { id: 'compelted-ride-name' },
+	          ride.ride_name
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'completed-ride-stats' },
+	          React.createElement(
+	            'div',
+	            { id: 'completed-ride-distance' },
+	            'Distance: ',
+	            ride.elevation_gain,
+	            ' miles'
+	          ),
+	          React.createElement(
+	            'div',
+	            { id: 'completed-ride-duration' },
+	            'Duration: ',
+	            ride.durationHour,
+	            ' : ',
+	            ride.durationMinute,
+	            ' : ',
+	            ride.durationSecond
+	          ),
+	          React.createElement(
+	            'div',
+	            { id: 'completed-ride-elev' },
+	            'Elevation Gain: ',
+	            ride.elevation_gain,
+	            ' feet'
+	          ),
+	          React.createElement(
+	            'div',
+	            { id: 'completed-ride-calories' },
+	            'Calories Burned: ',
+	            ride.calories_burned
+	          )
+	        )
 	      );
 	    });
 	    return React.createElement(
 	      'div',
 	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'greeting' },
-	        'Hello from user page'
-	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'showallrides' },
@@ -33758,7 +33795,15 @@
 	    });
 	  },
 	  render: function render() {
-	    return React.createElement('div', { id: 'elevation-chart' });
+	    return React.createElement(
+	      'div',
+	      { id: 'elevation-chart' },
+	      React.createElement(
+	        'p',
+	        { id: 'pre-chart-message' },
+	        'Begin mapping to show your ride\'s elevation chart'
+	      )
+	    );
 	  }
 	});
 	

@@ -28,13 +28,30 @@ const UserPage = React.createClass({
 
   render() {
     let rides = this.state.rides.map( (ride) => {
-      return <div key={ride.id}>{ride.ride_name}</div>;
+      return (
+        <div className="completed-ride" key={ride.id}>
+          <div id="compelted-ride-name">
+            {ride.ride_name}
+          </div>
+          <div className="completed-ride-stats">
+            <div id="completed-ride-distance">
+              Distance: {ride.elevation_gain} miles
+            </div>
+            <div id="completed-ride-duration">
+              Duration: {ride.durationHour} : {ride.durationMinute} : {ride.durationSecond}
+            </div>
+            <div id="completed-ride-elev">
+              Elevation Gain: {ride.elevation_gain} feet
+            </div>
+            <div id="completed-ride-calories">
+              Calories Burned: {ride.calories_burned}
+            </div>
+          </div>
+        </div>
+      );
     });
     return (
       <div>
-        <div className="greeting">
-          Hello from user page
-        </div>
         <div className="showallrides">
           {rides}
         </div>

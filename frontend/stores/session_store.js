@@ -9,15 +9,15 @@ const SessionStore = new Store(AppDispatcher);
 let _currentUser = {};
 let _currentUserHasBeenFetched = false;
 
-const _login = function(currentUser) {
+function _login(currentUser) {
   _currentUser = currentUser;
   _currentUserHasBeenFetched = true;
-};
+}
 
-const _logout = function() {
+function _logout() {
   _currentUser = {};
   _currentUserHasBeenFetched = true;
-};
+}
 
 
 SessionStore.__onDispatch = (payload) => {

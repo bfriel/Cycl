@@ -1,14 +1,19 @@
 const React = require('react'),
       hashHistory = require('react-router').hashHistory,
       Link = require('react-router').Link;
-const SessionStore = require('../stores/session_store');
-const SessionActions = require('../actions/session_actions');
+
+const SessionStore = require('../stores/session_store'),
+      SessionActions = require('../actions/session_actions');
 
 
 const NavBar = React.createClass({
 
   _goHome(){
     hashHistory.push("/");
+  },
+
+  _goProfile(){
+    hashHistory.push("user/" + SessionStore.currentUser().id);
   },
 
   _createRide(){
@@ -31,8 +36,8 @@ const NavBar = React.createClass({
             <div id='right'>
               <div className="navbar-buttons">
                 <a onClick={this._createRide}>Create a Route</a>
-                <a href="#">Feed</a>
-                <a href="#">{SessionStore.currentUser().username}</a>
+                <a onClick={this._goHome}>Feed</a>
+                <a onClick={this._goProfile}>{SessionStore.currentUser().username}</a>
               </div>
               <div className="dropdown">
                 <button className="dropbtn">
@@ -41,7 +46,7 @@ const NavBar = React.createClass({
                   </div>
                 </button>
                 <div className="dropdown-content">
-                  <a href="#">PROFILE</a>
+                  <a onClick={this._goProfile}>PROFILE</a>
                   <a href="#">SETTINGS</a>
                   <a onClick={this._handleLogOut}>LOGOUT</a>
                 </div>
