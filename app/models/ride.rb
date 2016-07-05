@@ -16,7 +16,8 @@
 #
 
 class Ride < ActiveRecord::Base
-  validates :user_id, :ride_name, :ride_path, :elevation_gain, :distance, presence: true
+  validates :user_id, :ride_name, :ride_path, :elevation_gain,
+            :distance, :ride_description, :duration, :calories_burned, presence: true
 
   belongs_to :user
 end

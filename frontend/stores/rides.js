@@ -10,24 +10,36 @@ RidesStore.rides = function () {
   return _rides;
 };
 
+RidesStore.find = function (userId) {
+  let result = [];
+  if (!_rides) { return []; }
+  _rides.forEach( (ride) => {
+    if (ride.user_id === userId) {
+      result.push(ride);
+    }
+  });
+
+  return result;
+};
+
 RidesStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
-    case RideConstants.ADD_RIDES:
+    case RideConstants.ADD_RIDE:
       addRide(payload.ride);
       break;
-    case RideConstants.RECIVE_SAVED_RIDES:
-      updateRides(payload.rides);
+    case RideConstants.RIDES_RECEIVED:
+      resetAllRides(payload.rides);
       break;
   }
 };
 
-function addRide(ride) {
-  _rides.push(ride);
+function resetAllRides(rides) {
+  _rides = rides;
   RidesStore.__emitChange();
 }
 
-function updateRides(rides) {
-  _rides = rides;
+function addRide(ride) {
+  _rides.push(ride);
   RidesStore.__emitChange();
 }
 

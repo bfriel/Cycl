@@ -11,6 +11,7 @@ const App = require('./components/app'),
       UserPage = require('./components/user_page'),
       CreateRide = require('./components/map/create_ride'),
       SignupForm = require('./components/signup_form'),
+      RidesStore = require('./stores/rides'),
       LoginForm = require('./components/login_form');
 //Flux
 const SessionStore = require('./stores/session_store'),
@@ -42,3 +43,5 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('root')
   );
 });
+
+window.RidesStore = RidesStore;

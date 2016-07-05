@@ -1,7 +1,10 @@
-const React = require('react');
+const React = require('react'),
+      hashHistory = require('react-router').hashHistory;
 
 const ApiUtil = require('../../util/api_util'),
-      RidesStore = require('../../stores/rides');
+      RidesStore = require('../../stores/rides'),
+      SessionStore = require('../../stores/session_store'),
+      DirectionsStore = require('../../stores/directions');
 
 
 const CreateRideForm = React.createClass({
@@ -17,8 +20,7 @@ const CreateRideForm = React.createClass({
     durationSecond: '',
     duration: '',
     calories_burned: '',
-    existing_ride: '',
-    rides: null
+    user_id: ''
   },
 
   getInitialState() {
@@ -45,7 +47,6 @@ const CreateRideForm = React.createClass({
 
   createRide(e) {
     e.preventDefault();
-
     let ride = {};
     let durationInSeconds = 0;
 
@@ -59,16 +60,26 @@ const CreateRideForm = React.createClass({
       } else {
         ride[key] = this.state[key];
       }
-    }).bind(this);
+    });
 
-    if (this.newRide) {
-      ride.elevation_gain = ElevationStore.gain().toFixed(0);
-      ride.distance = DirectionsStore.distance().toFixed(2);
-      let path = DirectionsStore.markers().map( (marker) => {
-        return [marker.position.lat(), marker.position.lng()];
-      });
-      ride.ride_path = JSON.stringify(path);
-    }
+    ride.elevation_gain = parseInt(this.props.elevation_gain);
+    ride.distance = parseInt(this.props.distance);
+    ride.calories_burned = parseInt(this.props.calories_burned);
+    ride.duration = durationInSeconds;
+
+    let path = DirectionsStore.markers().map( (marker) => {
+      return [marker.position.lat(), marker.position.lng()];
+    });
+    ride.ride_path = JSON.stringify(path);
+
+    ApiUtil.createRide(ride, function() {
+      ApiUtil.fetchRides();
+    });
+
+    hashHistory.push("user/" + SessionStore.currentUser().id);
+    // if (this.newRide) {
+    //   return;
+    // }
   },
 
   update(property) {
@@ -84,7 +95,7 @@ const CreateRideForm = React.createClass({
     }
 
     return(
-      <form className="ride-form" onSubmit={this.createWorkout}>
+      <form className="ride-form" onSubmit={this.createRide}>
         <h3>Route Details</h3>
 
         <div className="ride-form-item">

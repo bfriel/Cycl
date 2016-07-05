@@ -59,6 +59,7 @@
 	    UserPage = __webpack_require__(265),
 	    CreateRide = __webpack_require__(266),
 	    SignupForm = __webpack_require__(231),
+	    RidesStore = __webpack_require__(278),
 	    LoginForm = __webpack_require__(260);
 	//Flux
 	var SessionStore = __webpack_require__(241),
@@ -91,6 +92,8 @@
 	    routes
 	  ), document.getElementById('root'));
 	});
+	
+	window.RidesStore = RidesStore;
 
 /***/ },
 /* 1 */
@@ -33574,16 +33577,52 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(1);
+	var React = __webpack_require__(1),
+	    ApiUtil = __webpack_require__(277),
+	    RidesStore = __webpack_require__(278);
 	
 	var UserPage = React.createClass({
 	  displayName: 'UserPage',
-	
+	  getInitialState: function getInitialState() {
+	    return {
+	      rides: RidesStore.find(parseInt(this.props.params.userId))
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    ApiUtil.fetchRides();
+	    this.rideListener = RidesStore.addListener(this._onChange);
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({
+	      rides: RidesStore.find(parseInt(this.props.params.userId))
+	    });
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps() {
+	    this.setState({
+	      rides: RidesStore.find(parseInt(this.props.params.userId))
+	    });
+	  },
 	  render: function render() {
+	    var rides = this.state.rides.map(function (ride) {
+	      return React.createElement(
+	        'div',
+	        { key: ride.id },
+	        ride.ride_name
+	      );
+	    });
 	    return React.createElement(
 	      'div',
 	      null,
-	      'Hello from the User Page'
+	      React.createElement(
+	        'div',
+	        { className: 'greeting' },
+	        'Hello from user page'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'showallrides' },
+	        rides
+	      )
 	    );
 	  }
 	});
@@ -34302,13 +34341,15 @@
 	              React.createElement(
 	                'td',
 	                null,
-	                Math.round(this.state.distance * 40)
+	                (this.state.distance * 40).toFixed(0)
 	              )
 	            )
 	          )
 	        )
 	      ),
-	      React.createElement(CreateRideForm, null)
+	      React.createElement(CreateRideForm, { distance: this.state.distance,
+	        elevation_gain: (this.state.gain * 3.28).toFixed(0),
+	        calories_burned: (this.state.distance * 40).toFixed(0) })
 	    );
 	  }
 	});
@@ -34323,10 +34364,13 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var React = __webpack_require__(1);
+	var React = __webpack_require__(1),
+	    hashHistory = __webpack_require__(168).hashHistory;
 	
 	var ApiUtil = __webpack_require__(277),
-	    RidesStore = __webpack_require__(278);
+	    RidesStore = __webpack_require__(278),
+	    SessionStore = __webpack_require__(241),
+	    DirectionsStore = __webpack_require__(270);
 	
 	var CreateRideForm = React.createClass({
 	  displayName: 'CreateRideForm',
@@ -34343,8 +34387,7 @@
 	    durationSecond: '',
 	    duration: '',
 	    calories_burned: '',
-	    existing_ride: '',
-	    rides: null
+	    user_id: ''
 	  },
 	
 	  getInitialState: function getInitialState() {
@@ -34369,7 +34412,6 @@
 	    var _this = this;
 	
 	    e.preventDefault();
-	
 	    var ride = {};
 	    var durationInSeconds = 0;
 	
@@ -34383,16 +34425,26 @@
 	      } else {
 	        ride[key] = _this.state[key];
 	      }
-	    }).bind(this);
+	    });
 	
-	    if (this.newRide) {
-	      ride.elevation_gain = ElevationStore.gain().toFixed(0);
-	      ride.distance = DirectionsStore.distance().toFixed(2);
-	      var path = DirectionsStore.markers().map(function (marker) {
-	        return [marker.position.lat(), marker.position.lng()];
-	      });
-	      ride.ride_path = JSON.stringify(path);
-	    }
+	    ride.elevation_gain = parseInt(this.props.elevation_gain);
+	    ride.distance = parseInt(this.props.distance);
+	    ride.calories_burned = parseInt(this.props.calories_burned);
+	    ride.duration = durationInSeconds;
+	
+	    var path = DirectionsStore.markers().map(function (marker) {
+	      return [marker.position.lat(), marker.position.lng()];
+	    });
+	    ride.ride_path = JSON.stringify(path);
+	
+	    ApiUtil.createRide(ride, function () {
+	      ApiUtil.fetchRides();
+	    });
+	
+	    hashHistory.push("user/" + SessionStore.currentUser().id);
+	    // if (this.newRide) {
+	    //   return;
+	    // }
 	  },
 	  update: function update(property) {
 	    var _this2 = this;
@@ -34415,7 +34467,7 @@
 	
 	    return React.createElement(
 	      'form',
-	      { className: 'ride-form', onSubmit: this.createWorkout },
+	      { className: 'ride-form', onSubmit: this.createRide },
 	      React.createElement(
 	        'h3',
 	        null,
@@ -34514,6 +34566,17 @@
 	        ApiActions.receiveAll(rides);
 	      }
 	    });
+	  },
+	  createRide: function createRide(ride, callback) {
+	    $.ajax({
+	      url: "api/rides",
+	      method: "POST",
+	      data: { ride: ride },
+	      success: function success(newRide) {
+	        ApiActions.receiveNewRide(newRide);
+	        callback();
+	      }
+	    });
 	  }
 	};
 	
@@ -34537,24 +34600,38 @@
 	  return _rides;
 	};
 	
+	RidesStore.find = function (userId) {
+	  var result = [];
+	  if (!_rides) {
+	    return [];
+	  }
+	  _rides.forEach(function (ride) {
+	    if (ride.user_id === userId) {
+	      result.push(ride);
+	    }
+	  });
+	
+	  return result;
+	};
+	
 	RidesStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
-	    case RideConstants.ADD_RIDES:
+	    case RideConstants.ADD_RIDE:
 	      addRide(payload.ride);
 	      break;
-	    case RideConstants.RECIVE_SAVED_RIDES:
-	      updateRides(payload.rides);
+	    case RideConstants.RIDES_RECEIVED:
+	      resetAllRides(payload.rides);
 	      break;
 	  }
 	};
 	
-	function addRide(ride) {
-	  _rides.push(ride);
+	function resetAllRides(rides) {
+	  _rides = rides;
 	  RidesStore.__emitChange();
 	}
 	
-	function updateRides(rides) {
-	  _rides = rides;
+	function addRide(ride) {
+	  _rides.push(ride);
 	  RidesStore.__emitChange();
 	}
 	
@@ -34575,8 +34652,16 @@
 	      actionType: RideConstants.RIDES_RECEIVED,
 	      rides: rides
 	    });
+	  },
+	  receiveNewRide: function receiveNewRide(newRide) {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.ADD_RIDE,
+	      ride: newRide
+	    });
 	  }
 	};
+	
+	module.exports = ApiActions;
 
 /***/ }
 /******/ ]);

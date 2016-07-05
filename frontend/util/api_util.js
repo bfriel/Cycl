@@ -10,6 +10,18 @@ const ApiUtil = {
         ApiActions.receiveAll(rides);
       }
     });
+  },
+
+  createRide(ride, callback) {
+    $.ajax({
+      url: "api/rides",
+      method: "POST",
+      data: {ride: ride},
+      success(newRide) {
+        ApiActions.receiveNewRide(newRide);
+        callback();
+      }
+    });
   }
 };
 

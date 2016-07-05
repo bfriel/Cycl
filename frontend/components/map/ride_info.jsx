@@ -47,12 +47,14 @@ const RideInfo = React.createClass({
               </tr>
               <tr>
                 <th>Calories Burned</th>
-                <td>{(Math.round(this.state.distance * 40))}</td>
+                <td>{(this.state.distance * 40).toFixed(0)}</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <CreateRideForm />
+        <CreateRideForm distance={this.state.distance}
+                        elevation_gain={(this.state.gain * 3.28).toFixed(0)}
+                        calories_burned={(this.state.distance * 40).toFixed(0)} />
       </div>
     );
   }
