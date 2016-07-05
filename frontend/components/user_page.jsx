@@ -38,7 +38,7 @@ const UserPage = React.createClass({
               Distance: {ride.elevation_gain} miles
             </div>
             <div id="completed-ride-duration">
-              Duration: {ride.durationHour} : {ride.durationMinute} : {ride.durationSecond}
+
             </div>
             <div id="completed-ride-elev">
               Elevation Gain: {ride.elevation_gain} feet

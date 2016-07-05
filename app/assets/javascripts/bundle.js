@@ -33626,16 +33626,7 @@
 	            ride.elevation_gain,
 	            ' miles'
 	          ),
-	          React.createElement(
-	            'div',
-	            { id: 'completed-ride-duration' },
-	            'Duration: ',
-	            ride.durationHour,
-	            ' : ',
-	            ride.durationMinute,
-	            ' : ',
-	            ride.durationSecond
-	          ),
+	          React.createElement('div', { id: 'completed-ride-duration' }),
 	          React.createElement(
 	            'div',
 	            { id: 'completed-ride-elev' },
