@@ -14,10 +14,10 @@ const CreateRide = React.createClass({
         <div className="block-for-map">
           <CreateRideMap />
         </div>
-        <div className="map-tools">
+        <div className="ride-info-pane">
           <RideInfo />
         </div>
-        <div className="ride-info-pane">
+        <div className="elev-chart">
           <ElevationChart />
         </div>
       </div>

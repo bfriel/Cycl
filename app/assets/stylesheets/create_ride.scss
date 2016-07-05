@@ -14,7 +14,7 @@
   background-color: rgba(0, 0, 0, .7);
 }
 
-.map-tools {
+.ride-info-pane {
   float: right;
   width: 300px;
   height: 600px;
@@ -25,7 +25,7 @@
   color: #eeeedd;
 }
 
-.ride-info-pane {
+.elev-chart {
   float: left;
   width: 1160px;
   height: 200px;
@@ -36,7 +36,7 @@
   overflow: hidden;
 }
 
-.map-tools .table {
+.ride-info-pane .table {
   width: 250px;
 }
 
@@ -54,9 +54,7 @@
   width: 1160px;
   float: left;
   margin: 20px;
-  border-radius: 10px;
   height: 70px;
-  background-color: rgba(0, 0, 0, .7);
   color: white;
 }
 

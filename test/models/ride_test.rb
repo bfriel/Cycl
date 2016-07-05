@@ -11,6 +11,8 @@
 #  ride_description :text
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  duration         :integer
+#  calories_burned  :integer
 #
 
 require 'test_helper'

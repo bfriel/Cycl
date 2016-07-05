@@ -17,6 +17,7 @@
  *= require navbar
  *= require feed
  *= require create_ride
+ *= require create_ride_form
  */
 
 html {

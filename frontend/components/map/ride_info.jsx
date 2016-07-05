@@ -1,5 +1,6 @@
 const React = require('react'),
       ElevationChart = require('./elevation_chart'),
+      CreateRideForm = require('./create_ride_form'),
       DirectionsStore = require('../../stores/directions'),
       ElevationStore = require('../../stores/elevation');
 
@@ -45,12 +46,13 @@ const RideInfo = React.createClass({
                 <td>{(this.state.gain * 3.28).toFixed(0)} feet</td>
               </tr>
               <tr>
-                <td></td>
-                <td></td>
+                <th>Calories Burned</th>
+                <td>{(Math.round(this.state.distance * 40))}</td>
               </tr>
             </tbody>
           </table>
         </div>
+        <CreateRideForm />
       </div>
     );
   }

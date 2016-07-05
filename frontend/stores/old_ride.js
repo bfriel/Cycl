@@ -6,28 +6,28 @@ let _oldRide= {};
 
 const OldRideStore = new Store(AppDispatcher);
 
-OldRideStore.route = function () {
+OldRideStore.ride = function () {
   return _oldRide;
 };
 
 OldRideStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
-    case RideConstants.SHOW_OLD_ROUTE:
-      updateOldRide(payload.route);
+    case RideConstants.SHOW_OLD_RIDE:
+      updateOldRide(payload.ride);
       break;
-    case RideConstants.REMOVE_ROUTE:
+    case RideConstants.REMOVE_RIDE:
       removeRide();
       break;
   }
 };
 
-function updateOldRide(route) {
-  _oldRide= route;
+function updateOldRide(ride) {
+  _oldRide = ride;
   OldRideStore.__emitChange();
 }
 
 function removeRide() {
-  _oldRide= {};
+  _oldRide = {};
   OldRideStore.__emitChange();
 }
 

@@ -26085,7 +26085,7 @@
 					'li',
 					{ key: i },
 					field,
-					': ',
+					' ',
 					errorMsg,
 					' '
 				);
@@ -33624,12 +33624,12 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'map-tools' },
+	        { className: 'ride-info-pane' },
 	        React.createElement(RideInfo, null)
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'ride-info-pane' },
+	        { className: 'elev-chart' },
 	        React.createElement(ElevationChart, null)
 	      )
 	    );
@@ -33796,11 +33796,11 @@
 	var RideConstants = {
 	  RIDES_RECEIVED: "RIDES_RECEIVED",
 	  NEW_RIDE: "NEW_RIDE",
-	  ADD_ROUTE: "ADD_ROUTE",
-	  RECEIVE_SAVED_ROUTES: "RECEIVE_SAVED_ROUTES",
+	  ADD_RIDE: "ADD_RIDE",
+	  RECEIVE_SAVED_RIDES: "RECEIVE_SAVED_RIDES",
 	  STORE_MARKERS: "STORE_MARKERS",
-	  SHOW_OLD_ROUTE: "SHOW_OLD_ROUTE",
-	  REMOVE_ROUTE: "REMOVE_ROUTE",
+	  SHOW_OLD_RIDE: "SHOW_OLD_RIDE",
+	  REMOVE_RIDE: "REMOVE_RIDE",
 	  RECEIVE_ELEVATION_DATA: "RECEIVE_ELEVATION_DATA",
 	  RECEIVE_USER: "RECEIVE_USER",
 	  CURRENT_USER_INFO: "CURRENT_USER_INFO",
@@ -34182,23 +34182,23 @@
 	
 	var OldRideStore = new Store(AppDispatcher);
 	
-	OldRideStore.route = function () {
+	OldRideStore.ride = function () {
 	  return _oldRide;
 	};
 	
 	OldRideStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
-	    case RideConstants.SHOW_OLD_ROUTE:
-	      updateOldRide(payload.route);
+	    case RideConstants.SHOW_OLD_RIDE:
+	      updateOldRide(payload.ride);
 	      break;
-	    case RideConstants.REMOVE_ROUTE:
+	    case RideConstants.REMOVE_RIDE:
 	      removeRide();
 	      break;
 	  }
 	};
 	
-	function updateOldRide(route) {
-	  _oldRide = route;
+	function updateOldRide(ride) {
+	  _oldRide = ride;
 	  OldRideStore.__emitChange();
 	}
 	
@@ -34217,6 +34217,7 @@
 	
 	var React = __webpack_require__(1),
 	    ElevationChart = __webpack_require__(267),
+	    CreateRideForm = __webpack_require__(276),
 	    DirectionsStore = __webpack_require__(270),
 	    ElevationStore = __webpack_require__(268);
 	
@@ -34293,17 +34294,289 @@
 	            React.createElement(
 	              'tr',
 	              null,
-	              React.createElement('td', null),
-	              React.createElement('td', null)
+	              React.createElement(
+	                'th',
+	                null,
+	                'Calories Burned'
+	              ),
+	              React.createElement(
+	                'td',
+	                null,
+	                Math.round(this.state.distance * 40)
+	              )
 	            )
 	          )
 	        )
-	      )
+	      ),
+	      React.createElement(CreateRideForm, null)
 	    );
 	  }
 	});
 	
 	module.exports = RideInfo;
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var React = __webpack_require__(1);
+	
+	var ApiUtil = __webpack_require__(277),
+	    RidesStore = __webpack_require__(278);
+	
+	var CreateRideForm = React.createClass({
+	  displayName: 'CreateRideForm',
+	
+	
+	  blankAttrs: {
+	    ride_path: '',
+	    ride_name: '',
+	    elevation_gain: '',
+	    distance: '',
+	    ride_description: '',
+	    durationHour: '',
+	    durationMinute: '',
+	    durationSecond: '',
+	    duration: '',
+	    calories_burned: '',
+	    existing_ride: '',
+	    rides: null
+	  },
+	
+	  getInitialState: function getInitialState() {
+	    this.newRide = true;
+	    return this.blankAttrs;
+	  },
+	  componentDidMount: function componentDidMount() {
+	    ApiUtil.fetchRides();
+	    this.routeListener = RidesStore.addListener(this._updateRides);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.routeListener.remove();
+	  },
+	  _updateRides: function _updateRides() {
+	    if (RidesStore.rides()[0]) {
+	      this.setState({
+	        rides: RidesStore.rides()
+	      });
+	    }
+	  },
+	  createRide: function createRide(e) {
+	    var _this = this;
+	
+	    e.preventDefault();
+	
+	    var ride = {};
+	    var durationInSeconds = 0;
+	
+	    Object.keys(this.state).forEach(function (key) {
+	      if (key === "durationHour") {
+	        durationInSeconds += parseInt(_this.state[key]) * 3600;
+	      } else if (key === "durationMinute") {
+	        durationInSeconds += parseInt(_this.state[key]) * 60;
+	      } else if (key === "durationSecond") {
+	        durationInSeconds += parseInt(_this.state[key]);
+	      } else {
+	        ride[key] = _this.state[key];
+	      }
+	    }).bind(this);
+	
+	    if (this.newRide) {
+	      ride.elevation_gain = ElevationStore.gain().toFixed(0);
+	      ride.distance = DirectionsStore.distance().toFixed(2);
+	      var path = DirectionsStore.markers().map(function (marker) {
+	        return [marker.position.lat(), marker.position.lng()];
+	      });
+	      ride.ride_path = JSON.stringify(path);
+	    }
+	  },
+	  update: function update(property) {
+	    var _this2 = this;
+	
+	    return function (e) {
+	      return _this2.setState(_defineProperty({}, property, e.target.value));
+	    };
+	  },
+	  render: function render() {
+	    var rides = void 0;
+	    if (this.state.rides) {
+	      rides = RidesStore.rides().map(function (ride, idx) {
+	        return React.createElement(
+	          'option',
+	          { key: idx, 'data-ride': JSON.stringify(ride) },
+	          ride.name
+	        );
+	      });
+	    }
+	
+	    return React.createElement(
+	      'form',
+	      { className: 'ride-form', onSubmit: this.createWorkout },
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Route Details'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'ride-form-item' },
+	        React.createElement(
+	          'div',
+	          { className: 'ride-form-title' },
+	          React.createElement('input', { type: 'text',
+	            value: this.state.name,
+	            placeholder: 'Name your ride',
+	            id: 'ride-name',
+	            onChange: this.update("ride_name") }),
+	          React.createElement(
+	            'select',
+	            { id: 'existing-ride-drpdwn', onChange: this.selectRoute },
+	            React.createElement(
+	              'option',
+	              null,
+	              'Choose existing ride'
+	            ),
+	            rides
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'ride-form-item', id: 'time-form' },
+	        React.createElement(
+	          'div',
+	          { id: 'duration-label' },
+	          'Duration:'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'ride-form-item' },
+	          React.createElement('input', { type: 'text',
+	            id: 'ride-duration-hour',
+	            placeholder: 'hh',
+	            maxLength: '2',
+	            value: this.state.durationHour,
+	            onChange: this.update("durationHour") })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'ride-form-item' },
+	          React.createElement('input', { type: 'text',
+	            id: 'ride-duration-minute',
+	            placeholder: 'mm',
+	            maxLength: '2',
+	            value: this.state.durationMinute,
+	            onChange: this.update("durationMinute") })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'ride-form-item' },
+	          React.createElement('input', { type: 'text',
+	            id: 'ride-duration-second',
+	            placeholder: 'ss',
+	            maxLength: '2',
+	            value: this.state.durationSecond,
+	            onChange: this.update("durationSecond") })
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'ride-form-item' },
+	        React.createElement('textarea', { id: 'workout-description',
+	          value: this.state.description,
+	          placeholder: 'Describe your ride',
+	          onChange: this.update("ride_description") })
+	      ),
+	      React.createElement('input', { id: 'create-ride-button', type: 'submit', value: 'Create Ride' })
+	    );
+	  }
+	});
+	
+	module.exports = CreateRideForm;
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var ApiActions = __webpack_require__(279);
+	
+	var ApiUtil = {
+	  fetchRides: function fetchRides() {
+	    $.ajax({
+	      url: "api/rides",
+	      success: function success(rides) {
+	        ApiActions.receiveAll(rides);
+	      }
+	    });
+	  }
+	};
+	
+	module.exports = ApiUtil;
+
+/***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
+	
+	var _rides = [];
+	
+	var RidesStore = new Store(AppDispatcher);
+	
+	RidesStore.rides = function () {
+	  return _rides;
+	};
+	
+	RidesStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case RideConstants.ADD_RIDES:
+	      addRide(payload.ride);
+	      break;
+	    case RideConstants.RECIVE_SAVED_RIDES:
+	      updateRides(payload.rides);
+	      break;
+	  }
+	};
+	
+	function addRide(ride) {
+	  _rides.push(ride);
+	  RidesStore.__emitChange();
+	}
+	
+	function updateRides(rides) {
+	  _rides = rides;
+	  RidesStore.__emitChange();
+	}
+	
+	module.exports = RidesStore;
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
+	
+	var ApiActions = {
+	  receiveAll: function receiveAll(rides) {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.RIDES_RECEIVED,
+	      rides: rides
+	    });
+	  }
+	};
 
 /***/ }
 /******/ ]);

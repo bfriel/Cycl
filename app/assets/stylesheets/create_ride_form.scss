@@ -1,0 +1,63 @@
+.ride-form div {
+  float: left;
+}
+
+.ride-form-item {
+  float: left;
+  margin-left: 5px;
+  padding-bottom: 5px;
+}
+
+.ride-form input {
+  border: 1px solid gray;
+  font-size: 16px;
+  padding: 2px;
+}
+
+.ride-form textarea {
+  border: 1px solid gray;
+  font-size: 16px;
+  color: white;
+}
+
+.ride-form label {
+  padding-left: 9px;
+}
+
+#ride-name {
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 125px;
+}
+
+#existing-ride-drpdwn {
+  margin-left: 5px;
+}
+
+#duration-label {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 16px;
+}
+
+#ride-duration-hour {
+  width: 32px;
+}
+
+#ride-duration-minute {
+  width: 32px;
+}
+
+#ride-duration-second {
+  width: 32px;
+}
+
+#workout-description {
+  margin-left: 10px;
+  width: 262px;
+  height: 150px;
+}
+
+#create-ride-button {
+  margin-left: 70px;
+}

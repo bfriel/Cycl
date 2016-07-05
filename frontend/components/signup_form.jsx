@@ -51,7 +51,7 @@ const SignupForm = React.createClass({
     if (!errors[field]) { return; }
 
     let messages = errors[field].map( (errorMsg, i) => {
-      return <li key={ i }>{ field }: { errorMsg } </li>;
+      return <li key={ i }>{ field } { errorMsg } </li>;
     });
 
     return <ul>{ messages }</ul>;
