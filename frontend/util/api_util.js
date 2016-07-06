@@ -32,7 +32,17 @@ const ApiUtil = {
         ApiActions.receiveAllUsers(users);
       }
     });
-  }
+  },
+
+  fetchUserTotals: function (id) {
+    $.ajax({
+      url: "/api/users/" + id,
+      method: "GET",
+      success(totals) {
+        ApiActions.userTotals(totals);
+      }
+    });
+  },
 };
 
 module.exports = ApiUtil;

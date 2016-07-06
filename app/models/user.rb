@@ -19,6 +19,15 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
+  has_many :rides
+
+  has_many :followings, through: :out_follows, source: :following
+  has_many :out_follows, class_name: :Following, foreign_key: :follower_id
+
+  has_many :followers, through: :in_follows, source: :follower
+  has_many :in_follows, class_name: :Following, foreign_key: :following_id
+
+
   def self.find_by_credentials(username, password)
     user = User.find_by(username: username)
     user.try(:is_password?, password) ? user : nil

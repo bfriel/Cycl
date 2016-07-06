@@ -1,4 +1,5 @@
 const AppDispatcher = require('../dispatcher/dispatcher'),
+      UserConstants = require('../constants/user_constants'),
       RideConstants = require('../constants/ride_constants');
 
 
@@ -20,10 +21,17 @@ const ApiActions = {
 
   receiveAllUsers(users) {
     AppDispatcher.dispatch({
-      actionType: RideConstants.RECEIVE_ALL_USERS,
+      actionType: UserConstants.RECEIVE_ALL_USERS,
       users: users
     });
-  }
+  },
+
+  userTotals(totals) {
+    AppDispatcher.dispatch({
+      actionType: UserConstants.USER_TOTALS,
+      totals: totals
+    });
+  },
 };
 
 module.exports = ApiActions;

@@ -48,9 +48,6 @@ const Feed = React.createClass({
 
         <div className="feed-side-bar">
           <div className="feed-side-bar-item">
-            <UserInfoPane />
-          </div>
-          <div className="feed-side-bar-item">
             <AllUsersPane />
           </div>
         </div>

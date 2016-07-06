@@ -26670,11 +26670,13 @@
 	
 	var AppDispatcher = __webpack_require__(233);
 	var Store = __webpack_require__(242).Store;
-	var SessionConstants = __webpack_require__(237);
+	var SessionConstants = __webpack_require__(237),
+	    UserConstants = __webpack_require__(283);
 	
 	var SessionStore = new Store(AppDispatcher);
 	
 	var _currentUser = {};
+	var _followings = {};
 	var _currentUserHasBeenFetched = false;
 	
 	function _login(currentUser) {
@@ -26687,6 +26689,25 @@
 	  _currentUserHasBeenFetched = true;
 	}
 	
+	function _removeFollowing(following) {
+	  var idx = -1;
+	  _followings.forEach(function (follow, i) {
+	    if (follow.id === following.id) {
+	      idx = i;
+	    }
+	  });
+	
+	  if (idx >= 0) {
+	    _followings.splice(idx, 1);
+	  }
+	  SessionStore.__emitChange();
+	}
+	
+	function _addFollowing(following) {
+	  _followings.push(following);
+	  SessionStore.__emitChange();
+	}
+	
 	SessionStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
 	    case SessionConstants.LOGIN:
@@ -26697,7 +26718,17 @@
 	      _logout();
 	      SessionStore.__emitChange();
 	      break;
+	    case UserConstants.ADD_FOLLOWINGS:
+	      _addFollowing(payload.following);
+	      break;
+	    case UserConstants.REMOVE_FOLLOWING:
+	      _removeFollowing(payload.following);
+	      break;
 	  }
+	};
+	
+	SessionStore.followings = function () {
+	  return _followings;
 	};
 	
 	SessionStore.currentUser = function () {
@@ -33549,11 +33580,6 @@
 	        React.createElement(
 	          'div',
 	          { className: 'feed-side-bar-item' },
-	          React.createElement(UserInfoPane, null)
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'feed-side-bar-item' },
 	          React.createElement(AllUsersPane, null)
 	        )
 	      )
@@ -33567,39 +33593,158 @@
 /* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	var React = __webpack_require__(1),
+	    AllUsersStore = __webpack_require__(281),
+	    UserStore = __webpack_require__(282),
+	    ApiUtil = __webpack_require__(277),
 	    SessionStore = __webpack_require__(241);
 	
 	var UserInfo = React.createClass({
-	  displayName: "UserInfo",
+	  displayName: 'UserInfo',
 	  getInitialState: function getInitialState() {
 	    return {
-	      currentUser: SessionStore.currentUser()
+	      currentUserId: SessionStore.currentUser().id,
+	      pageUserInfo: UserStore.totals(),
+	      currentUserFollowings: SessionStore.followings()
 	    };
 	  },
-	  render: function render() {
-	    var currentUser = this.state.currentUser;
+	  componentDidMount: function componentDidMount() {
+	    this.userListener = UserStore.addListener(this._updateTotals);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.userListener.remove();
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps() {
+	    if (this.props.user) {
+	      ApiUtil.fetchUserTotals(this.props.user);
+	    }
+	  },
 	
-	    if (SessionStore.isUserLoggedIn()) {
+	
+	  _updateTotals: function _updateTotals() {
+	    this.setState({
+	      pageUserInfo: UserStore.totals()
+	    });
+	  },
+	
+	  render: function render() {
+	    if (Object.keys(this.state.pageUserInfo).length > 0) {
+	      var PageUserInfo = this.state.pageUserInfo;
+	      var UserTotals = PageUserInfo.totals;
+	
+	      var hours = (UserTotals.totalDuration / 3600).toFixed(0);
+	      var minutes = (UserTotals.totalDuration % 3600 / 60).toFixed(0);
+	      var seconds = UserTotals.totalDuration % 60;
+	
+	      var followings = this.state.currentUserFollowings;
+	      var followed = false;
+	
+	      // followings.forEach(function (follow) {
+	      //   if (follow.id === this.state.pageUserInfo.user.id) {
+	      //     followed = true;
+	      //   }
+	      // }.bind(this));
+	
+	      var button = void 0;
+	      if (this.state.pageUserInfo.user.id === this.state.currentUserId) {
+	        button = "";
+	      } else if (followed) {
+	        button = React.createElement(
+	          'button',
+	          { onClick: this.handleUnFollow },
+	          'Unfollow'
+	        );
+	      } else {
+	        button = React.createElement(
+	          'button',
+	          { onClick: this.handleFollow },
+	          'Follow'
+	        );
+	      }
+	
 	      return React.createElement(
-	        "div",
-	        { className: "user-info-container" },
+	        'div',
+	        { className: 'user-info container' },
 	        React.createElement(
-	          "h2",
+	          'h2',
 	          null,
-	          currentUser.username
+	          PageUserInfo.user.username
+	        ),
+	        button,
+	        React.createElement(
+	          'h4',
+	          null,
+	          'Lifetime Stats'
+	        ),
+	        React.createElement(
+	          'table',
+	          { className: 'table' },
+	          React.createElement(
+	            'tbody',
+	            null,
+	            React.createElement(
+	              'tr',
+	              null,
+	              React.createElement(
+	                'td',
+	                null,
+	                UserTotals.rideCount,
+	                ' rides'
+	              )
+	            ),
+	            React.createElement(
+	              'tr',
+	              null,
+	              React.createElement(
+	                'td',
+	                null,
+	                UserTotals.totalDistance,
+	                ' miles'
+	              )
+	            ),
+	            React.createElement(
+	              'tr',
+	              null,
+	              React.createElement(
+	                'td',
+	                null,
+	                UserTotals.totalCalories,
+	                ' calories burned'
+	              )
+	            ),
+	            React.createElement(
+	              'tr',
+	              null,
+	              React.createElement(
+	                'td',
+	                null,
+	                hours,
+	                ' hours ',
+	                minutes,
+	                ' minutes ',
+	                seconds,
+	                ' seconds '
+	              )
+	            ),
+	            React.createElement(
+	              'tr',
+	              null,
+	              React.createElement('td', null),
+	              React.createElement('td', null)
+	            )
+	          )
 	        )
 	      );
 	    } else {
 	      return React.createElement(
-	        "div",
-	        { className: "user-info-container" },
+	        'div',
+	        { className: 'user-info' },
 	        React.createElement(
-	          "h3",
+	          'p',
 	          null,
-	          "Log In to see your profile"
+	          'Please log in to see your profile'
 	        )
 	      );
 	    }
@@ -33614,15 +33759,60 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(1);
+	var React = __webpack_require__(1),
+	    hashHistory = __webpack_require__(168).hashHistory,
+	    AllUsersStore = __webpack_require__(281),
+	    ApiUtil = __webpack_require__(277),
+	    SessionStore = __webpack_require__(241);
 	
 	var AllUsers = React.createClass({
 	  displayName: 'AllUsers',
+	  getInitialState: function getInitialState() {
+	    return {
+	      users: [],
+	      followings: SessionStore.followings()
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.usersListener = AllUsersStore.addListener(this.updateUsers);
+	    this.followListener = SessionStore.addListener(this.follows);
+	    ApiUtil.fetchAllUsers();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.usersListener.remove();
+	    this.followListener.remove();
+	  },
+	  follows: function follows() {
+	    this.setState({
+	      followings: SessionStore.followings()
+	    });
+	  },
+	  updateUsers: function updateUsers() {
+	    this.setState({
+	      users: AllUsersStore.all()
+	    });
+	  },
+	  _goToUsersPage: function _goToUsersPage(e) {
+	    var userId = e.currentTarget.dataset.userid;
+	    hashHistory.push('user/' + userId);
+	  },
 	  render: function render() {
+	    var _this = this;
+	
+	    var allUsers = this.state.users.map(function (user) {
+	      return React.createElement(
+	        'div',
+	        { key: user.id,
+	          className: 'all-user-item',
+	          'data-userid': user.id,
+	          onClick: _this._goToUsersPage },
+	        user.username
+	      );
+	    });
 	    return React.createElement(
 	      'div',
 	      null,
-	      'AllUsersPane'
+	      allUsers
 	    );
 	  }
 	});
@@ -33638,22 +33828,33 @@
 	var React = __webpack_require__(1),
 	    ApiUtil = __webpack_require__(277),
 	    RideItem = __webpack_require__(280),
+	    UserInfo = __webpack_require__(263),
+	    SessionStore = __webpack_require__(241),
+	    AllUsersStore = __webpack_require__(281),
 	    RidesStore = __webpack_require__(278);
 	
 	var UserPage = React.createClass({
 	  displayName: 'UserPage',
 	  getInitialState: function getInitialState() {
 	    return {
-	      rides: RidesStore.find(parseInt(this.props.params.userId))
+	      rides: RidesStore.find(parseInt(this.props.params.userId)),
+	      currentUser: SessionStore.currentUser()
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    ApiUtil.fetchRides();
 	    this.rideListener = RidesStore.addListener(this._onChange);
+	
+	    this.currentUserListener = SessionStore.addListener(this._currentUser);
 	  },
 	  _onChange: function _onChange() {
 	    this.setState({
 	      rides: RidesStore.find(parseInt(this.props.params.userId))
+	    });
+	  },
+	  _currentUser: function _currentUser() {
+	    this.setState({
+	      currentUser: SessionStore.currentUser()
 	    });
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps() {
@@ -33662,22 +33863,44 @@
 	    });
 	  },
 	  render: function render() {
+	    var header = void 0;
+	    if (parseInt(this.props.params.userId) === this.state.currentUser.id) {
+	      header = React.createElement(
+	        'h2',
+	        { id: 'my-rides' },
+	        'My Rides'
+	      );
+	    } else {
+	      header = React.createElement(
+	        'h2',
+	        { id: 'my-rides' },
+	        'Their Rides'
+	      );
+	    }
 	    var rides = this.state.rides.map(function (ride) {
 	      return React.createElement(RideItem, { ride: ride, key: ride.ride_name });
 	    });
 	    return React.createElement(
 	      'div',
 	      null,
-	      React.createElement('div', { className: 'user-info' }),
 	      React.createElement(
 	        'div',
-	        { className: 'feed' },
+	        null,
 	        React.createElement(
-	          'h2',
-	          { id: 'my-rides' },
-	          'My Rides'
-	        ),
-	        rides
+	          'div',
+	          { className: 'feed' },
+	          header,
+	          rides
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'feed-side-bar' },
+	        React.createElement(
+	          'div',
+	          { className: 'feed-side-bar-item' },
+	          React.createElement(UserInfo, { user: parseInt(this.props.params.userId) })
+	        )
 	      )
 	    );
 	  }
@@ -33910,12 +34133,8 @@
 	  UPDATE_USER: "UPDATE_USER",
 	  CURRENT_USER_TOTALS: "CURRENT_USER_TOTALS",
 	  LOGGED_OUT: "LOGGED_OUT",
-	  USER_TOTALS: "USER_TOTALS",
-	  ADD_FOLLOWINGS: "ADD_FOLLOWINGS",
-	  REMOVE_FOLLOWING: "REMOVE_FOLLOWING",
 	  UPDATE_DIRECTIONS: "UPDATE_DIRECTIONS",
-	  REST_CHART: "REST_CHART",
-	  RECEIVE_ALL_USERS: "RECEIVE_ALL_USERS"
+	  REST_CHART: "REST_CHART"
 	};
 	
 	module.exports = RideConstants;
@@ -34655,6 +34874,17 @@
 	        ApiActions.receiveAllUsers(users);
 	      }
 	    });
+	  },
+	
+	
+	  fetchUserTotals: function fetchUserTotals(id) {
+	    $.ajax({
+	      url: "/api/users/" + id,
+	      method: "GET",
+	      success: function success(totals) {
+	        ApiActions.userTotals(totals);
+	      }
+	    });
 	  }
 	};
 	
@@ -34722,6 +34952,7 @@
 	'use strict';
 	
 	var AppDispatcher = __webpack_require__(233),
+	    UserConstants = __webpack_require__(283),
 	    RideConstants = __webpack_require__(269);
 	
 	var ApiActions = {
@@ -34739,8 +34970,14 @@
 	  },
 	  receiveAllUsers: function receiveAllUsers(users) {
 	    AppDispatcher.dispatch({
-	      actionType: RideConstants.RECEIVE_ALL_USERS,
+	      actionType: UserConstants.RECEIVE_ALL_USERS,
 	      users: users
+	    });
+	  },
+	  userTotals: function userTotals(totals) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.USER_TOTALS,
+	      totals: totals
 	    });
 	  }
 	};
@@ -34875,6 +35112,103 @@
 	});
 	
 	module.exports = RideItem;
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    UserConstants = __webpack_require__(283);
+	
+	var _users = {};
+	
+	var AllUsersStore = new Store(AppDispatcher);
+	
+	AllUsersStore.all = function () {
+	  return _users;
+	};
+	
+	AllUsersStore.find = function (userId) {
+	  if (_users = {}) {
+	    return;
+	  } else {
+	    _users.filter(function (user) {
+	      return user.id === userId;
+	    });
+	  }
+	  // for (var k in _users) {
+	  //   if (_users.hasOwnProperty(k)) {
+	  //     if (k.id === userId) {
+	  //       return k;
+	  //     }
+	  //   }
+	  // }
+	};
+	
+	AllUsersStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case UserConstants.RECEIVE_ALL_USERS:
+	      updateUsers(payload.users);
+	      break;
+	  }
+	};
+	
+	function updateUsers(users) {
+	  _users = users;
+	  AllUsersStore.__emitChange();
+	}
+	
+	module.exports = AllUsersStore;
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    UserConstants = __webpack_require__(283);
+	
+	var _userTotals = {};
+	var UserStore = new Store(AppDispatcher);
+	
+	UserStore.totals = function () {
+	  return _userTotals;
+	};
+	
+	UserStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case UserConstants.USER_TOTALS:
+	      updateTotals(payload.totals);
+	      break;
+	  }
+	};
+	
+	function updateTotals(totals) {
+	  _userTotals = totals;
+	  UserStore.__emitChange();
+	}
+	
+	module.exports = UserStore;
+
+/***/ },
+/* 283 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var UserConstants = {
+	  ADD_FOLLOWINGS: "ADD_FOLLOWINGS",
+	  REMOVE_FOLLOWING: "REMOVE_FOLLOWING",
+	  USER_TOTALS: "USER_TOTALS",
+	  RECEIVE_ALL_USERS: "RECEIVE_ALL_USERS"
+	};
+	
+	module.exports = UserConstants;
 
 /***/ }
 /******/ ]);

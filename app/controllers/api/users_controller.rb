@@ -20,7 +20,11 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.includes(:followings).find(params[:id])
+    @ride_count = @user.rides.count
+    @total_distance = @user.rides.sum('distance')
+    @total_duration = @user.rides.sum('duration')
+    @total_calories = @user.rides.sum('calories_burned')
   end
 
   def update

@@ -2,11 +2,13 @@
 
 const AppDispatcher = require('../dispatcher/dispatcher.js');
 const Store = require('flux/utils').Store;
-const SessionConstants = require('../constants/session_constants');
+const SessionConstants = require('../constants/session_constants'),
+      UserConstants = require('../constants/user_constants');
 
 const SessionStore = new Store(AppDispatcher);
 
 let _currentUser = {};
+let _followings = {};
 let _currentUserHasBeenFetched = false;
 
 function _login(currentUser) {
@@ -19,6 +21,24 @@ function _logout() {
   _currentUserHasBeenFetched = true;
 }
 
+function _removeFollowing(following) {
+  var idx = -1;
+  _followings.forEach(function (follow, i) {
+    if (follow.id === following.id) {
+      idx = i;
+    }
+  });
+
+  if (idx >= 0) {
+    _followings.splice(idx, 1);
+  }
+  SessionStore.__emitChange();
+}
+
+function _addFollowing(following) {
+  _followings.push(following);
+  SessionStore.__emitChange();
+}
 
 SessionStore.__onDispatch = (payload) => {
   switch(payload.actionType) {
@@ -30,7 +50,17 @@ SessionStore.__onDispatch = (payload) => {
     	_logout();
       SessionStore.__emitChange();
       break;
+    case UserConstants.ADD_FOLLOWINGS:
+      _addFollowing(payload.following);
+      break;
+    case UserConstants.REMOVE_FOLLOWING:
+      _removeFollowing(payload.following);
+      break;
   }
+};
+
+SessionStore.followings = function() {
+  return _followings;
 };
 
 SessionStore.currentUser = function() {

@@ -1,0 +1,8 @@
+const UserConstants = {
+  ADD_FOLLOWINGS: "ADD_FOLLOWINGS",
+  REMOVE_FOLLOWING: "REMOVE_FOLLOWING",
+  USER_TOTALS: "USER_TOTALS",
+  RECEIVE_ALL_USERS: "RECEIVE_ALL_USERS"
+};
+
+module.exports = UserConstants;

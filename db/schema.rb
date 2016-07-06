@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160706173845) do
   end
 
   add_index "followings", ["follower_id"], name: "index_followings_on_follower_id", using: :btree
+  add_index "followings", ["following_id", "follower_id"], name: "index_followings_on_following_id_and_follower_id", unique: true, using: :btree
   add_index "followings", ["following_id"], name: "index_followings_on_following_id", using: :btree
 
   create_table "rides", force: :cascade do |t|
