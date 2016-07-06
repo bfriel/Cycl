@@ -33425,7 +33425,7 @@
 	            React.createElement(
 	              'a',
 	              { onClick: this._createRide },
-	              'Create a Route'
+	              'Create a Ride'
 	            ),
 	            React.createElement(
 	              'a',
@@ -33614,10 +33614,15 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      React.createElement('div', { className: 'user-inf0' }),
+	      React.createElement('div', { className: 'user-info' }),
 	      React.createElement(
 	        'div',
-	        { className: 'show-all-rides' },
+	        { className: 'feed' },
+	        React.createElement(
+	          'h2',
+	          { id: 'my-rides' },
+	          'My Rides'
+	        ),
 	        rides
 	      )
 	    );
@@ -34294,7 +34299,7 @@
 	      React.createElement(
 	        'h3',
 	        null,
-	        'Route Stats'
+	        'Ride Stats'
 	      ),
 	      React.createElement(
 	        'div',
@@ -34479,7 +34484,7 @@
 	      React.createElement(
 	        'h3',
 	        null,
-	        'Route Details'
+	        'Ride Details'
 	      ),
 	      React.createElement(
 	        'div',
@@ -34489,7 +34494,7 @@
 	          { className: 'ride-form-title' },
 	          React.createElement('input', { type: 'text',
 	            value: this.state.name,
-	            placeholder: 'Name your ride',
+	            placeholder: 'Name your route',
 	            id: 'ride-name',
 	            onChange: this.update("ride_name") }),
 	          React.createElement(
@@ -34498,7 +34503,7 @@
 	            React.createElement(
 	              'option',
 	              null,
-	              'Choose existing ride'
+	              'Choose existing route'
 	            ),
 	            rides
 	          )
@@ -34686,7 +34691,7 @@
 	    var hours = (ride.duration / 3600).toFixed(0);
 	    var minutes = (ride.duration % 3600 / 60).toFixed(0);
 	    var seconds = ride.duration % 60;
-	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=200x200&zoom=15&markers=color:green%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
+	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=200x200&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
 	    return React.createElement(
 	      "div",
 	      { className: "completed-ride" },
@@ -34707,7 +34712,7 @@
 	          { id: "completed-ride-details" },
 	          React.createElement(
 	            "table",
-	            { className: "table" },
+	            { className: "table", id: "feed-table" },
 	            React.createElement(
 	              "tbody",
 	              null,
@@ -34716,12 +34721,12 @@
 	                null,
 	                React.createElement(
 	                  "td",
-	                  { className: "completed-ride-td" },
+	                  { className: "completed-ride-th" },
 	                  "Distance"
 	                ),
 	                React.createElement(
 	                  "td",
-	                  { className: "completed-ride-td" },
+	                  { className: "completed-ride-tb" },
 	                  ride.distance,
 	                  " miles"
 	                )
@@ -34731,12 +34736,12 @@
 	                null,
 	                React.createElement(
 	                  "td",
-	                  { className: "completed-ride-td" },
+	                  { className: "completed-ride-th" },
 	                  "Duration"
 	                ),
 	                React.createElement(
 	                  "td",
-	                  { className: "completed-ride-td" },
+	                  { className: "completed-ride-tb" },
 	                  hours,
 	                  " hours ",
 	                  minutes,
@@ -34750,12 +34755,12 @@
 	                null,
 	                React.createElement(
 	                  "td",
-	                  { className: "completed-ride-td" },
+	                  { className: "completed-ride-th" },
 	                  "Elevation"
 	                ),
 	                React.createElement(
 	                  "td",
-	                  { className: "completed-ride-td" },
+	                  { className: "completed-ride-tb" },
 	                  ride.elevation_gain,
 	                  " feet"
 	                )
@@ -34765,27 +34770,13 @@
 	                null,
 	                React.createElement(
 	                  "td",
-	                  { className: "completed-ride-td" },
-	                  "Calories Burned"
+	                  { className: "completed-ride-th" },
+	                  "Calories"
 	                ),
 	                React.createElement(
 	                  "td",
-	                  { className: "completed-ride-td" },
+	                  { className: "completed-ride-tb" },
 	                  ride.calories_burned
-	                )
-	              ),
-	              React.createElement(
-	                "tr",
-	                null,
-	                React.createElement(
-	                  "td",
-	                  { className: "completed-ride-td" },
-	                  "Description"
-	                ),
-	                React.createElement(
-	                  "td",
-	                  { className: "completed-ride-td" },
-	                  ride.ride_description
 	                )
 	              )
 	            )

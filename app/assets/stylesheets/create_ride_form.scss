@@ -9,7 +9,7 @@
 }
 
 .ride-form input {
-  border: 1px solid gray;
+  border-bottom: 1px solid gray;
   font-size: 16px;
   padding: 2px;
 }
@@ -41,23 +41,29 @@
 }
 
 #ride-duration-hour {
-  width: 32px;
+  width: 30px;
+  text-align: center;
 }
 
 #ride-duration-minute {
-  width: 32px;
+  width: 30px;
+  text-align: center;
 }
 
 #ride-duration-second {
-  width: 32px;
+  width: 30px;
+  text-align: center;
 }
 
 #workout-description {
   margin-left: 10px;
   width: 262px;
   height: 150px;
+  border-radius: 3px;
+  padding: 5px;
 }
 
 #create-ride-button {
   margin-left: 70px;
+  border: 1px solid white;
 }

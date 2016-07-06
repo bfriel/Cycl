@@ -99,18 +99,18 @@ const CreateRideForm = React.createClass({
 
     return(
       <form className="ride-form" onSubmit={this.createRide}>
-        <h3>Route Details</h3>
+        <h3>Ride Details</h3>
 
         <div className="ride-form-item">
           <div className="ride-form-title">
               <input type="text"
                 value={this.state.name}
-                placeholder="Name your ride"
+                placeholder="Name your route"
                 id="ride-name"
                 onChange={this.update("ride_name")} />
 
             <select id="existing-ride-drpdwn" onChange={this.selectRoute}>
-              <option>Choose existing ride</option>
+              <option>Choose existing route</option>
               {rides}
             </select>
           </div>

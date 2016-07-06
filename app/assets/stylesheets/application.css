@@ -18,6 +18,8 @@
  *= require feed
  *= require create_ride
  *= require create_ride_form
+ *= require user_page
+ *= require ride_item
  */
 
 html {

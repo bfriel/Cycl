@@ -35,10 +35,11 @@ const UserPage = React.createClass({
     });
     return (
       <div>
-        <div className="user-inf0">
+        <div className="user-info">
 
         </div>
-        <div className="show-all-rides">
+        <div className="feed">
+          <h2 id="my-rides">My Rides</h2>
           {rides}
         </div>
       </div>

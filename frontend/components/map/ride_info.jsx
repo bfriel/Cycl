@@ -33,7 +33,7 @@ const RideInfo = React.createClass({
   render() {
     return (
       <div className="ride-stats">
-        <h3>Route Stats</h3>
+        <h3>Ride Stats</h3>
         <div className="container">
           <table className="table">
             <tbody>

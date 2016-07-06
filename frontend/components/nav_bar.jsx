@@ -35,7 +35,7 @@ const NavBar = React.createClass({
 
             <div id='right'>
               <div className="navbar-buttons">
-                <a onClick={this._createRide}>Create a Route</a>
+                <a onClick={this._createRide}>Create a Ride</a>
                 <a onClick={this._goHome}>Feed</a>
                 <a onClick={this._goProfile}>{SessionStore.currentUser().username}</a>
               </div>
