@@ -1,9 +1,15 @@
-const React = require('react');
+const React = require('react'),
+      hashHistory = require('react-router').hashHistory,
+      SessionStore = require('../stores/session_store');
 
 const RideItem = React.createClass({
 
-
+  _goToUsersPage() {
+      hashHistory.push('user/' + this.props.ride.user_id);
+  },
+  
   render(){
+    let currentUser = SessionStore.currentUser();
     let ride = this.props.ride;
     let hours = (ride.duration / 3600).toFixed(0);
     let minutes = ((ride.duration % 3600) / 60 ).toFixed(0);
@@ -17,8 +23,9 @@ const RideItem = React.createClass({
     return(
       <div className="completed-ride hvr-pop">
         <div id="completed-ride-info">
-          <div id="compelted-ride-name">
-            <h2>{ride.ride_name}</h2>
+          <div>
+            <h2 id="completed-ride-name">{ride.ride_name}</h2>
+            <h5 onClick={this._goToUsersPage}>{ride.rider}</h5>
           </div>
 
           <div id="completed-ride-details">

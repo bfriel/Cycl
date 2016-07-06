@@ -22,6 +22,16 @@ const ApiUtil = {
         callback();
       }
     });
+  },
+
+  fetchAllUsers() {
+    $.ajax({
+      url: "/api/users",
+      method: "GET",
+      success(users) {
+        ApiActions.receiveAllUsers(users);
+      }
+    });
   }
 };
 

@@ -14,6 +14,7 @@
 #  duration         :integer
 #  calories_burned  :integer
 #  start_pos        :string
+#  rider            :string
 #
 
 require 'test_helper'

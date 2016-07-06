@@ -21,7 +21,8 @@ const CreateRideForm = React.createClass({
     duration: '',
     calories_burned: '',
     user_id: '',
-    start_pos: ''
+    start_pos: '',
+    rider: ''
   },
 
   getInitialState() {
@@ -67,6 +68,7 @@ const CreateRideForm = React.createClass({
     ride.distance = parseInt(this.props.distance);
     ride.calories_burned = parseInt(this.props.calories_burned);
     ride.duration = durationInSeconds;
+    ride.rider = SessionStore.currentUser().username;
 
     let path = DirectionsStore.markers().map( (marker) => {
       return [marker.position.lat(), marker.position.lng()];

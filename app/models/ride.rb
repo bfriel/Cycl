@@ -14,10 +14,11 @@
 #  duration         :integer
 #  calories_burned  :integer
 #  start_pos        :string
+#  rider            :string
 #
 
 class Ride < ActiveRecord::Base
-  validates :user_id, :ride_name, :ride_path, :elevation_gain, :start_pos,
+  validates :user_id, :ride_name, :ride_path, :elevation_gain, :start_pos, :rider,
             :distance, :ride_description, :duration, :calories_burned, presence: true
 
   belongs_to :user

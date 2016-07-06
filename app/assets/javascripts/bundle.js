@@ -33567,18 +33567,42 @@
 /* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
-	var React = __webpack_require__(1);
+	var React = __webpack_require__(1),
+	    SessionStore = __webpack_require__(241);
 	
 	var UserInfo = React.createClass({
-	  displayName: 'UserInfo',
+	  displayName: "UserInfo",
+	  getInitialState: function getInitialState() {
+	    return {
+	      currentUser: SessionStore.currentUser()
+	    };
+	  },
 	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      'UserPane'
-	    );
+	    var currentUser = this.state.currentUser;
+	
+	    if (SessionStore.isUserLoggedIn()) {
+	      return React.createElement(
+	        "div",
+	        { className: "user-info-container" },
+	        React.createElement(
+	          "h2",
+	          null,
+	          currentUser.username
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        "div",
+	        { className: "user-info-container" },
+	        React.createElement(
+	          "h3",
+	          null,
+	          "Log In to see your profile"
+	        )
+	      );
+	    }
 	  }
 	});
 	
@@ -34428,7 +34452,8 @@
 	    duration: '',
 	    calories_burned: '',
 	    user_id: '',
-	    start_pos: ''
+	    start_pos: '',
+	    rider: ''
 	  },
 	
 	  getInitialState: function getInitialState() {
@@ -34472,6 +34497,7 @@
 	    ride.distance = parseInt(this.props.distance);
 	    ride.calories_burned = parseInt(this.props.calories_burned);
 	    ride.duration = durationInSeconds;
+	    ride.rider = SessionStore.currentUser().username;
 	
 	    var path = DirectionsStore.markers().map(function (marker) {
 	      return [marker.position.lat(), marker.position.lng()];
@@ -34620,6 +34646,15 @@
 	        callback();
 	      }
 	    });
+	  },
+	  fetchAllUsers: function fetchAllUsers() {
+	    $.ajax({
+	      url: "/api/users",
+	      method: "GET",
+	      success: function success(users) {
+	        ApiActions.receiveAllUsers(users);
+	      }
+	    });
 	  }
 	};
 	
@@ -34701,6 +34736,12 @@
 	      actionType: RideConstants.ADD_RIDE,
 	      ride: newRide
 	    });
+	  },
+	  receiveAllUsers: function receiveAllUsers(users) {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.RECEIVE_ALL_USERS,
+	      users: users
+	    });
 	  }
 	};
 	
@@ -34710,102 +34751,113 @@
 /* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
-	var React = __webpack_require__(1);
+	var React = __webpack_require__(1),
+	    hashHistory = __webpack_require__(168).hashHistory,
+	    SessionStore = __webpack_require__(241);
 	
 	var RideItem = React.createClass({
-	  displayName: "RideItem",
+	  displayName: 'RideItem',
+	  _goToUsersPage: function _goToUsersPage() {
+	    hashHistory.push('user/' + this.props.ride.user_id);
+	  },
 	  render: function render() {
+	    var currentUser = SessionStore.currentUser();
 	    var ride = this.props.ride;
 	    var hours = (ride.duration / 3600).toFixed(0);
 	    var minutes = (ride.duration % 3600 / 60).toFixed(0);
 	    var seconds = ride.duration % 60;
 	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=200x200&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
 	    return React.createElement(
-	      "div",
-	      { className: "completed-ride hvr-pop" },
+	      'div',
+	      { className: 'completed-ride hvr-pop' },
 	      React.createElement(
-	        "div",
-	        { id: "completed-ride-info" },
+	        'div',
+	        { id: 'completed-ride-info' },
 	        React.createElement(
-	          "div",
-	          { id: "compelted-ride-name" },
+	          'div',
+	          null,
 	          React.createElement(
-	            "h2",
-	            null,
+	            'h2',
+	            { id: 'completed-ride-name' },
 	            ride.ride_name
+	          ),
+	          React.createElement(
+	            'h5',
+	            { onClick: this._goToUsersPage },
+	            ride.rider
 	          )
 	        ),
 	        React.createElement(
-	          "div",
-	          { id: "completed-ride-details" },
+	          'div',
+	          { id: 'completed-ride-details' },
 	          React.createElement(
-	            "table",
-	            { className: "table", id: "feed-table" },
+	            'table',
+	            { className: 'table', id: 'feed-table' },
 	            React.createElement(
-	              "tbody",
+	              'tbody',
 	              null,
 	              React.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                React.createElement(
-	                  "td",
-	                  { className: "completed-ride-th" },
-	                  "Distance"
+	                  'td',
+	                  { className: 'completed-ride-th' },
+	                  'Distance'
 	                ),
 	                React.createElement(
-	                  "td",
-	                  { className: "completed-ride-tb" },
+	                  'td',
+	                  { className: 'completed-ride-tb' },
 	                  ride.distance,
-	                  " miles"
+	                  ' miles'
 	                )
 	              ),
 	              React.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                React.createElement(
-	                  "td",
-	                  { className: "completed-ride-th" },
-	                  "Duration"
+	                  'td',
+	                  { className: 'completed-ride-th' },
+	                  'Duration'
 	                ),
 	                React.createElement(
-	                  "td",
-	                  { className: "completed-ride-tb" },
+	                  'td',
+	                  { className: 'completed-ride-tb' },
 	                  hours,
-	                  " hours ",
+	                  ' hours ',
 	                  minutes,
-	                  " minutes ",
+	                  ' minutes ',
 	                  seconds,
-	                  " seconds"
+	                  ' seconds'
 	                )
 	              ),
 	              React.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                React.createElement(
-	                  "td",
-	                  { className: "completed-ride-th" },
-	                  "Elevation"
+	                  'td',
+	                  { className: 'completed-ride-th' },
+	                  'Elevation'
 	                ),
 	                React.createElement(
-	                  "td",
-	                  { className: "completed-ride-tb" },
+	                  'td',
+	                  { className: 'completed-ride-tb' },
 	                  ride.elevation_gain,
-	                  " feet"
+	                  ' feet'
 	                )
 	              ),
 	              React.createElement(
-	                "tr",
+	                'tr',
 	                null,
 	                React.createElement(
-	                  "td",
-	                  { className: "completed-ride-th" },
-	                  "Calories"
+	                  'td',
+	                  { className: 'completed-ride-th' },
+	                  'Calories'
 	                ),
 	                React.createElement(
-	                  "td",
-	                  { className: "completed-ride-tb" },
+	                  'td',
+	                  { className: 'completed-ride-tb' },
 	                  ride.calories_burned
 	                )
 	              )
@@ -34814,9 +34866,9 @@
 	        )
 	      ),
 	      React.createElement(
-	        "div",
-	        { className: "mini-map" },
-	        React.createElement("img", { src: startImg })
+	        'div',
+	        { className: 'mini-map' },
+	        React.createElement('img', { src: startImg })
 	      )
 	    );
 	  }

@@ -9,4 +9,5 @@ json.array! @rides do |ride|
   json.user_id ride.user_id
   json.ride_id ride.id
   json.start_pos ride.start_pos
+  json.rider ride.rider
 end

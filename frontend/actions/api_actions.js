@@ -16,6 +16,13 @@ const ApiActions = {
       actionType: RideConstants.ADD_RIDE,
       ride: newRide
     });
+  },
+
+  receiveAllUsers(users) {
+    AppDispatcher.dispatch({
+      actionType: RideConstants.RECEIVE_ALL_USERS,
+      users: users
+    });
   }
 };
 
