@@ -20,7 +20,8 @@ const CreateRideForm = React.createClass({
     durationSecond: '',
     duration: '',
     calories_burned: '',
-    user_id: ''
+    user_id: '',
+    start_pos: ''
   },
 
   getInitialState() {
@@ -71,7 +72,9 @@ const CreateRideForm = React.createClass({
       return [marker.position.lat(), marker.position.lng()];
     });
     ride.ride_path = JSON.stringify(path);
-
+    let allMarkers = DirectionsStore.markers();
+    let startMarker = allMarkers[allMarkers.length - 1].position;
+    ride.start_pos = startMarker.lat() + "," + startMarker.lng();
     ApiUtil.createRide(ride, function() {
       ApiUtil.fetchRides();
     });
@@ -133,11 +136,11 @@ const CreateRideForm = React.createClass({
           </div>
           <div className="ride-form-item">
             <input type="text"
-                id="ride-duration-second"
-                placeholder="ss"
-                maxLength="2"
-                value={this.state.durationSecond}
-                onChange={this.update("durationSecond")}/>
+              id="ride-duration-second"
+              placeholder="ss"
+              maxLength="2"
+              value={this.state.durationSecond}
+              onChange={this.update("durationSecond")}/>
           </div>
         </div>
 

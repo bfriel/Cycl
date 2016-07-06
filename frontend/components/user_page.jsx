@@ -1,5 +1,6 @@
 const React = require('react'),
       ApiUtil = require('../util/api_util'),
+      RideItem = require('./ride_item'),
       RidesStore = require('../stores/rides');
 
 const UserPage = React.createClass({
@@ -29,30 +30,15 @@ const UserPage = React.createClass({
   render() {
     let rides = this.state.rides.map( (ride) => {
       return (
-        <div className="completed-ride" key={ride.id}>
-          <div id="compelted-ride-name">
-            {ride.ride_name}
-          </div>
-          <div className="completed-ride-stats">
-            <div id="completed-ride-distance">
-              Distance: {ride.elevation_gain} miles
-            </div>
-            <div id="completed-ride-duration">
-
-            </div>
-            <div id="completed-ride-elev">
-              Elevation Gain: {ride.elevation_gain} feet
-            </div>
-            <div id="completed-ride-calories">
-              Calories Burned: {ride.calories_burned}
-            </div>
-          </div>
-        </div>
+        <RideItem ride={ride} key={ride.ride_name} />
       );
     });
     return (
       <div>
-        <div className="showallrides">
+        <div className="user-inf0">
+
+        </div>
+        <div className="show-all-rides">
           {rides}
         </div>
       </div>

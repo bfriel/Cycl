@@ -13,6 +13,7 @@
 #  updated_at       :datetime         not null
 #  duration         :integer
 #  calories_burned  :integer
+#  start_pos        :string
 #
 
 require 'test_helper'

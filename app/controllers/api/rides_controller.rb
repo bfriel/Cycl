@@ -18,6 +18,6 @@ class Api::RidesController < ApplicationController
   private
   def ride_params
     params.require(:ride).permit(:ride_path, :ride_name, :elevation_gain,
-      :distance, :ride_description, :duration, :calories_burned)
+      :distance, :ride_description, :duration, :calories_burned, :start_pos)
   end
 end

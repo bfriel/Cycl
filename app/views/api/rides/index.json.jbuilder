@@ -8,4 +8,5 @@ json.array! @rides do |ride|
   json.calories_burned ride.calories_burned
   json.user_id ride.user_id
   json.ride_id ride.id
+  json.start_pos ride.start_pos
 end
