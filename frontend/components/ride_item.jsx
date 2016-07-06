@@ -15,7 +15,7 @@ const RideItem = React.createClass({
                    "&key=" +
                    window.GOOGLE_KEYS.GOOGLE_MAPS;
     return(
-      <div className="completed-ride">
+      <div className="completed-ride hvr-grow">
         <div id="completed-ride-info">
           <div id="compelted-ride-name">
             <h2>{ride.ride_name}</h2>

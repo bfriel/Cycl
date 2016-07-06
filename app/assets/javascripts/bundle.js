@@ -33486,11 +33486,36 @@
 	
 	var React = __webpack_require__(1);
 	var UserInfoPane = __webpack_require__(263),
+	    RidesStore = __webpack_require__(278),
+	    ApiUtil = __webpack_require__(277),
+	    RideItem = __webpack_require__(280),
 	    AllUsersPane = __webpack_require__(264);
 	
 	var Feed = React.createClass({
 	  displayName: 'Feed',
+	  getInitialState: function getInitialState() {
+	    return {
+	      rides: RidesStore.rides()
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    ApiUtil.fetchRides();
+	    this.rideListener = RidesStore.addListener(this._onChange);
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({
+	      rides: RidesStore.rides()
+	    });
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps() {
+	    this.setState({
+	      rides: RidesStore.rides()
+	    });
+	  },
 	  render: function render() {
+	    var rides = this.state.rides.map(function (ride) {
+	      return React.createElement(RideItem, { ride: ride, key: ride.ride_name });
+	    });
 	    return React.createElement(
 	      'div',
 	      { className: 'feed-container' },
@@ -33511,6 +33536,11 @@
 	          'p',
 	          null,
 	          'When you\'re read to start mapping, click on the Create a Route button above!'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'feed' },
+	          rides
 	        )
 	      ),
 	      React.createElement(
@@ -34694,7 +34724,7 @@
 	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=200x200&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
 	    return React.createElement(
 	      "div",
-	      { className: "completed-ride" },
+	      { className: "completed-ride hvr-grow" },
 	      React.createElement(
 	        "div",
 	        { id: "completed-ride-info" },
