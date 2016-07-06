@@ -34724,7 +34724,7 @@
 	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=200x200&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
 	    return React.createElement(
 	      "div",
-	      { className: "completed-ride hvr-grow" },
+	      { className: "completed-ride hvr-pop" },
 	      React.createElement(
 	        "div",
 	        { id: "completed-ride-info" },
