@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
    namespace :api do
      resources :users, only: [:new, :create, :show, :index, :update] do
-       resource :following, only: [:create, :destroy]
+       resource :following, only: [:create, :show, :destroy]
      end
      resource :session, only: [:create, :destroy]
      resources :rides

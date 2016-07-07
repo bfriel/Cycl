@@ -32,12 +32,14 @@ function _removeFollowing(following) {
   if (idx >= 0) {
     _followings.splice(idx, 1);
   }
-  SessionStore.__emitChange();
 }
 
 function _addFollowing(following) {
   _followings.push(following);
-  SessionStore.__emitChange();
+}
+
+function _resetFollowings(followings) {
+  _followings = followings;
 }
 
 SessionStore.__onDispatch = (payload) => {
@@ -58,11 +60,21 @@ SessionStore.__onDispatch = (payload) => {
       _removeFollowing(payload.following);
       SessionStore.__emitChange();
       break;
+    case UserConstants.RECEIVE_FOLLOWINGS:
+      _resetFollowings(payload.followings);
+      SessionStore.__emitChange();
   }
 };
 
 SessionStore.followings = function() {
-  return _followings;
+  let usersFollowings = [];
+
+  _followings.map( (following) => {
+    if (following.followersId === SessionStore.currentUser().id) {
+      usersFollowings.push(following);
+    }
+  });
+  return usersFollowings;
 };
 
 SessionStore.currentUser = function() {

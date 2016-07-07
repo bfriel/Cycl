@@ -7,9 +7,9 @@ const React = require('react'),
 const AllUsers = React.createClass({
 
   getInitialState() {
-    console.log(SessionStore.followings());
     return {
       users: [],
+      currentUserId: SessionStore.currentUser().id,
       followings: SessionStore.followings()
     };
   },
@@ -18,12 +18,14 @@ const AllUsers = React.createClass({
     this.usersListener = AllUsersStore.addListener(this.updateUsers);
     this.followListener = SessionStore.addListener(this.follows);
     ApiUtil.fetchAllUsers();
+    ApiUtil.fetchAllFollows(this.state.currentUserId);
   },
 
   componentWillUnmount() {
     this.usersListener.remove();
     this.followListener.remove();
   },
+
 
   follows() {
     this.setState({

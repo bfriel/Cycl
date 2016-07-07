@@ -40,17 +40,26 @@ const UserPage = React.createClass({
   },
 
   render() {
+    let riderName;
+    if (this.state.rides.length === 0) {
+      riderName = "Their";
+    } else {
+      riderName = this.state.rides[0].rider + "'s";
+    }
+
     let header;
     if (parseInt(this.props.params.userId) === this.state.currentUser.id ) {
-      header = <h2 id="my-rides">My Rides</h2>;
+      header = <h2 id="my-rides">Your Rides</h2>;
     } else {
-      header = <h2 id="my-rides">Their Rides</h2>;
+      header = <h2 id="my-rides">{riderName} Rides</h2>;
     }
+    
     let rides = this.state.rides.map( (ride) => {
       return (
         <RideItem ride={ride} key={ride.ride_name} />
       );
     });
+
     return (
       <div>
         <div>

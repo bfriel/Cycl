@@ -22,4 +22,5 @@ function updateTotals(totals) {
   UserStore.__emitChange();
 }
 
+
 module.exports = UserStore;

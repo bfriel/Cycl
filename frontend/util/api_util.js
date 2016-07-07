@@ -63,6 +63,17 @@ const ApiUtil = {
       }
     });
   },
+
+  fetchAllFollows(id) {
+    $.ajax({
+      url: "/api/users/" + id + "/following",
+      method: "GET",
+      success(follows) {
+        ApiActions.receiveFollowings(follows);
+      }
+    });
+  }
+
 };
 
 module.exports = ApiUtil;

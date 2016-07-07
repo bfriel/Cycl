@@ -5,6 +5,12 @@ class Api::FollowingsController < ApplicationController
     render :follow
   end
 
+  def show
+    @follows = Following.all
+
+    render :show
+  end
+
   def destroy
 
     @follow = current_user.out_follows.find_by(following_id: params[:user_id])

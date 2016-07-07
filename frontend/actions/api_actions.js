@@ -46,6 +46,13 @@ const ApiActions = {
       following: following
     });
   },
+
+  receiveFollowings(followings) {
+    AppDispatcher.dispatch({
+      actionType: UserConstants.RECEIVE_FOLLOWINGS,
+      followings: followings
+    });
+  }
 };
 
 module.exports = ApiActions;

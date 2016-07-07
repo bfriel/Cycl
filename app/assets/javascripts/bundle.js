@@ -26700,12 +26700,14 @@
 	  if (idx >= 0) {
 	    _followings.splice(idx, 1);
 	  }
-	  SessionStore.__emitChange();
 	}
 	
 	function _addFollowing(following) {
 	  _followings.push(following);
-	  SessionStore.__emitChange();
+	}
+	
+	function _resetFollowings(followings) {
+	  _followings = followings;
 	}
 	
 	SessionStore.__onDispatch = function (payload) {
@@ -26726,11 +26728,21 @@
 	      _removeFollowing(payload.following);
 	      SessionStore.__emitChange();
 	      break;
+	    case UserConstants.RECEIVE_FOLLOWINGS:
+	      _resetFollowings(payload.followings);
+	      SessionStore.__emitChange();
 	  }
 	};
 	
 	SessionStore.followings = function () {
-	  return _followings;
+	  var usersFollowings = [];
+	
+	  _followings.map(function (following) {
+	    if (following.followersId === SessionStore.currentUser().id) {
+	      usersFollowings.push(following);
+	    }
+	  });
+	  return usersFollowings;
 	};
 	
 	SessionStore.currentUser = function () {
@@ -33781,9 +33793,9 @@
 	var AllUsers = React.createClass({
 	  displayName: 'AllUsers',
 	  getInitialState: function getInitialState() {
-	    console.log(SessionStore.followings());
 	    return {
 	      users: [],
+	      currentUserId: SessionStore.currentUser().id,
 	      followings: SessionStore.followings()
 	    };
 	  },
@@ -33791,6 +33803,7 @@
 	    this.usersListener = AllUsersStore.addListener(this.updateUsers);
 	    this.followListener = SessionStore.addListener(this.follows);
 	    ApiUtil.fetchAllUsers();
+	    ApiUtil.fetchAllFollows(this.state.currentUserId);
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.usersListener.remove();
@@ -33917,23 +33930,33 @@
 	    });
 	  },
 	  render: function render() {
+	    var riderName = void 0;
+	    if (this.state.rides.length === 0) {
+	      riderName = "Their";
+	    } else {
+	      riderName = this.state.rides[0].rider + "'s";
+	    }
+	
 	    var header = void 0;
 	    if (parseInt(this.props.params.userId) === this.state.currentUser.id) {
 	      header = React.createElement(
 	        'h2',
 	        { id: 'my-rides' },
-	        'My Rides'
+	        'Your Rides'
 	      );
 	    } else {
 	      header = React.createElement(
 	        'h2',
 	        { id: 'my-rides' },
-	        'Their Rides'
+	        riderName,
+	        ' Rides'
 	      );
 	    }
+	
 	    var rides = this.state.rides.map(function (ride) {
 	      return React.createElement(RideItem, { ride: ride, key: ride.ride_name });
 	    });
+	
 	    return React.createElement(
 	      'div',
 	      null,
@@ -34950,6 +34973,15 @@
 	        ApiActions.removeFollowing(follow);
 	      }
 	    });
+	  },
+	  fetchAllFollows: function fetchAllFollows(id) {
+	    $.ajax({
+	      url: "/api/users/" + id + "/following",
+	      method: "GET",
+	      success: function success(follows) {
+	        ApiActions.receiveFollowings(follows);
+	      }
+	    });
 	  }
 	};
 	
@@ -35055,6 +35087,12 @@
 	    AppDispatcher.dispatch({
 	      actionType: UserConstants.REMOVE_FOLLOWING,
 	      following: following
+	    });
+	  },
+	  receiveFollowings: function receiveFollowings(followings) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.RECEIVE_FOLLOWINGS,
+	      followings: followings
 	    });
 	  }
 	};
@@ -35283,7 +35321,8 @@
 	  REMOVE_FOLLOWING: "REMOVE_FOLLOWING",
 	  USER_TOTALS: "USER_TOTALS",
 	  RECEIVE_ALL_USERS: "RECEIVE_ALL_USERS",
-	  UPDATE_USER: "UPDATE_USER"
+	  UPDATE_USER: "UPDATE_USER",
+	  RECEIVE_FOLLOWINGS: "RECEIVE_FOLLOWINGS"
 	};
 	
 	module.exports = UserConstants;
