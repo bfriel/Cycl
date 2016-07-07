@@ -34,12 +34,32 @@ const ApiUtil = {
     });
   },
 
-  fetchUserTotals: function (id) {
+  fetchUserTotals(id) {
     $.ajax({
       url: "/api/users/" + id,
       method: "GET",
       success(totals) {
         ApiActions.userTotals(totals);
+      }
+    });
+  },
+
+  followUser(id) {
+    $.ajax({
+      url: "/api/users/" + id + "/following",
+      method: "POST",
+      success(follow) {
+        ApiActions.addFollowing(follow);
+      }
+    });
+  },
+
+  unfollowUser(id) {
+    $.ajax({
+      url: "/api/users/" + id + "/following",
+      method: "DELETE",
+      success(follow) {
+        ApiActions.removeFollowing(follow);
       }
     });
   },

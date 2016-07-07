@@ -8,7 +8,7 @@ const SessionConstants = require('../constants/session_constants'),
 const SessionStore = new Store(AppDispatcher);
 
 let _currentUser = {};
-let _followings = {};
+let _followings = [];
 let _currentUserHasBeenFetched = false;
 
 function _login(currentUser) {
@@ -50,11 +50,13 @@ SessionStore.__onDispatch = (payload) => {
     	_logout();
       SessionStore.__emitChange();
       break;
-    case UserConstants.ADD_FOLLOWINGS:
+    case UserConstants.ADD_FOLLOWING:
       _addFollowing(payload.following);
+      SessionStore.__emitChange();
       break;
     case UserConstants.REMOVE_FOLLOWING:
       _removeFollowing(payload.following);
+      SessionStore.__emitChange();
       break;
   }
 };

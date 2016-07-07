@@ -16,11 +16,13 @@ const UserInfo = React.createClass({
   },
 
   componentDidMount() {
-      this.userListener = UserStore.addListener(this._updateTotals);
+    this.userListener = UserStore.addListener(this._updateTotals);
+    this.currentUserListener = SessionStore.addListener(this._updateFollow);
   },
 
   componentWillUnmount() {
     this.userListener.remove();
+    this.currentUserListener.remove();
   },
 
   componentWillReceiveProps() {
@@ -29,10 +31,24 @@ const UserInfo = React.createClass({
     }
   },
 
-  _updateTotals: function () {
+  _updateTotals() {
     this.setState({
       pageUserInfo: UserStore.totals()
     });
+  },
+
+  _updateFollow() {
+    this.setState({
+      currentUserFollowings: SessionStore.followings()
+    });
+  },
+
+  _handleFollow() {
+    ApiUtil.followUser(this.state.pageUserInfo.user.id);
+  },
+
+  _handleUnFollow() {
+    ApiUtil.unfollowUser(this.state.pageUserInfo.user.id);
   },
 
   render(){
@@ -47,19 +63,19 @@ const UserInfo = React.createClass({
       let followings = this.state.currentUserFollowings;
       let followed = false;
 
-      // followings.forEach(function (follow) {
-      //   if (follow.id === this.state.pageUserInfo.user.id) {
-      //     followed = true;
-      //   }
-      // }.bind(this));
+      followings.forEach(function (follow) {
+        if (follow.id === this.state.pageUserInfo.user.id) {
+          followed = true;
+        }
+      }.bind(this));
 
       let button;
       if (this.state.pageUserInfo.user.id === this.state.currentUserId) {
         button = "";
       } else if (followed){
-        button = <button onClick={this.handleUnFollow}>Unfollow</button>;
+        button = <button id="follow-button" onClick={this._handleUnFollow}>Unfollow</button>;
       } else {
-        button = <button onClick={this.handleFollow}>Follow</button>;
+        button = <button id="follow-button" onClick={this._handleFollow}>Follow</button>;
       }
 
       return (

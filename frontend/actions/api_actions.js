@@ -32,6 +32,20 @@ const ApiActions = {
       totals: totals
     });
   },
+
+  addFollowing(following) {
+    AppDispatcher.dispatch({
+      actionType: UserConstants.ADD_FOLLOWING,
+      following: following
+    });
+  },
+
+  removeFollowing(following) {
+    AppDispatcher.dispatch({
+      actionType: UserConstants.REMOVE_FOLLOWING,
+      following: following
+    });
+  },
 };
 
 module.exports = ApiActions;

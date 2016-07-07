@@ -44,4 +44,4 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 });
 
-window.RidesStore = RidesStore;
+window.SessionStore = SessionStore;

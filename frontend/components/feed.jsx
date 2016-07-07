@@ -3,6 +3,7 @@ const UserInfoPane = require('./user_info'),
       RidesStore = require('../stores/rides'),
       ApiUtil = require('../util/api_util'),
       RideItem = require('./ride_item'),
+      SessionStore = require('../stores/session_store'),
       AllUsersPane = require('./all_users');
 
 const Feed = React.createClass({

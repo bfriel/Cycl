@@ -42,7 +42,7 @@ const NavBar = React.createClass({
               <div className="dropdown">
                 <button className="dropbtn">
                   <div id='menu'>
-                    <img src="http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467267735/down-arrow_wwwzde.png" />
+                    <img src="http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467853219/whitearrowdown1_abyhs8.png" />
                   </div>
                 </button>
                 <div className="dropdown-content">

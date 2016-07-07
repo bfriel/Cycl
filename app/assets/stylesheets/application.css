@@ -103,3 +103,13 @@ body {
    margin: 0 auto;
    margin-left: 30px;
  }
+
+#follow-button {
+  float: right;
+  margin-right: 20px;
+  border: 1px solid black;
+  padding: 5px;
+  background: #f1ceb0;
+  width: 60px;
+  border-radius: 2px;
+}

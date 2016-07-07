@@ -93,7 +93,7 @@
 	  ), document.getElementById('root'));
 	});
 	
-	window.RidesStore = RidesStore;
+	window.SessionStore = SessionStore;
 
 /***/ },
 /* 1 */
@@ -26676,7 +26676,7 @@
 	var SessionStore = new Store(AppDispatcher);
 	
 	var _currentUser = {};
-	var _followings = {};
+	var _followings = [];
 	var _currentUserHasBeenFetched = false;
 	
 	function _login(currentUser) {
@@ -26718,11 +26718,13 @@
 	      _logout();
 	      SessionStore.__emitChange();
 	      break;
-	    case UserConstants.ADD_FOLLOWINGS:
+	    case UserConstants.ADD_FOLLOWING:
 	      _addFollowing(payload.following);
+	      SessionStore.__emitChange();
 	      break;
 	    case UserConstants.REMOVE_FOLLOWING:
 	      _removeFollowing(payload.following);
+	      SessionStore.__emitChange();
 	      break;
 	  }
 	};
@@ -33478,7 +33480,7 @@
 	              React.createElement(
 	                'div',
 	                { id: 'menu' },
-	                React.createElement('img', { src: 'http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467267735/down-arrow_wwwzde.png' })
+	                React.createElement('img', { src: 'http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467853219/whitearrowdown1_abyhs8.png' })
 	              )
 	            ),
 	            React.createElement(
@@ -33520,6 +33522,7 @@
 	    RidesStore = __webpack_require__(278),
 	    ApiUtil = __webpack_require__(277),
 	    RideItem = __webpack_require__(280),
+	    SessionStore = __webpack_require__(241),
 	    AllUsersPane = __webpack_require__(264);
 	
 	var Feed = React.createClass({
@@ -33612,23 +33615,33 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.userListener = UserStore.addListener(this._updateTotals);
+	    this.currentUserListener = SessionStore.addListener(this._updateFollow);
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.userListener.remove();
+	    this.currentUserListener.remove();
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps() {
 	    if (this.props.user) {
 	      ApiUtil.fetchUserTotals(this.props.user);
 	    }
 	  },
-	
-	
 	  _updateTotals: function _updateTotals() {
 	    this.setState({
 	      pageUserInfo: UserStore.totals()
 	    });
 	  },
-	
+	  _updateFollow: function _updateFollow() {
+	    this.setState({
+	      currentUserFollowings: SessionStore.followings()
+	    });
+	  },
+	  _handleFollow: function _handleFollow() {
+	    ApiUtil.followUser(this.state.pageUserInfo.user.id);
+	  },
+	  _handleUnFollow: function _handleUnFollow() {
+	    ApiUtil.unfollowUser(this.state.pageUserInfo.user.id);
+	  },
 	  render: function render() {
 	    if (Object.keys(this.state.pageUserInfo).length > 0) {
 	      var PageUserInfo = this.state.pageUserInfo;
@@ -33641,11 +33654,11 @@
 	      var followings = this.state.currentUserFollowings;
 	      var followed = false;
 	
-	      // followings.forEach(function (follow) {
-	      //   if (follow.id === this.state.pageUserInfo.user.id) {
-	      //     followed = true;
-	      //   }
-	      // }.bind(this));
+	      followings.forEach(function (follow) {
+	        if (follow.id === this.state.pageUserInfo.user.id) {
+	          followed = true;
+	        }
+	      }.bind(this));
 	
 	      var button = void 0;
 	      if (this.state.pageUserInfo.user.id === this.state.currentUserId) {
@@ -33653,13 +33666,13 @@
 	      } else if (followed) {
 	        button = React.createElement(
 	          'button',
-	          { onClick: this.handleUnFollow },
+	          { id: 'follow-button', onClick: this._handleUnFollow },
 	          'Unfollow'
 	        );
 	      } else {
 	        button = React.createElement(
 	          'button',
-	          { onClick: this.handleFollow },
+	          { id: 'follow-button', onClick: this._handleFollow },
 	          'Follow'
 	        );
 	      }
@@ -33796,9 +33809,28 @@
 	    var userId = e.currentTarget.dataset.userid;
 	    hashHistory.push('user/' + userId);
 	  },
+	  _followings: function _followings() {
+	    var followings = this.state.followings;
+	    if (Object.keys(followings).length === 0) {
+	      return;
+	    }
+	
+	    var yourFollowings = followings.map(function (user) {
+	      return React.createElement(
+	        'div',
+	        { key: user.id,
+	          className: 'find-user',
+	          'data-userid': user.id,
+	          onClick: this._goToUsersPage },
+	        user.username
+	      );
+	    }.bind(this));
+	    return yourFollowings;
+	  },
 	  render: function render() {
 	    var _this = this;
 	
+	    var followings = this._followings();
 	    var allUsers = this.state.users.map(function (user) {
 	      return React.createElement(
 	        'div',
@@ -33812,7 +33844,16 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      allUsers
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Users You Follow'
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        followings
+	      )
 	    );
 	  }
 	});
@@ -34128,11 +34169,6 @@
 	  SHOW_OLD_RIDE: "SHOW_OLD_RIDE",
 	  REMOVE_RIDE: "REMOVE_RIDE",
 	  RECEIVE_ELEVATION_DATA: "RECEIVE_ELEVATION_DATA",
-	  RECEIVE_USER: "RECEIVE_USER",
-	  CURRENT_USER_INFO: "CURRENT_USER_INFO",
-	  UPDATE_USER: "UPDATE_USER",
-	  CURRENT_USER_TOTALS: "CURRENT_USER_TOTALS",
-	  LOGGED_OUT: "LOGGED_OUT",
 	  UPDATE_DIRECTIONS: "UPDATE_DIRECTIONS",
 	  REST_CHART: "REST_CHART"
 	};
@@ -34875,14 +34911,30 @@
 	      }
 	    });
 	  },
-	
-	
 	  fetchUserTotals: function fetchUserTotals(id) {
 	    $.ajax({
 	      url: "/api/users/" + id,
 	      method: "GET",
 	      success: function success(totals) {
 	        ApiActions.userTotals(totals);
+	      }
+	    });
+	  },
+	  followUser: function followUser(id) {
+	    $.ajax({
+	      url: "/api/users/" + id + "/following",
+	      method: "POST",
+	      success: function success(follow) {
+	        ApiActions.addFollowing(follow);
+	      }
+	    });
+	  },
+	  unfollowUser: function unfollowUser(id) {
+	    $.ajax({
+	      url: "/api/users/" + id + "/following",
+	      method: "DELETE",
+	      success: function success(follow) {
+	        ApiActions.removeFollowing(follow);
 	      }
 	    });
 	  }
@@ -34978,6 +35030,18 @@
 	    AppDispatcher.dispatch({
 	      actionType: UserConstants.USER_TOTALS,
 	      totals: totals
+	    });
+	  },
+	  addFollowing: function addFollowing(following) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.ADD_FOLLOWING,
+	      following: following
+	    });
+	  },
+	  removeFollowing: function removeFollowing(following) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.REMOVE_FOLLOWING,
+	      following: following
 	    });
 	  }
 	};
@@ -35202,10 +35266,11 @@
 	"use strict";
 	
 	var UserConstants = {
-	  ADD_FOLLOWINGS: "ADD_FOLLOWINGS",
+	  ADD_FOLLOWING: "ADD_FOLLOWING",
 	  REMOVE_FOLLOWING: "REMOVE_FOLLOWING",
 	  USER_TOTALS: "USER_TOTALS",
-	  RECEIVE_ALL_USERS: "RECEIVE_ALL_USERS"
+	  RECEIVE_ALL_USERS: "RECEIVE_ALL_USERS",
+	  UPDATE_USER: "UPDATE_USER"
 	};
 	
 	module.exports = UserConstants;
