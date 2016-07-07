@@ -7,6 +7,7 @@ const React = require('react'),
 const AllUsers = React.createClass({
 
   getInitialState() {
+    console.log(SessionStore.followings());
     return {
       users: [],
       followings: SessionStore.followings()
@@ -41,15 +42,22 @@ const AllUsers = React.createClass({
     hashHistory.push('user/' + userId);
   },
 
+  _findFollowedUser(userId) {
+    if (this.state.users === []) {
+      return;
+    } else {
+      this.state.users.filter(function (user) { return user.id === userId; });
+    }
+  },
+
   _followings(){
     let followings = this.state.followings;
     if (Object.keys(followings).length === 0) {
-      return;
+      return <div id="no-friends">Nobody! :( Click on another user's name to check out their profile</div>;
     }
-
     let yourFollowings = followings.map(function (user) {
       return <div key={user.id}
-                  className="find-user"
+                  className="followed-user"
                   data-userid={user.id}
                   onClick={this._goToUsersPage}>{user.username}</div>;
     }.bind(this));

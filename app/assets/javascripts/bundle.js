@@ -33781,6 +33781,7 @@
 	var AllUsers = React.createClass({
 	  displayName: 'AllUsers',
 	  getInitialState: function getInitialState() {
+	    console.log(SessionStore.followings());
 	    return {
 	      users: [],
 	      followings: SessionStore.followings()
@@ -33809,17 +33810,29 @@
 	    var userId = e.currentTarget.dataset.userid;
 	    hashHistory.push('user/' + userId);
 	  },
+	  _findFollowedUser: function _findFollowedUser(userId) {
+	    if (this.state.users === []) {
+	      return;
+	    } else {
+	      this.state.users.filter(function (user) {
+	        return user.id === userId;
+	      });
+	    }
+	  },
 	  _followings: function _followings() {
 	    var followings = this.state.followings;
 	    if (Object.keys(followings).length === 0) {
-	      return;
+	      return React.createElement(
+	        'div',
+	        { id: 'no-friends' },
+	        'Nobody! :( Click on another user\'s name to check out their profile'
+	      );
 	    }
-	
 	    var yourFollowings = followings.map(function (user) {
 	      return React.createElement(
 	        'div',
 	        { key: user.id,
-	          className: 'find-user',
+	          className: 'followed-user',
 	          'data-userid': user.id,
 	          onClick: this._goToUsersPage },
 	        user.username
