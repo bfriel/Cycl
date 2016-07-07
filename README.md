@@ -8,14 +8,14 @@
 
 Cycl is a web application inspired by MapMyRun that will be build using Ruby on Rails and React.js.  By the end of Week 9, this app will, at a minimum, satisfy the following criteria:
 
-- [ ] Hosting on Heroku
-- [ ] New account creation, login, and guest/demo login
+- [x] Hosting on Heroku
+- [x] New account creation, login, and guest/demo login
 - [ ] A production README, replacing this README
-- [ ] Creation of cycling routes via Google Maps
+- [x] Creation of cycling routes via Google Maps
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
-- [ ] Feed of completed routes
+- [x] Feed of completed routes
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
@@ -23,7 +23,7 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
-- [ ] Following of other users
+- [x] Following of other users
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
