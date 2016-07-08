@@ -1,4 +1,5 @@
 const React = require('react'),
+      hashHistory = require('react-router').hashHistory,
       ElevationChart = require('./elevation_chart'),
       CreateRideForm = require('./create_ride_form'),
       DirectionsStore = require('../../stores/directions'),
@@ -30,6 +31,10 @@ const RideInfo = React.createClass({
     this.setState({ gain: ElevationStore.gain().toFixed(0) });
   },
 
+  _goToUsersPage(){
+    hashHistory.push('user/' + this.props.ride.user_id);
+  },
+
   render() {
     let rideForm;
     let header;
@@ -42,7 +47,7 @@ const RideInfo = React.createClass({
       rideForm = "";
       header = <div id="old-ride-header">
                   <h3>{this.props.ride.ride_name}</h3>
-                  <p>By {this.props.ride.rider}</p>
+                  <p onClick={this._goToUsersPage}>By {this.props.ride.rider}</p>
                 </div>;
     }
 

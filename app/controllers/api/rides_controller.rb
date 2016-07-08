@@ -9,6 +9,7 @@ class Api::RidesController < ApplicationController
   end
 
   def show
+    @ride = Ride.find
   end
 
   def index

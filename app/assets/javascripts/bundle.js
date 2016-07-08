@@ -34620,6 +34620,7 @@
 	'use strict';
 	
 	var React = __webpack_require__(1),
+	    hashHistory = __webpack_require__(168).hashHistory,
 	    ElevationChart = __webpack_require__(267),
 	    CreateRideForm = __webpack_require__(276),
 	    DirectionsStore = __webpack_require__(270),
@@ -34647,6 +34648,9 @@
 	  _updateElevation: function _updateElevation() {
 	    this.setState({ gain: ElevationStore.gain().toFixed(0) });
 	  },
+	  _goToUsersPage: function _goToUsersPage() {
+	    hashHistory.push('user/' + this.props.ride.user_id);
+	  },
 	  render: function render() {
 	    var rideForm = void 0;
 	    var header = void 0;
@@ -34667,7 +34671,7 @@
 	        ),
 	        React.createElement(
 	          'p',
-	          null,
+	          { onClick: this._goToUsersPage },
 	          'By ',
 	          this.props.ride.rider
 	        )
