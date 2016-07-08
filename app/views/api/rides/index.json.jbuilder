@@ -10,4 +10,5 @@ json.array! @rides do |ride|
   json.ride_id ride.id
   json.start_pos ride.start_pos
   json.rider ride.rider
+  json.comments ride.comments
 end

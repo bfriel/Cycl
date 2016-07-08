@@ -38,6 +38,10 @@ RidesStore.__onDispatch = function (payload) {
     case RideConstants.RIDES_RECEIVED:
       resetAllRides(payload.rides);
       break;
+    case RideConstants.NEW_COMMENT:
+      debugger;
+      addComment(payload.comment);
+      break;
   }
 };
 
@@ -48,6 +52,12 @@ function resetAllRides(rides) {
 
 function addRide(ride) {
   _rides.push(ride);
+  RidesStore.__emitChange();
+}
+
+function addComment(comment) {
+  let ride = RidesStore.findOldRide(comment.ride_id);
+  ride.comments.push(comment);
   RidesStore.__emitChange();
 }
 

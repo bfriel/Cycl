@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   has_many :rides
+  has_many :comments
 
   has_many :followings, through: :out_follows, source: :following
   has_many :out_follows, class_name: :Following, foreign_key: :follower_id

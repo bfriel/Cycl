@@ -66,6 +66,14 @@ const ApiActions = {
       actionType: RideConstants.REMOVE_RIDE
     });
   },
+
+  createComment(comment) {
+    debugger;
+    AppDispatcher.dispatch({
+      actionType: RideConstants.NEW_COMMENT,
+      comment: comment
+    });
+  }
 };
 
 module.exports = ApiActions;

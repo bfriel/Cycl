@@ -3,6 +3,7 @@ const React = require('react'),
       ElevationChart = require('./elevation_chart'),
       CreateRideForm = require('./create_ride_form'),
       DirectionsStore = require('../../stores/directions'),
+      CommentsIndex = require('../comment_index'),
       ElevationStore = require('../../stores/elevation');
 
 const RideInfo = React.createClass({
@@ -42,9 +43,14 @@ const RideInfo = React.createClass({
       rideForm = <CreateRideForm distance={this.state.distance}
                       elevation_gain={(this.state.gain * 3.28).toFixed(0)}
                       calories_burned={(this.state.distance * 40).toFixed(0)} />;
-      header = "";
+      header = <h3>Ride Stats</h3>;
     } else if (this.props.rideStatus === "old") {
-      rideForm = "";
+      rideForm =  <div>
+                    <div id="old-ride-description">
+                      {this.props.ride.ride_description}
+                    </div>
+                    <CommentsIndex ride={this.props.ride} />
+                  </div>;
       header = <div id="old-ride-header">
                   <h3>{this.props.ride.ride_name}</h3>
                   <p onClick={this._goToUsersPage}>By {this.props.ride.rider}</p>
@@ -54,7 +60,6 @@ const RideInfo = React.createClass({
     return (
       <div className="ride-stats">
         {header}
-        <h3>Ride Stats</h3>
         <div className="container">
           <table className="table">
             <tbody>

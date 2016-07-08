@@ -11,7 +11,6 @@ OldRideStore.ride = function () {
 };
 
 OldRideStore.find = function (id) {
-  debugger;
   return _oldRide[id];
 };
 

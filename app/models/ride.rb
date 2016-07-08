@@ -22,4 +22,5 @@ class Ride < ActiveRecord::Base
             :distance, :ride_description, :duration, :calories_burned, presence: true
 
   belongs_to :user
+  has_many :comments
 end

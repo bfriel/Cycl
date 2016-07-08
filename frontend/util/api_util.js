@@ -79,8 +79,20 @@ const ApiUtil = {
   },
 
   removeRide() {
-  ApiActions.removeRide();
-},
+    ApiActions.removeRide();
+  },
+
+  createComment(comment, resetFormCallback) {
+    $.ajax({
+      url: "/api/rides/" + comment.ride_id + "/comments",
+      method: "POST",
+      data: {comment: comment},
+      success(newComment) {
+        ApiActions.createComment(newComment);
+        resetFormCallback();
+      }
+    });
+  }
 
 };
 

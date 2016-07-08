@@ -34211,7 +34211,8 @@
 	  REMOVE_RIDE: "REMOVE_RIDE",
 	  RECEIVE_ELEVATION_DATA: "RECEIVE_ELEVATION_DATA",
 	  UPDATE_DIRECTIONS: "UPDATE_DIRECTIONS",
-	  REST_CHART: "REST_CHART"
+	  REST_CHART: "REST_CHART",
+	  NEW_COMMENT: "NEW_COMMENT"
 	};
 	
 	module.exports = RideConstants;
@@ -34586,7 +34587,6 @@
 	};
 	
 	OldRideStore.find = function (id) {
-	  debugger;
 	  return _oldRide[id];
 	};
 	
@@ -34624,6 +34624,7 @@
 	    ElevationChart = __webpack_require__(267),
 	    CreateRideForm = __webpack_require__(276),
 	    DirectionsStore = __webpack_require__(270),
+	    CommentsIndex = __webpack_require__(285),
 	    ElevationStore = __webpack_require__(268);
 	
 	var RideInfo = React.createClass({
@@ -34658,9 +34659,22 @@
 	      rideForm = React.createElement(CreateRideForm, { distance: this.state.distance,
 	        elevation_gain: (this.state.gain * 3.28).toFixed(0),
 	        calories_burned: (this.state.distance * 40).toFixed(0) });
-	      header = "";
+	      header = React.createElement(
+	        'h3',
+	        null,
+	        'Ride Stats'
+	      );
 	    } else if (this.props.rideStatus === "old") {
-	      rideForm = "";
+	      rideForm = React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'div',
+	          { id: 'old-ride-description' },
+	          this.props.ride.ride_description
+	        ),
+	        React.createElement(CommentsIndex, { ride: this.props.ride })
+	      );
 	      header = React.createElement(
 	        'div',
 	        { id: 'old-ride-header' },
@@ -34682,11 +34696,6 @@
 	      'div',
 	      { className: 'ride-stats' },
 	      header,
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Ride Stats'
-	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'container' },
@@ -35050,6 +35059,17 @@
 	  },
 	  removeRide: function removeRide() {
 	    ApiActions.removeRide();
+	  },
+	  createComment: function createComment(comment, resetFormCallback) {
+	    $.ajax({
+	      url: "/api/rides/" + comment.ride_id + "/comments",
+	      method: "POST",
+	      data: { comment: comment },
+	      success: function success(newComment) {
+	        ApiActions.createComment(newComment);
+	        resetFormCallback();
+	      }
+	    });
 	  }
 	};
 	
@@ -35103,6 +35123,10 @@
 	    case RideConstants.RIDES_RECEIVED:
 	      resetAllRides(payload.rides);
 	      break;
+	    case RideConstants.NEW_COMMENT:
+	      debugger;
+	      addComment(payload.comment);
+	      break;
 	  }
 	};
 	
@@ -35113,6 +35137,12 @@
 	
 	function addRide(ride) {
 	  _rides.push(ride);
+	  RidesStore.__emitChange();
+	}
+	
+	function addComment(comment) {
+	  var ride = RidesStore.findOldRide(comment.ride_id);
+	  ride.comments.push(comment);
 	  RidesStore.__emitChange();
 	}
 	
@@ -35180,6 +35210,13 @@
 	  removeRide: function removeRide() {
 	    AppDispatcher.dispatch({
 	      actionType: RideConstants.REMOVE_RIDE
+	    });
+	  },
+	  createComment: function createComment(comment) {
+	    debugger;
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.NEW_COMMENT,
+	      comment: comment
 	    });
 	  }
 	};
@@ -35474,6 +35511,144 @@
 	});
 	
 	module.exports = CreateRide;
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
+	    CommentForm = __webpack_require__(286),
+	    RidesStore = __webpack_require__(278),
+	    CommentIndexItem = __webpack_require__(287);
+	
+	var CommentIndex = React.createClass({
+	  displayName: 'CommentIndex',
+	  getInitialState: function getInitialState() {
+	    return {
+	      ride: this.props.ride,
+	      rideId: this.props.ride.ride_id
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.ridesListener = RidesStore.addListener(this._onChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.ridesListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({
+	      ride: RidesStore.findOldRide(this.state.rideId)
+	    });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { id: 'all-comment-container' },
+	      React.createElement(
+	        'ul',
+	        { className: 'comment-index' },
+	        this.state.ride.comments.map(function (comment) {
+	          return React.createElement(CommentIndexItem, { comment: comment, key: comment.id });
+	        })
+	      ),
+	      React.createElement(CommentForm, { ride: this.props.ride })
+	    );
+	  }
+	});
+	
+	module.exports = CommentIndex;
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
+	    ApiUtil = __webpack_require__(277),
+	    SessionStore = __webpack_require__(241);
+	
+	var CommentForm = React.createClass({
+	  displayName: 'CommentForm',
+	  getInitialState: function getInitialState() {
+	    return {
+	      body: "",
+	      currentUser: SessionStore.currentUser()
+	    };
+	  },
+	  _updateComment: function _updateComment(e) {
+	    this.setState({ body: e.target.value });
+	  },
+	  _submitWithEnterKey: function _submitWithEnterKey(e) {
+	    if (e.keyCode === 13) {
+	      this.handleSubmit(e);
+	      this.setState({ body: "" });
+	    }
+	  },
+	  handleSubmit: function handleSubmit(e) {
+	    var _this = this;
+	
+	    e.preventDefault();
+	    var comment = { body: this.state.body,
+	      author: this.state.currentUser.username,
+	      user_id: this.state.currentUser.id,
+	      ride_id: this.props.ride.ride_id };
+	    ApiUtil.createComment(comment, function () {
+	      _this.setState({ body: "" });
+	    });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'new-comment-form-container' },
+	      React.createElement(
+	        'form',
+	        { className: 'new-comment-form',
+	          onSubmit: this.handleSubmit },
+	        React.createElement('input', { type: 'text',
+	          value: this.state.body,
+	          placeholder: 'Write a comment...',
+	          onChange: this._updateComment,
+	          onKeyDown: this._submitWithEnterKey,
+	          className: "new-comment-input" })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CommentForm;
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var CommentIndexItem = React.createClass({
+	  displayName: "CommentIndexItem",
+	  render: function render() {
+	    return React.createElement(
+	      "li",
+	      { className: "comment-item" },
+	      React.createElement(
+	        "div",
+	        { className: "comment-author" },
+	        this.props.comment.author
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "comment-body" },
+	        this.props.comment.body
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CommentIndexItem;
 
 /***/ }
 /******/ ]);
