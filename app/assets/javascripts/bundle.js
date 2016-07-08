@@ -34652,9 +34652,37 @@
 	  _goToUsersPage: function _goToUsersPage() {
 	    hashHistory.push('user/' + this.props.ride.user_id);
 	  },
+	  _getTime: function _getTime(seconds) {
+	    var hours = Math.floor(seconds / 3600);
+	    var mins = Math.floor(seconds / 60 % 60);
+	    var secs = Math.floor(seconds % 60);
+	    var digitalTime = '';
+	
+	    if (hours < 10) {
+	      digitalTime += '0' + hours + ':';
+	    } else {
+	      digitalTime += hours + ':';
+	    }
+	
+	    if (mins < 10) {
+	      digitalTime += '0' + mins + ':';
+	    } else {
+	      digitalTime += mins + ':';
+	    }
+	
+	    if (secs < 10) {
+	      digitalTime += '0' + secs;
+	    } else {
+	      digitalTime += secs;
+	    }
+	
+	    return digitalTime;
+	  },
 	  render: function render() {
 	    var rideForm = void 0;
 	    var header = void 0;
+	    var rideData = void 0;
+	    var ride = this.props.ride;
 	    if (this.props.rideStatus === "new") {
 	      rideForm = React.createElement(CreateRideForm, { distance: this.state.distance,
 	        elevation_gain: (this.state.gain * 3.28).toFixed(0),
@@ -34664,16 +34692,18 @@
 	        null,
 	        'Ride Stats'
 	      );
+	      rideData = React.createElement('tr', null);
 	    } else if (this.props.rideStatus === "old") {
+	      var duration = this._getTime(ride.duration);
 	      rideForm = React.createElement(
 	        'div',
 	        null,
 	        React.createElement(
 	          'div',
 	          { id: 'old-ride-description' },
-	          this.props.ride.ride_description
+	          ride.ride_description
 	        ),
-	        React.createElement(CommentsIndex, { ride: this.props.ride })
+	        React.createElement(CommentsIndex, { ride: ride })
 	      );
 	      header = React.createElement(
 	        'div',
@@ -34681,13 +34711,27 @@
 	        React.createElement(
 	          'h3',
 	          null,
-	          this.props.ride.ride_name
+	          ride.ride_name
 	        ),
 	        React.createElement(
 	          'p',
 	          { onClick: this._goToUsersPage },
 	          'By ',
-	          this.props.ride.rider
+	          ride.rider
+	        )
+	      );
+	      rideData = React.createElement(
+	        'tr',
+	        null,
+	        React.createElement(
+	          'th',
+	          null,
+	          'Duration'
+	        ),
+	        React.createElement(
+	          'td',
+	          null,
+	          duration
 	        )
 	      );
 	    }
@@ -34720,6 +34764,7 @@
 	                ' miles'
 	              )
 	            ),
+	            rideData,
 	            React.createElement(
 	              'tr',
 	              null,
@@ -34911,7 +34956,7 @@
 	          'div',
 	          { className: 'ride-form-title' },
 	          React.createElement('input', { type: 'text',
-	            value: this.state.name,
+	            value: this.state.ride_name,
 	            placeholder: 'Name your route',
 	            id: 'ride-name',
 	            onChange: this.update("ride_name") }),
@@ -35124,7 +35169,6 @@
 	      resetAllRides(payload.rides);
 	      break;
 	    case RideConstants.NEW_COMMENT:
-	      debugger;
 	      addComment(payload.comment);
 	      break;
 	  }

@@ -19,7 +19,7 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
-- [ ] Comments on routes
+- [x] Comments on routes
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
@@ -47,11 +47,11 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 **Objective:** Functioning rails project with Authentication. Set up on Heroku
 
-- [ ] Create new project
-- [ ] Create `User` model
-- [ ] Authentication
-- [ ] User signup/signin pages
-- [ ] Styled landing page with Navbar after login
+- [x] Create new project
+- [x] Create `User` model
+- [x] Authentication
+- [x] User signup/signin pages
+- [x] Styled landing page with Navbar after login
 
 * [Phase One][phase-one]
 [phase-one]: docs/phases/phase1.md
@@ -60,10 +60,10 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 **Objective:** Routes can be created through the API/User interface.
 
-- [ ] Allow users to create routes using Google Maps API
-- [ ] Routes can be saved along with their mileage, duration, elevation gain, calories burned, description, and picture of route
-- [ ] Routes can be reused
-- [ ] Create Route page is styled
+- [x] Allow users to create routes using Google Maps API
+- [x] Routes can be saved along with their mileage, duration, elevation gain, calories burned, description, and picture of route
+- [x] Routes can be reused
+- [x] Create Route page is styled
 
 * [Phase Two][phase-three]
 [phase-three]: docs/phases/phase3.md
@@ -72,9 +72,9 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 **Objective:** Routes can be viewed through the API/User interface.
 
-- [ ] Saved Routes appear automatically on User Page
-- [ ] Feed shows routes of all folowees
-- [ ] Feed and User Page are styled
+- [x] Saved Routes appear automatically on User Page
+- [x] Feed shows routes of all users
+- [x] Feed and User Page are styled
 
 * [Phase Three][phase-three]
 [phase-three]: docs/phases/phase3.md
@@ -83,20 +83,20 @@ Cycl is a web application inspired by MapMyRun that will be build using Ruby on 
 
 **Objective:** Seamless navigation from Dashboard to User and Follower pages.
 
-- [ ] Create `Follower` model
-- [ ] Seed the database with a small amount of test data
-- [ ] CRUD API for routes (`FollowersController`)
-- [ ] jBuilder views for users
-- [ ] Setup Webpack & Flux scaffold
-- [ ] Setup `APIUtil` to interact with the API
-- [ ] Test out API interaction in the console
+- [x] Create `Follower` model
+- [x] Seed the database with a small amount of test data
+- [x] CRUD API for routes (`FollowersController`)
+- [x] jBuilder views for users
+- [x] Setup Webpack & Flux scaffold
+- [x] Setup `APIUtil` to interact with the API
+- [x] Test out API interaction in the console
 
 
 ### Phase 5: Adding Comments to Routes (1 day)
 
 **Objective:** Existing route pages will show comments.
 
-- [ ] Allow users to leave comments on a Route Show page
+- [x] Allow users to leave comments on a Route Show page
 
 * [Phase Five][phase-five]
 [phase-five]: docs/phases/phase5.md

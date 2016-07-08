@@ -39,7 +39,6 @@ RidesStore.__onDispatch = function (payload) {
       resetAllRides(payload.rides);
       break;
     case RideConstants.NEW_COMMENT:
-      debugger;
       addComment(payload.comment);
       break;
   }

@@ -36,25 +36,60 @@ const RideInfo = React.createClass({
     hashHistory.push('user/' + this.props.ride.user_id);
   },
 
+  _getTime(seconds){
+    let hours = Math.floor(seconds / 3600);
+    let mins = Math.floor(seconds / 60 % 60);
+    let secs = Math.floor(seconds % 60);
+    let digitalTime = '';
+
+    if (hours < 10) {
+      digitalTime += '0' + hours + ':';
+    } else {
+      digitalTime += hours + ':';
+    }
+
+    if (mins < 10) {
+      digitalTime += '0' + mins + ':';
+    } else {
+      digitalTime += mins + ':';
+    }
+
+    if (secs < 10) {
+      digitalTime += '0' + secs;
+    } else {
+      digitalTime += secs;
+    }
+
+    return digitalTime;
+  },
+
   render() {
     let rideForm;
     let header;
+    let rideData;
+    let ride = this.props.ride;
     if (this.props.rideStatus === "new") {
       rideForm = <CreateRideForm distance={this.state.distance}
                       elevation_gain={(this.state.gain * 3.28).toFixed(0)}
                       calories_burned={(this.state.distance * 40).toFixed(0)} />;
       header = <h3>Ride Stats</h3>;
+      rideData = <tr></tr>;
     } else if (this.props.rideStatus === "old") {
+      let duration = this._getTime(ride.duration);
       rideForm =  <div>
                     <div id="old-ride-description">
-                      {this.props.ride.ride_description}
+                      {ride.ride_description}
                     </div>
-                    <CommentsIndex ride={this.props.ride} />
+                    <CommentsIndex ride={ride} />
                   </div>;
       header = <div id="old-ride-header">
-                  <h3>{this.props.ride.ride_name}</h3>
-                  <p onClick={this._goToUsersPage}>By {this.props.ride.rider}</p>
+                  <h3>{ride.ride_name}</h3>
+                  <p onClick={this._goToUsersPage}>By {ride.rider}</p>
                 </div>;
+      rideData = <tr>
+                  <th>Duration</th>
+                  <td>{duration}</td>
+                </tr>;
     }
 
     return (
@@ -67,6 +102,7 @@ const RideInfo = React.createClass({
                 <th>Distance</th>
                 <td>{this.state.distance} miles</td>
               </tr>
+                {rideData}
               <tr>
                 <th>Elevation Gain</th>
                 <td>{(this.state.gain * 3.28).toFixed(0)} feet</td>
