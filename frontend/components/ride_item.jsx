@@ -5,9 +5,13 @@ const React = require('react'),
 const RideItem = React.createClass({
 
   _goToUsersPage() {
-      hashHistory.push('user/' + this.props.ride.user_id);
+    hashHistory.push('user/' + this.props.ride.user_id);
   },
-  
+
+  _goToShow() {
+    hashHistory.push('ride/' + this.props.ride.ride_id);
+  },
+
   render(){
     let currentUser = SessionStore.currentUser();
     let ride = this.props.ride;
@@ -21,7 +25,7 @@ const RideItem = React.createClass({
                    "&key=" +
                    window.GOOGLE_KEYS.GOOGLE_MAPS;
     return(
-      <div className="completed-ride hvr-pop">
+      <div className="completed-ride hvr-pop" onClick={this._goToShow}>
         <div id="completed-ride-info">
           <div>
             <h2 id="completed-ride-name">{ride.ride_name}</h2>

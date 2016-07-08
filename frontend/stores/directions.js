@@ -28,7 +28,7 @@ DirectionsStore.__onDispatch = function (payload) {
     case RideConstants.STORE_MARKERS:
       updateMarkers(payload.markers);
       break;
-    case RideConstants.REMOVE_ROUTE:
+    case RideConstants.REMOVE_RIDE:
       resetRoute();
       break;
   }

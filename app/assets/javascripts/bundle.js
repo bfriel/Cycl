@@ -59,10 +59,11 @@
 	    UserPage = __webpack_require__(265),
 	    CreateRide = __webpack_require__(266),
 	    SignupForm = __webpack_require__(231),
-	    RidesStore = __webpack_require__(278),
+	    ShowRide = __webpack_require__(284),
 	    LoginForm = __webpack_require__(260);
 	//Flux
 	var SessionStore = __webpack_require__(241),
+	    RidesStore = __webpack_require__(278),
 	    SessionActions = __webpack_require__(232);
 	
 	var routes = React.createElement(
@@ -72,7 +73,8 @@
 	  React.createElement(Route, { path: '/login', component: LoginForm }),
 	  React.createElement(Route, { path: '/signup', component: SignupForm }),
 	  React.createElement(Route, { path: 'create_ride', component: CreateRide }),
-	  React.createElement(Route, { path: 'user/:userId', component: UserPage, onEnter: _ensureLoggedIn })
+	  React.createElement(Route, { path: 'user/:userId', component: UserPage, onEnter: _ensureLoggedIn }),
+	  React.createElement(Route, { path: 'ride/:rideId', component: ShowRide, onEnter: _ensureLoggedIn })
 	);
 	
 	function _ensureLoggedIn(nextState, replace) {
@@ -34023,7 +34025,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'ride-info-pane' },
-	        React.createElement(RideInfo, null)
+	        React.createElement(RideInfo, { rideStatus: 'new' })
 	      ),
 	      React.createElement(
 	        'div',
@@ -34162,7 +34164,7 @@
 	    case RideConstants.RESET_CHART:
 	      resetElevation();
 	      break;
-	    case RideConstants.REMOVE_ROUTE:
+	    case RideConstants.REMOVE_RIDE:
 	      resetElevation();
 	      break;
 	  }
@@ -34250,7 +34252,7 @@
 	    case RideConstants.STORE_MARKERS:
 	      updateMarkers(payload.markers);
 	      break;
-	    case RideConstants.REMOVE_ROUTE:
+	    case RideConstants.REMOVE_RIDE:
 	      resetRoute();
 	      break;
 	  }
@@ -34583,6 +34585,11 @@
 	  return _oldRide;
 	};
 	
+	OldRideStore.find = function (id) {
+	  debugger;
+	  return _oldRide[id];
+	};
+	
 	OldRideStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
 	    case RideConstants.SHOW_OLD_RIDE:
@@ -34641,9 +34648,36 @@
 	    this.setState({ gain: ElevationStore.gain().toFixed(0) });
 	  },
 	  render: function render() {
+	    var rideForm = void 0;
+	    var header = void 0;
+	    if (this.props.rideStatus === "new") {
+	      rideForm = React.createElement(CreateRideForm, { distance: this.state.distance,
+	        elevation_gain: (this.state.gain * 3.28).toFixed(0),
+	        calories_burned: (this.state.distance * 40).toFixed(0) });
+	      header = "";
+	    } else if (this.props.rideStatus === "old") {
+	      rideForm = "";
+	      header = React.createElement(
+	        'div',
+	        { id: 'old-ride-header' },
+	        React.createElement(
+	          'h3',
+	          null,
+	          this.props.ride.ride_name
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          'By ',
+	          this.props.ride.rider
+	        )
+	      );
+	    }
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'ride-stats' },
+	      header,
 	      React.createElement(
 	        'h3',
 	        null,
@@ -34705,9 +34739,7 @@
 	          )
 	        )
 	      ),
-	      React.createElement(CreateRideForm, { distance: this.state.distance,
-	        elevation_gain: (this.state.gain * 3.28).toFixed(0),
-	        calories_burned: (this.state.distance * 40).toFixed(0) })
+	      rideForm
 	    );
 	  }
 	});
@@ -34826,7 +34858,7 @@
 	        ride_description: "",
 	        distance: ""
 	      });
-	      ApiUtil.removeRoute();
+	      ApiUtil.removeRide();
 	      this.newRoute = true;
 	    }
 	  },
@@ -35011,6 +35043,9 @@
 	  },
 	  showOldRide: function showOldRide(ride) {
 	    ApiActions.showOldRide(ride);
+	  },
+	  removeRide: function removeRide() {
+	    ApiActions.removeRide();
 	  }
 	};
 	
@@ -35046,6 +35081,14 @@
 	  });
 	
 	  return result;
+	};
+	
+	RidesStore.findOldRide = function (rideId) {
+	  for (var i = 0; i < _rides.length; i++) {
+	    if (_rides[i].ride_id === rideId) {
+	      return _rides[i];
+	    }
+	  }
 	};
 	
 	RidesStore.__onDispatch = function (payload) {
@@ -35129,6 +35172,11 @@
 	      actionType: RideConstants.SHOW_OLD_RIDE,
 	      ride: ride
 	    });
+	  },
+	  removeRide: function removeRide() {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.REMOVE_RIDE
+	    });
 	  }
 	};
 	
@@ -35149,6 +35197,9 @@
 	  _goToUsersPage: function _goToUsersPage() {
 	    hashHistory.push('user/' + this.props.ride.user_id);
 	  },
+	  _goToShow: function _goToShow() {
+	    hashHistory.push('ride/' + this.props.ride.ride_id);
+	  },
 	  render: function render() {
 	    var currentUser = SessionStore.currentUser();
 	    var ride = this.props.ride;
@@ -35158,7 +35209,7 @@
 	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=200x200&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
 	    return React.createElement(
 	      'div',
-	      { className: 'completed-ride hvr-pop' },
+	      { className: 'completed-ride hvr-pop', onClick: this._goToShow },
 	      React.createElement(
 	        'div',
 	        { id: 'completed-ride-info' },
@@ -35361,6 +35412,64 @@
 	};
 	
 	module.exports = UserConstants;
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var ElevationChart = __webpack_require__(267),
+	    RideMap = __webpack_require__(273),
+	    ApiUtil = __webpack_require__(277),
+	    RidesStore = __webpack_require__(278),
+	    OldRideStore = __webpack_require__(274),
+	    RideInfo = __webpack_require__(275);
+	
+	var CreateRide = React.createClass({
+	  displayName: 'CreateRide',
+	  getInitialState: function getInitialState() {
+	    return { ride: RidesStore.findOldRide(parseInt(this.props.params.rideId)) };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    ApiUtil.showOldRide(this.state.ride);
+	  },
+	  render: function render() {
+	    var ride = this.state.ride;
+	    return React.createElement(
+	      'div',
+	      { className: 'create-ride-page clear-fix' },
+	      React.createElement(
+	        'div',
+	        { className: 'instructions clear-fix' },
+	        React.createElement(
+	          'h5',
+	          null,
+	          ride.ride_name
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'block-for-map' },
+	        React.createElement(RideMap, { ride: ride })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'ride-info-pane' },
+	        React.createElement(RideInfo, { rideStatus: 'old', ride: ride })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'elev-chart' },
+	        React.createElement(ElevationChart, { ride: ride })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CreateRide;
 
 /***/ }
 /******/ ]);

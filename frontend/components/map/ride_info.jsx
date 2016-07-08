@@ -31,8 +31,24 @@ const RideInfo = React.createClass({
   },
 
   render() {
+    let rideForm;
+    let header;
+    if (this.props.rideStatus === "new") {
+      rideForm = <CreateRideForm distance={this.state.distance}
+                      elevation_gain={(this.state.gain * 3.28).toFixed(0)}
+                      calories_burned={(this.state.distance * 40).toFixed(0)} />;
+      header = "";
+    } else if (this.props.rideStatus === "old") {
+      rideForm = "";
+      header = <div id="old-ride-header">
+                  <h3>{this.props.ride.ride_name}</h3>
+                  <p>By {this.props.ride.rider}</p>
+                </div>;
+    }
+
     return (
       <div className="ride-stats">
+        {header}
         <h3>Ride Stats</h3>
         <div className="container">
           <table className="table">
@@ -52,9 +68,7 @@ const RideInfo = React.createClass({
             </tbody>
           </table>
         </div>
-        <CreateRideForm distance={this.state.distance}
-                        elevation_gain={(this.state.gain * 3.28).toFixed(0)}
-                        calories_burned={(this.state.distance * 40).toFixed(0)} />
+        {rideForm}
       </div>
     );
   }

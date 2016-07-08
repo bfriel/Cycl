@@ -15,7 +15,7 @@ const CreateRide = React.createClass({
           <CreateRideMap />
         </div>
         <div className="ride-info-pane">
-          <RideInfo />
+          <RideInfo rideStatus="new"/>
         </div>
         <div className="elev-chart">
           <ElevationChart />

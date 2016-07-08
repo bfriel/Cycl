@@ -60,6 +60,12 @@ const ApiActions = {
       ride: ride
     });
   },
+
+  removeRide() {
+    AppDispatcher.dispatch({
+      actionType: RideConstants.REMOVE_RIDE
+    });
+  },
 };
 
 module.exports = ApiActions;

@@ -76,7 +76,11 @@ const ApiUtil = {
 
   showOldRide(ride) {
     ApiActions.showOldRide(ride);
-  }
+  },
+
+  removeRide() {
+  ApiActions.removeRide();
+},
 
 };
 

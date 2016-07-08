@@ -22,6 +22,14 @@ RidesStore.find = function (userId) {
   return result;
 };
 
+RidesStore.findOldRide = function (rideId) {
+  for (var i = 0; i < _rides.length; i++) {
+    if (_rides[i].ride_id === rideId) {
+      return _rides[i];
+    }
+  }
+};
+
 RidesStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case RideConstants.ADD_RIDE:

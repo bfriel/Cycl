@@ -23,7 +23,7 @@ ElevationStore.__onDispatch = function (payload) {
     case RideConstants.RESET_CHART:
       resetElevation();
       break;
-    case RideConstants.REMOVE_ROUTE:
+    case RideConstants.REMOVE_RIDE:
       resetElevation();
       break;
   }

@@ -10,6 +10,11 @@ OldRideStore.ride = function () {
   return _oldRide;
 };
 
+OldRideStore.find = function (id) {
+  debugger;
+  return _oldRide[id];
+};
+
 OldRideStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case RideConstants.SHOW_OLD_RIDE:

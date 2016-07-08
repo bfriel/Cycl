@@ -105,7 +105,7 @@ const CreateRideForm = React.createClass({
         ride_description: "",
         distance: ""
       });
-      ApiUtil.removeRoute();
+      ApiUtil.removeRide();
       this.newRoute = true;
     }
   },
