@@ -68,7 +68,6 @@ const ApiActions = {
   },
 
   createComment(comment) {
-    debugger;
     AppDispatcher.dispatch({
       actionType: RideConstants.NEW_COMMENT,
       comment: comment

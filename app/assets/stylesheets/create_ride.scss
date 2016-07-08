@@ -60,7 +60,18 @@
 }
 
 #ride-input {
-  min-height: 340px;
+  min-height: 275px;
+}
+
+#old-ride-description-container {
+  text-align: center;
+  margin-top: 30px;
+  height: 40px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+#old-ride-description-text {
 }
 
 #pre-chart-message {

@@ -34682,6 +34682,7 @@
 	    var rideForm = void 0;
 	    var header = void 0;
 	    var rideData = void 0;
+	    var rideDescription = void 0;
 	    var ride = this.props.ride;
 	    if (this.props.rideStatus === "new") {
 	      rideForm = React.createElement(CreateRideForm, { distance: this.state.distance,
@@ -34693,16 +34694,12 @@
 	        'Ride Stats'
 	      );
 	      rideData = React.createElement('tr', null);
+	      rideDescription = "";
 	    } else if (this.props.rideStatus === "old") {
 	      var duration = this._getTime(ride.duration);
 	      rideForm = React.createElement(
 	        'div',
 	        null,
-	        React.createElement(
-	          'div',
-	          { id: 'old-ride-description' },
-	          ride.ride_description
-	        ),
 	        React.createElement(CommentsIndex, { ride: ride })
 	      );
 	      header = React.createElement(
@@ -34732,6 +34729,15 @@
 	          'td',
 	          null,
 	          duration
+	        )
+	      );
+	      rideDescription = React.createElement(
+	        'div',
+	        { id: 'old-ride-description-container' },
+	        React.createElement(
+	          'div',
+	          { id: 'old-ride-description-text' },
+	          ride.ride_description
 	        )
 	      );
 	    }
@@ -34798,7 +34804,8 @@
 	                )
 	              )
 	            )
-	          )
+	          ),
+	          rideDescription
 	        )
 	      ),
 	      React.createElement(
@@ -35265,7 +35272,6 @@
 	    });
 	  },
 	  createComment: function createComment(comment) {
-	    debugger;
 	    AppDispatcher.dispatch({
 	      actionType: RideConstants.NEW_COMMENT,
 	      comment: comment
