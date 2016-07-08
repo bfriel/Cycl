@@ -87,6 +87,29 @@ const CreateRideForm = React.createClass({
     // }
   },
 
+  selectRide(e) {
+    let rideString = e.currentTarget.selectedOptions[0].dataset.ride;
+
+    if (rideString) {
+      let ride = JSON.parse(rideString);
+      this.setState({
+        ride_name: ride.ride_name,
+        ride_description: ride.ride_description
+      });
+      ApiUtil.showOldRide(ride);
+      this.newRoute = false;
+
+    } else {
+      this.setState({
+        ride_name: "",
+        ride_description: "",
+        distance: ""
+      });
+      ApiUtil.removeRoute();
+      this.newRoute = true;
+    }
+  },
+
   update(property) {
     return (e) => this.setState({[property]: e.target.value});
   },
@@ -95,7 +118,7 @@ const CreateRideForm = React.createClass({
     let rides;
     if (this.state.rides){
       rides = RidesStore.rides().map( (ride, idx) => {
-        return <option key={idx} data-ride={JSON.stringify(ride)}>{ride.name}</option>;
+        return <option key={idx} data-ride={JSON.stringify(ride)}>{ride.ride_name}</option>;
       });
     }
 
@@ -111,7 +134,7 @@ const CreateRideForm = React.createClass({
                 id="ride-name"
                 onChange={this.update("ride_name")} />
 
-            <select id="existing-ride-drpdwn" onChange={this.selectRoute}>
+              <select id="existing-ride-drpdwn" onChange={this.selectRide}>
               <option>Choose existing route</option>
               {rides}
             </select>

@@ -33843,7 +33843,7 @@
 	    }
 	    var yourFollowings = followings.map(function (user) {
 	      return React.createElement(
-	        'div',
+	        'button',
 	        { key: user.id,
 	          className: 'followed-user',
 	          'data-userid': user.id,
@@ -33853,13 +33853,12 @@
 	    }.bind(this));
 	    return yourFollowings;
 	  },
-	  render: function render() {
+	  _allUsers: function _allUsers() {
 	    var _this = this;
 	
-	    var followings = this._followings();
-	    var allUsers = this.state.users.map(function (user) {
+	    this.state.users.map(function (user) {
 	      return React.createElement(
-	        'div',
+	        'button',
 	        { key: user.id,
 	          className: 'all-user-item',
 	          'data-userid': user.id,
@@ -33867,13 +33866,17 @@
 	        user.username
 	      );
 	    });
+	  },
+	  render: function render() {
+	    var followings = this._followings();
+	    var allUsers = this._allUsers();
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(
 	        'h3',
 	        null,
-	        'Users You Follow'
+	        'Cyclists You Follow'
 	      ),
 	      React.createElement(
 	        'div',
@@ -34806,6 +34809,27 @@
 	    //   return;
 	    // }
 	  },
+	  selectRide: function selectRide(e) {
+	    var rideString = e.currentTarget.selectedOptions[0].dataset.ride;
+	
+	    if (rideString) {
+	      var ride = JSON.parse(rideString);
+	      this.setState({
+	        ride_name: ride.ride_name,
+	        ride_description: ride.ride_description
+	      });
+	      ApiUtil.showOldRide(ride);
+	      this.newRoute = false;
+	    } else {
+	      this.setState({
+	        ride_name: "",
+	        ride_description: "",
+	        distance: ""
+	      });
+	      ApiUtil.removeRoute();
+	      this.newRoute = true;
+	    }
+	  },
 	  update: function update(property) {
 	    var _this2 = this;
 	
@@ -34820,7 +34844,7 @@
 	        return React.createElement(
 	          'option',
 	          { key: idx, 'data-ride': JSON.stringify(ride) },
-	          ride.name
+	          ride.ride_name
 	        );
 	      });
 	    }
@@ -34846,7 +34870,7 @@
 	            onChange: this.update("ride_name") }),
 	          React.createElement(
 	            'select',
-	            { id: 'existing-ride-drpdwn', onChange: this.selectRoute },
+	            { id: 'existing-ride-drpdwn', onChange: this.selectRide },
 	            React.createElement(
 	              'option',
 	              null,
@@ -34982,6 +35006,9 @@
 	        ApiActions.receiveFollowings(follows);
 	      }
 	    });
+	  },
+	  showOldRide: function showOldRide(ride) {
+	    ApiActions.showOldRide(ride);
 	  }
 	};
 	
@@ -35093,6 +35120,12 @@
 	    AppDispatcher.dispatch({
 	      actionType: UserConstants.RECEIVE_FOLLOWINGS,
 	      followings: followings
+	    });
+	  },
+	  showOldRide: function showOldRide(ride) {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.SHOW_OLD_RIDE,
+	      ride: ride
 	    });
 	  }
 	};

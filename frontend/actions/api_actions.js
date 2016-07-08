@@ -52,7 +52,14 @@ const ApiActions = {
       actionType: UserConstants.RECEIVE_FOLLOWINGS,
       followings: followings
     });
-  }
+  },
+
+  showOldRide(ride) {
+    AppDispatcher.dispatch({
+      actionType: RideConstants.SHOW_OLD_RIDE,
+      ride: ride
+    });
+  },
 };
 
 module.exports = ApiActions;

@@ -20,6 +20,7 @@
  *= require create_ride_form
  *= require user_page
  *= require ride_item
+ *= require all_users
  */
 
 html {

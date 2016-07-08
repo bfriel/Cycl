@@ -58,25 +58,29 @@ const AllUsers = React.createClass({
       return <div id="no-friends">Nobody! :( Click on another user's name to check out their profile</div>;
     }
     let yourFollowings = followings.map(function (user) {
-      return <div key={user.id}
+      return <button key={user.id}
                   className="followed-user"
                   data-userid={user.id}
-                  onClick={this._goToUsersPage}>{user.username}</div>;
+                  onClick={this._goToUsersPage}>{user.username}</button>;
     }.bind(this));
     return yourFollowings;
     },
 
-  render(){
-    let followings = this._followings();
-    let allUsers = this.state.users.map( (user) => {
-      return <div key={user.id}
+  _allUsers() {
+    this.state.users.map( (user) => {
+      return <button key={user.id}
                 className="all-user-item"
                 data-userid={user.id}
-                onClick={this._goToUsersPage}>{user.username}</div>;
+                onClick={this._goToUsersPage}>{user.username}</button>;
     });
+  },
+
+  render(){
+    let followings = this._followings();
+    let allUsers = this._allUsers();
     return(
       <div>
-        <h3>Users You Follow</h3>
+        <h3>Cyclists You Follow</h3>
         <div>
           {followings}
         </div>

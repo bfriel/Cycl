@@ -72,6 +72,10 @@ const ApiUtil = {
         ApiActions.receiveFollowings(follows);
       }
     });
+  },
+
+  showOldRide(ride) {
+    ApiActions.showOldRide(ride);
   }
 
 };
