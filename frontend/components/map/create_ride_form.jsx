@@ -118,7 +118,9 @@ const CreateRideForm = React.createClass({
     let rides;
     if (this.state.rides){
       rides = RidesStore.rides().map( (ride, idx) => {
-        return <option key={idx} data-ride={JSON.stringify(ride)}>{ride.ride_name}</option>;
+        if (ride.user_id === SessionStore.currentUser().id) {
+          return <option key={idx} data-ride={JSON.stringify(ride)}>{ride.ride_name}</option>;
+        }
       });
     }
 

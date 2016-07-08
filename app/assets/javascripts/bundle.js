@@ -34841,11 +34841,13 @@
 	    var rides = void 0;
 	    if (this.state.rides) {
 	      rides = RidesStore.rides().map(function (ride, idx) {
-	        return React.createElement(
-	          'option',
-	          { key: idx, 'data-ride': JSON.stringify(ride) },
-	          ride.ride_name
-	        );
+	        if (ride.user_id === SessionStore.currentUser().id) {
+	          return React.createElement(
+	            'option',
+	            { key: idx, 'data-ride': JSON.stringify(ride) },
+	            ride.ride_name
+	          );
+	        }
 	      });
 	    }
 	
