@@ -16,13 +16,22 @@
 
 .ride-info-pane {
   float: right;
-  width: 300px;
   height: 600px;
+}
+
+.ride-stats {
+  width: 300px;
+  background: #fff;
   margin: 20px;
   border-radius: 10px;
-  background: #fff;
-  background-color: rgba(0, 0, 0, .7);
   box-shadow: 5px 5px 5px black;
+  background-color: rgba(0, 0, 0, .7);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.ride-stats h3 {
+  text-align: center;
 }
 
 .elev-chart {
@@ -46,7 +55,12 @@
   border-radius: 10px;
 }
 
-#elevation-chart {
+#ride-metrics {
+
+}
+
+#ride-input {
+  min-height: 340px;
 }
 
 #pre-chart-message {
@@ -66,8 +80,4 @@
   text-align: center;
   margin-left: 15px;
   font-size: 22px;
-}
-
-.ride-stats h3 {
-  text-align: center;
 }

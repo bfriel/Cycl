@@ -41,7 +41,7 @@ const Feed = React.createClass({
         <div className="intro-message">
           <h3>Welcome to Cycl!</h3>
           <p>As a warmup, check out some recent rides from the Cycl community below</p>
-          <p>When you're read to start mapping, click on the Create a Route button above!</p>
+          <p>When you're ready to start mapping, click on the Create a Route button above!</p>
           <div className="feed">
             {rides}
           </div>

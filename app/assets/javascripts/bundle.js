@@ -33583,7 +33583,7 @@
 	        React.createElement(
 	          'p',
 	          null,
-	          'When you\'re read to start mapping, click on the Create a Route button above!'
+	          'When you\'re ready to start mapping, click on the Create a Route button above!'
 	        ),
 	        React.createElement(
 	          'div',
@@ -34738,66 +34738,74 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'ride-stats' },
-	      header,
+	      null,
 	      React.createElement(
 	        'div',
-	        { className: 'container' },
+	        { className: 'ride-stats', id: 'ride-metrics' },
+	        header,
 	        React.createElement(
-	          'table',
-	          { className: 'table' },
+	          'div',
+	          { className: 'container' },
 	          React.createElement(
-	            'tbody',
-	            null,
+	            'table',
+	            { className: 'table' },
 	            React.createElement(
-	              'tr',
+	              'tbody',
 	              null,
 	              React.createElement(
-	                'th',
+	                'tr',
 	                null,
-	                'Distance'
+	                React.createElement(
+	                  'th',
+	                  null,
+	                  'Distance'
+	                ),
+	                React.createElement(
+	                  'td',
+	                  null,
+	                  this.state.distance,
+	                  ' miles'
+	                )
+	              ),
+	              rideData,
+	              React.createElement(
+	                'tr',
+	                null,
+	                React.createElement(
+	                  'th',
+	                  null,
+	                  'Elevation Gain'
+	                ),
+	                React.createElement(
+	                  'td',
+	                  null,
+	                  (this.state.gain * 3.28).toFixed(0),
+	                  ' feet'
+	                )
 	              ),
 	              React.createElement(
-	                'td',
+	                'tr',
 	                null,
-	                this.state.distance,
-	                ' miles'
-	              )
-	            ),
-	            rideData,
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'th',
-	                null,
-	                'Elevation Gain'
-	              ),
-	              React.createElement(
-	                'td',
-	                null,
-	                (this.state.gain * 3.28).toFixed(0),
-	                ' feet'
-	              )
-	            ),
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'th',
-	                null,
-	                'Calories Burned'
-	              ),
-	              React.createElement(
-	                'td',
-	                null,
-	                (this.state.distance * 40).toFixed(0)
+	                React.createElement(
+	                  'th',
+	                  null,
+	                  'Calories Burned'
+	                ),
+	                React.createElement(
+	                  'td',
+	                  null,
+	                  (this.state.distance * 40).toFixed(0)
+	                )
 	              )
 	            )
 	          )
 	        )
 	      ),
-	      rideForm
+	      React.createElement(
+	        'div',
+	        { className: 'ride-stats', id: 'ride-input' },
+	        rideForm
+	      )
 	    );
 	  }
 	});

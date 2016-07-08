@@ -93,28 +93,33 @@ const RideInfo = React.createClass({
     }
 
     return (
-      <div className="ride-stats">
-        {header}
-        <div className="container">
-          <table className="table">
-            <tbody>
-              <tr>
-                <th>Distance</th>
-                <td>{this.state.distance} miles</td>
-              </tr>
-                {rideData}
-              <tr>
-                <th>Elevation Gain</th>
-                <td>{(this.state.gain * 3.28).toFixed(0)} feet</td>
-              </tr>
-              <tr>
-                <th>Calories Burned</th>
-                <td>{(this.state.distance * 40).toFixed(0)}</td>
-              </tr>
-            </tbody>
-          </table>
+      <div>
+        <div className="ride-stats" id="ride-metrics">
+          {header}
+          <div className="container">
+            <table className="table">
+              <tbody>
+                <tr>
+                  <th>Distance</th>
+                  <td>{this.state.distance} miles</td>
+                </tr>
+                  {rideData}
+                <tr>
+                  <th>Elevation Gain</th>
+                  <td>{(this.state.gain * 3.28).toFixed(0)} feet</td>
+                </tr>
+                <tr>
+                  <th>Calories Burned</th>
+                  <td>{(this.state.distance * 40).toFixed(0)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        {rideForm}
+        <div className="ride-stats" id="ride-input">
+          {rideForm}
+
+        </div>
       </div>
     );
   }
