@@ -1,3 +1,24 @@
 .comment-index {
-  height: 210px;
+  height: 250px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.comment-item {
+  margin: 5px;
+}
+
+.comment-author {
+  color: gray;
+}
+
+.comment-body {
+}
+
+#new-comment-input {
+  height: 20px;
+  width: 95%;
+  font-size: 16px;
+  margin-bottom: 0px;
+  margin-left: 5px;
 }

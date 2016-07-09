@@ -44,7 +44,7 @@ const CommentForm = React.createClass({
                   placeholder="Write a comment..."
                   onChange={this._updateComment}
                   onKeyDown={this._submitWithEnterKey}
-                  className={"new-comment-input"} >
+                  id="new-comment-input" >
             </input>
         </form>
 

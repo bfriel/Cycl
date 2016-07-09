@@ -35670,7 +35670,7 @@
 	          placeholder: 'Write a comment...',
 	          onChange: this._updateComment,
 	          onKeyDown: this._submitWithEnterKey,
-	          className: "new-comment-input" })
+	          id: 'new-comment-input' })
 	      )
 	    );
 	  }
