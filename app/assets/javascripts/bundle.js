@@ -33543,7 +33543,7 @@
 	  displayName: 'Feed',
 	  getInitialState: function getInitialState() {
 	    return {
-	      rides: RidesStore.rides()
+	      rides: RidesStore.rides().reverse()
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
@@ -33552,12 +33552,12 @@
 	  },
 	  _onChange: function _onChange() {
 	    this.setState({
-	      rides: RidesStore.rides()
+	      rides: RidesStore.rides().reverse()
 	    });
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps() {
 	    this.setState({
-	      rides: RidesStore.rides()
+	      rides: RidesStore.rides().reverse()
 	    });
 	  },
 	  render: function render() {
@@ -33707,7 +33707,7 @@
 	        ),
 	        React.createElement(
 	          'table',
-	          { className: 'table' },
+	          { className: 'table', id: 'lifetime-stats' },
 	          React.createElement(
 	            'tbody',
 	            null,

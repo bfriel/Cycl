@@ -84,7 +84,7 @@ const UserInfo = React.createClass({
           {button}
           <h4>Lifetime Stats</h4>
 
-          <table className="table">
+          <table className="table" id="lifetime-stats">
             <tbody>
               <tr>
                 <td>{UserTotals.rideCount} rides</td>

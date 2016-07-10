@@ -29,7 +29,7 @@ const CommentIndex = React.createClass({
   render(){
     return (
       <div id="all-comment-container">
-        <ul className="comment-index">
+        <ul className="comment-index" >
           {
             this.state.ride.comments.map( (comment) => {
               return <CommentIndexItem comment={comment} key={comment.id} />;

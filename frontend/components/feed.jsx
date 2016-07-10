@@ -9,7 +9,7 @@ const UserInfoPane = require('./user_info'),
 const Feed = React.createClass({
   getInitialState(){
     return {
-      rides: RidesStore.rides()
+      rides: RidesStore.rides().reverse()
     };
   },
 
@@ -20,13 +20,13 @@ const Feed = React.createClass({
 
   _onChange(){
     this.setState({
-      rides: RidesStore.rides()
+      rides: RidesStore.rides().reverse()
     });
   },
 
   componentWillReceiveProps() {
     this.setState({
-      rides: RidesStore.rides()
+      rides: RidesStore.rides().reverse()
     });
   },
 
