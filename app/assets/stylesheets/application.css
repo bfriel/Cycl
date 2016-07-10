@@ -12,7 +12,6 @@
  *
  *= require reset
  *= require_self
- *= require login
  *= require signup
  *= require navbar
  *= require feed

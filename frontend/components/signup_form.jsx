@@ -68,7 +68,7 @@ const SignupForm = React.createClass({
 	render() {
 
 		return (
-			<div className="signup-page-container">
+			<div className="entry-page-container">
 				<div className="landing-title">
 					<h1>Cycl</h1>
 				</div>
@@ -77,12 +77,12 @@ const SignupForm = React.createClass({
 					{ this.fieldErrors("username") }
 					{ this.fieldErrors("password") }
 				</div>
-				<div className="signup-form-container">
-					<form className="signup-form-box" onSubmit={this.handleSubmit}>
+				<div className="entry-form-container">
+					<form className="entry-form-box" onSubmit={this.handleSubmit}>
 		        <h3>Sign Up</h3>
 						<br/>
 
-						<div className="signup-form">
+						<div className="entry-form">
 
 			        <br />
 
@@ -91,7 +91,7 @@ const SignupForm = React.createClass({
 			            value={this.state.username}
 			            onChange={this.update("username")}
 									autoFocus
-									className="signup-input"
+									className="entry-input"
 									id="user_username" />
 
 
@@ -101,7 +101,7 @@ const SignupForm = React.createClass({
 			          <input type="password"
 			            value={this.state.password}
 			            onChange={this.update("password")}
-									className="signup-input"
+									className="entry-input"
 									id="user_password" />
 
 	            <br />

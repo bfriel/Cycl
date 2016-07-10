@@ -1,5 +1,5 @@
 
-.signup-form-container{
+.entry-form-container{
   margin: 0 auto;
   width : 700px;
   padding: 20px;
@@ -7,29 +7,29 @@
 }
 
 
-.signup-form-box {
+.entry-form-box {
   background-color: rgba(0, 0, 0, .4);
   border: rgba(0, 0, 0, 0) 5px solid;
   border-radius: 10px;
   font-weight: 100;
 }
 
-.signup-form {
+.entry-form {
   margin-top: -100px;
 }
 
-.signup-form > label {
+.entry-form > label {
   margin-left: 20px;
   font-weight: 100;
 }
 
 
-.signup-form-box > h3 {
+.entry-form-box > h3 {
   text-align: center;
   font-weight: 100;
 }
 
-.signup-form > input[type="submit"] {
+.entry-form > input[type="submit"] {
   display: flex;
   justify-content: center;
   font-weight: 100;

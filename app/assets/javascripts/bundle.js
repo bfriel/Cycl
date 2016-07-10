@@ -26116,7 +26116,7 @@
 	
 			return React.createElement(
 				'div',
-				{ className: 'signup-page-container' },
+				{ className: 'entry-page-container' },
 				React.createElement(
 					'div',
 					{ className: 'landing-title' },
@@ -26135,10 +26135,10 @@
 				),
 				React.createElement(
 					'div',
-					{ className: 'signup-form-container' },
+					{ className: 'entry-form-container' },
 					React.createElement(
 						'form',
-						{ className: 'signup-form-box', onSubmit: this.handleSubmit },
+						{ className: 'entry-form-box', onSubmit: this.handleSubmit },
 						React.createElement(
 							'h3',
 							null,
@@ -26147,7 +26147,7 @@
 						React.createElement('br', null),
 						React.createElement(
 							'div',
-							{ className: 'signup-form' },
+							{ className: 'entry-form' },
 							React.createElement('br', null),
 							React.createElement(
 								'label',
@@ -26158,7 +26158,7 @@
 								value: this.state.username,
 								onChange: this.update("username"),
 								autoFocus: true,
-								className: 'signup-input',
+								className: 'entry-input',
 								id: 'user_username' }),
 							React.createElement('br', null),
 							React.createElement(
@@ -26169,7 +26169,7 @@
 							React.createElement('input', { type: 'password',
 								value: this.state.password,
 								onChange: this.update("password"),
-								className: 'signup-input',
+								className: 'entry-input',
 								id: 'user_password' }),
 							React.createElement('br', null),
 							React.createElement('input', { type: 'submit', value: 'Sign Up!' }),
@@ -33347,7 +33347,7 @@
 	
 			return React.createElement(
 				'div',
-				{ className: 'login-page-container' },
+				{ className: 'entry-page-container' },
 				React.createElement(
 					'div',
 					{ className: 'landing-title' },
@@ -33364,10 +33364,10 @@
 				),
 				React.createElement(
 					'div',
-					{ className: 'login-form-container' },
+					{ className: 'entry-form-container' },
 					React.createElement(
 						'form',
-						{ onSubmit: this.handleSubmit, className: 'login-form-box' },
+						{ onSubmit: this.handleSubmit, className: 'entry-form-box' },
 						React.createElement(
 							'h3',
 							null,
@@ -33376,7 +33376,7 @@
 						React.createElement('br', null),
 						React.createElement(
 							'div',
-							{ className: 'login-form' },
+							{ className: 'entry-form' },
 							React.createElement('br', null),
 							React.createElement(
 								'label',
@@ -33388,7 +33388,7 @@
 								value: this.state.username,
 								onChange: this.update("username"),
 								autoFocus: true,
-								className: 'login-input',
+								className: 'entry-input',
 								id: 'user_username' }),
 							React.createElement('br', null),
 							React.createElement(
@@ -33400,7 +33400,7 @@
 							React.createElement('input', { type: 'password',
 								value: this.state.password,
 								onChange: this.update("password"),
-								className: 'login-input',
+								className: 'entry-input',
 								id: 'user_password' }),
 							React.createElement('br', null),
 							React.createElement('input', { type: 'submit', value: 'Log In!' }),
