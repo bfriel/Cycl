@@ -30,7 +30,7 @@ const NavBar = React.createClass({
           <nav id='navbar'>
 
             <div className="nav-title" onClick={this._goHome}>
-              CYCL
+              Cycl
             </div>
 
             <div id='right'>

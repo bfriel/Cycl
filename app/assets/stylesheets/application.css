@@ -97,13 +97,12 @@ body {
  }
 
  .landing-title {
-   display: flex;
-   justify-content: flex-start;
-   font-size: 40px;
-   text-shadow: 2px 2px;
-   font-weight: 300;
-   margin: 0 auto;
-   margin-left: 30px;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 80px;
+  margin: 0 auto;
+  margin-left: 30px;
+  font-family: 'Pacifico', cursive;
  }
 
 #follow-button {

@@ -7,7 +7,7 @@ let _rides = [];
 const RidesStore = new Store(AppDispatcher);
 
 RidesStore.rides = function () {
-  return _rides;
+  return _rides.slice();
 };
 
 RidesStore.find = function (userId) {
@@ -50,7 +50,7 @@ function resetAllRides(rides) {
 }
 
 function addRide(ride) {
-  _rides.push(ride);
+  _rides.unshift(ride);
   RidesStore.__emitChange();
 }
 

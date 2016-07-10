@@ -33461,7 +33461,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'nav-title', onClick: this._goHome },
-	          'CYCL'
+	          'Cycl'
 	        ),
 	        React.createElement(
 	          'div',
@@ -33543,7 +33543,7 @@
 	  displayName: 'Feed',
 	  getInitialState: function getInitialState() {
 	    return {
-	      rides: RidesStore.rides().reverse()
+	      rides: RidesStore.rides()
 	    };
 	  },
 	  componentDidMount: function componentDidMount() {
@@ -33552,12 +33552,12 @@
 	  },
 	  _onChange: function _onChange() {
 	    this.setState({
-	      rides: RidesStore.rides().reverse()
+	      rides: RidesStore.rides()
 	    });
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps() {
 	    this.setState({
-	      rides: RidesStore.rides().reverse()
+	      rides: RidesStore.rides()
 	    });
 	  },
 	  render: function render() {
@@ -35150,7 +35150,7 @@
 	var RidesStore = new Store(AppDispatcher);
 	
 	RidesStore.rides = function () {
-	  return _rides;
+	  return _rides.slice();
 	};
 	
 	RidesStore.find = function (userId) {
@@ -35195,7 +35195,7 @@
 	}
 	
 	function addRide(ride) {
-	  _rides.push(ride);
+	  _rides.unshift(ride);
 	  RidesStore.__emitChange();
 	}
 	
