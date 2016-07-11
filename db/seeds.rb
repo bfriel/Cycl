@@ -2,11 +2,11 @@ User.create!([
   {username: "Haley", password_digest: "$2a$10$Rc2GqPnQTtGSzD.bjJbtTOeDz/R1TxEs0IkdAMa44BVxo.qT7byrm", session_token: "NMiMOa7Km60fSoN4qrXsfw"},
   {username: "Brian", password_digest: "$2a$10$thqZrZLuVSHkke9KZPfsZOSVdVek4HI7PlIgU0Ww/DvPwTfaZmJR6", session_token: "OlDW24HQQeQ-nme29jOXeA"},
   {username: "Kathe", password_digest: "$2a$10$GBK6ul1Ut6/tVhKtBN4FTehWXg6O/DxPTMr8WagTzxqXwFwoK/3S6", session_token: "V6MMUbHI8v8whFJNuvZhkA"},
-  {username: "Hannah", password_digest: "$2a$10$dTyCO8jb5gEq.faoobZ1Busz4IYRMC7DgaoKl5wxKLI2j3dQ2uFQ2", session_token: "nA4IBtNHocbZQ4eyHIDuHw"}
+  {username: "Hannah", password_digest: "$2a$10$dTyCO8jb5gEq.faoobZ1Busz4IYRMC7DgaoKl5wxKLI2j3dQ2uFQ2", session_token: "nA4IBtNHocbZQ4eyHIDuHw"},
   {username: "Dan", password_digest: "$2a$10$2qX2BVJTWx68I0V7A2g1..CCol./QRbP.ey0vPpMKXyDtcW4.oi1C", session_token: "f-7V-ai9L13eSvHz0c9QXw"},
   {username: "Kabir", password_digest: "$2a$10$w.32q5bVIcvlmz85ki3WY.CPgt7uc.QMYGOfFNujq5qeKyE5N8XtG", session_token: "R3ClEG9tWP5rdyPF0rSHWw"},
   {username: "Tony", password_digest: "$2a$10$5oahrLYrmQTYTzXhfl9StOzf9jFaKBZirMeTdL6jp05FhN4s7eIqi", session_token: "mlUrCn1HsUiTxEBPW7SgEw"},
-  {username: "Steven", password_digest: "$2a$10$x5YUtf.AcQ7ytj9k1PIVuOKFGSxkatE5JGs1/SryAjHc1BHBiyw3S", session_token: "5puIS1dAjfQaE7dR3YEBhA"},
+  {username: "Steven", password_digest: "$2a$10$x5YUtf.AcQ7ytj9k1PIVuOKFGSxkatE5JGs1/SryAjHc1BHBiyw3S", session_token: "5puIS1dAjfQaE7dR3YEBhA"}
   ])
 Ride.create!([
   {user_id: 1, ride_path: "[[37.78038406044851,-122.44734653707167],[37.77919717953236,-122.45871886769163],[37.77418028696985,-122.45837752974137],[37.77581780944428,-122.44642806291051],[37.78040361811934,-122.4474645284327]]", ride_name: "First Ride", elevation_gain: 223, distance: 2.0, ride_description: "Just around the neighborhood", duration: 1098, calories_burned: 94, start_pos: "37.78040361811934,-122.4474645284327", rider: "Haley"},
