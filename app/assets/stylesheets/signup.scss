@@ -4,13 +4,19 @@
   width : 700px;
   padding: 20px;
   font-size: 40px;
+  float: right;
+  margin-top: 120px;
 }
 
+.landing-title {
+ font-size: 80px;
+ margin: 0 auto;
+ margin-left: 30px;
+ font-family: 'Pacifico', cursive;
+ float: left;
+}
 
 .entry-form-box {
-  background-color: rgba(0, 0, 0, .4);
-  border: rgba(0, 0, 0, 0) 5px solid;
-  border-radius: 10px;
   font-weight: 100;
 }
 
@@ -29,15 +35,27 @@
   font-weight: 100;
 }
 
-.entry-form > input[type="submit"] {
-  display: flex;
-  justify-content: center;
-  font-weight: 100;
+
+.entry-input {
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto;
+}
+
+#user_username {
+  margin-bottom: -20px;
+}
+
+#user_password {
+  margin-bottom: -20px;
 }
 
 .switch-form {
   margin-bottom: 5px;
   text-align: center;
+  font-size: 22px;
 }
 
 .list-errors {

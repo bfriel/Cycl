@@ -79,35 +79,34 @@ const SignupForm = React.createClass({
 				</div>
 				<div className="entry-form-container">
 					<form className="entry-form-box" onSubmit={this.handleSubmit}>
-		        <h3>Sign Up</h3>
 						<br/>
 
 						<div className="entry-form">
 
 			        <br />
 
-							<label for="user_username"> Username: </label>
 								<input type="text"
 			            value={this.state.username}
 			            onChange={this.update("username")}
 									autoFocus
 									className="entry-input"
+                  placeholder="Username"
 									id="user_username" />
 
 
 			        <br />
 
-							<label for="user_password"> Password: </label>
 			          <input type="password"
 			            value={this.state.password}
 			            onChange={this.update("password")}
 									className="entry-input"
+                  placeholder="Password"
 									id="user_password" />
 
 	            <br />
 
 							<input type="submit" value="Sign Up!" />
-							<input type="submit" value="Continue as Guest" onClick={this._guestLogin} />
+							<input type="submit" value="Guest Login" onClick={this._guestLogin} />
 						</div>
 						<div className="switch-form">
 							Already have an account? <Link to="/login">Log In!</Link>

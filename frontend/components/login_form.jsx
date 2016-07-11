@@ -78,34 +78,33 @@ const LoginForm = React.createClass({
 				</div>
 				<div className="entry-form-container">
 					<form onSubmit={this.handleSubmit} className="entry-form-box">
-		        <h3>Log In</h3>
 						<br/>
 
 						<div className="entry-form">
 			        <br />
-							<label for="user_username"> Username: </label>
 			          { this.fieldErrors("username") }
 								<input type="text"
 			            value={this.state.username}
 			            onChange={this.update("username")}
 									autoFocus
 									className="entry-input"
+                  placeholder="Username"
 									id="user_username" />
 
 
 			        <br />
-							<label for="user_password"> Password: </label>
 			          { this.fieldErrors("password") }
 			          <input type="password"
 			            value={this.state.password}
 			            onChange={this.update("password")}
 									className="entry-input"
+                  placeholder="Password"
 									id="user_password"/>
 
 
 			        <br />
 							<input type="submit" value="Log In!" />
-							<input type="submit" value="Continue as Guest" onClick={this._guestLogin} />
+							<input type="submit" value="Guest Login" onClick={this._guestLogin} />
 						</div>
 						<div className="switch-form">
 							New to Cycl? <Link to="/signup">Sign Up!</Link>

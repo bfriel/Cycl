@@ -26139,41 +26139,28 @@
 					React.createElement(
 						'form',
 						{ className: 'entry-form-box', onSubmit: this.handleSubmit },
-						React.createElement(
-							'h3',
-							null,
-							'Sign Up'
-						),
 						React.createElement('br', null),
 						React.createElement(
 							'div',
 							{ className: 'entry-form' },
 							React.createElement('br', null),
-							React.createElement(
-								'label',
-								{ 'for': 'user_username' },
-								' Username: '
-							),
 							React.createElement('input', { type: 'text',
 								value: this.state.username,
 								onChange: this.update("username"),
 								autoFocus: true,
 								className: 'entry-input',
+								placeholder: 'Username',
 								id: 'user_username' }),
 							React.createElement('br', null),
-							React.createElement(
-								'label',
-								{ 'for': 'user_password' },
-								' Password: '
-							),
 							React.createElement('input', { type: 'password',
 								value: this.state.password,
 								onChange: this.update("password"),
 								className: 'entry-input',
+								placeholder: 'Password',
 								id: 'user_password' }),
 							React.createElement('br', null),
 							React.createElement('input', { type: 'submit', value: 'Sign Up!' }),
-							React.createElement('input', { type: 'submit', value: 'Continue as Guest', onClick: this._guestLogin })
+							React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin })
 						),
 						React.createElement(
 							'div',
@@ -33368,43 +33355,30 @@
 					React.createElement(
 						'form',
 						{ onSubmit: this.handleSubmit, className: 'entry-form-box' },
-						React.createElement(
-							'h3',
-							null,
-							'Log In'
-						),
 						React.createElement('br', null),
 						React.createElement(
 							'div',
 							{ className: 'entry-form' },
 							React.createElement('br', null),
-							React.createElement(
-								'label',
-								{ 'for': 'user_username' },
-								' Username: '
-							),
 							this.fieldErrors("username"),
 							React.createElement('input', { type: 'text',
 								value: this.state.username,
 								onChange: this.update("username"),
 								autoFocus: true,
 								className: 'entry-input',
+								placeholder: 'Username',
 								id: 'user_username' }),
 							React.createElement('br', null),
-							React.createElement(
-								'label',
-								{ 'for': 'user_password' },
-								' Password: '
-							),
 							this.fieldErrors("password"),
 							React.createElement('input', { type: 'password',
 								value: this.state.password,
 								onChange: this.update("password"),
 								className: 'entry-input',
+								placeholder: 'Password',
 								id: 'user_password' }),
 							React.createElement('br', null),
 							React.createElement('input', { type: 'submit', value: 'Log In!' }),
-							React.createElement('input', { type: 'submit', value: 'Continue as Guest', onClick: this._guestLogin })
+							React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin })
 						),
 						React.createElement(
 							'div',
