@@ -2,6 +2,7 @@ const React = require('react'),
       ApiUtil = require('../util/api_util'),
       RideItem = require('./ride_item'),
       UserInfo = require('./user_info'),
+      hashHistory = require('react-router').hashHistory,
       SessionStore = require('../stores/session_store'),
       AllUsersStore = require('../stores/all_users'),
       RidesStore = require('../stores/rides');
@@ -44,6 +45,11 @@ const UserPage = React.createClass({
     });
   },
 
+  _createRide(e){
+    e.preventDefault();
+    hashHistory.push('/create_ride');
+  },
+
   render() {
     let riderName;
     if (this.state.rides.length === 0) {
@@ -69,7 +75,7 @@ const UserPage = React.createClass({
     } else if (parseInt(this.props.params.userId) === this.state.currentUser.id) {
       rides = <div id="no-rides-message">
         <p>You haven't made any rides yet!</p>
-        <input type="submit" id="no-rides-button" value="Create a Ride" />
+        <input type="submit" id="no-rides-button" onClick={this._createRide} value="Create a Ride" />
       </div>;
     } else {
       rides = <div id="no-rides-message">

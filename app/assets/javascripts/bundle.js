@@ -33852,6 +33852,7 @@
 	    ApiUtil = __webpack_require__(277),
 	    RideItem = __webpack_require__(280),
 	    UserInfo = __webpack_require__(263),
+	    hashHistory = __webpack_require__(168).hashHistory,
 	    SessionStore = __webpack_require__(241),
 	    AllUsersStore = __webpack_require__(281),
 	    RidesStore = __webpack_require__(278);
@@ -33888,6 +33889,10 @@
 	    this.setState({
 	      rides: RidesStore.find(parseInt(this.props.params.userId))
 	    });
+	  },
+	  _createRide: function _createRide(e) {
+	    e.preventDefault();
+	    hashHistory.push('/create_ride');
 	  },
 	  render: function render() {
 	    var riderName = void 0;
@@ -33927,7 +33932,7 @@
 	          null,
 	          'You haven\'t made any rides yet!'
 	        ),
-	        React.createElement('input', { type: 'submit', id: 'no-rides-button', value: 'Create a Ride' })
+	        React.createElement('input', { type: 'submit', id: 'no-rides-button', onClick: this._createRide, value: 'Create a Ride' })
 	      );
 	    } else {
 	      rides = React.createElement(
