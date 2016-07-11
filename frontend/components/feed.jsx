@@ -40,12 +40,12 @@ const Feed = React.createClass({
       <div className="feed-container">
         <div className="intro-message">
           <h3>Welcome to Cycl!</h3>
-          <p>As a warmup, check out some recent rides from the Cycl community below</p>
-          <p>When you're ready to start mapping, click on the Create a Route button above!</p>
+          <p>As a warmup, check out some recent rides from the Cycl community below.</p>
+          <p>When you're ready to start mapping, click on the Create a Ride button above!</p>
+        </div>
           <div className="feed">
             {rides}
           </div>
-        </div>
 
         <div className="feed-side-bar">
           <div className="feed-side-bar-item">

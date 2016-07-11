@@ -1,13 +1,19 @@
 .feed {
   width: 800px;
   float: left;
-  margin-left: 20px;
+  margin-left: 40px;
   margin-top: 20px;
+}
+
+#no-rides-message {
+  text-align: center;
+  margin-top: 30px;
 }
 
 #my-rides {
   font-size: 64px;
   text-align: center;
+  margin-bottom: 69px;
 }
 
 #lifetime-stats {

@@ -3,9 +3,17 @@
   font-weight: 100;
   margin-left: 20px;
 }
+.intro-message > h3 {
+  font-size: 26px;
+}
+.intro-message > p {
+  font-size: 18px;
+}
 
 .feed-side-bar {
-  float: right;
+  position: fixed;
+  top: 10%;
+  left: 72%;
 }
 
 .feed-side-bar-item {

@@ -53,12 +53,21 @@ const UserPage = React.createClass({
     } else {
       header = <h2 id="my-rides">{riderName} Rides</h2>;
     }
-    
-    let rides = this.state.rides.map( (ride) => {
-      return (
-        <RideItem ride={ride} key={ride.ride_name} />
-      );
-    });
+
+    let rides;
+    if (this.state.rides.length > 0) {
+      rides = this.state.rides.map( (ride) => {
+        return (
+          <RideItem ride={ride} key={ride.ride_name} />
+        );
+      });
+    } else {
+      rides = <div id="no-rides-message">
+        <p>You haven't made any rides yet!</p>
+        <input type="submit" id="no-rides-button" value="Create a Ride" />
+      </div>;
+    }
+
 
     return (
       <div>

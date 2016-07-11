@@ -12,10 +12,9 @@ RidesStore.rides = function () {
 
 RidesStore.find = function (userId) {
   let result = [];
-  if (!_rides) { return []; }
   _rides.forEach( (ride) => {
     if (ride.user_id === userId) {
-      result.push(ride);
+      result.unshift(ride);
     }
   });
 

@@ -26128,17 +26128,17 @@
 				),
 				React.createElement(
 					'div',
-					{ className: 'list-errors' },
-					this.fieldErrors("base"),
-					this.fieldErrors("username"),
-					this.fieldErrors("password")
-				),
-				React.createElement(
-					'div',
 					{ className: 'entry-form-container' },
 					React.createElement(
 						'form',
 						{ className: 'entry-form-box', onSubmit: this.handleSubmit },
+						React.createElement(
+							'div',
+							{ className: 'list-errors' },
+							this.fieldErrors("base"),
+							this.fieldErrors("username"),
+							this.fieldErrors("password")
+						),
 						React.createElement('br', null),
 						React.createElement(
 							'div',
@@ -26168,7 +26168,7 @@
 							'Already have an account? ',
 							React.createElement(
 								Link,
-								{ to: '/login' },
+								{ to: '/login', className: 'switch-link' },
 								'Log In!'
 							)
 						)
@@ -33346,12 +33346,14 @@
 				),
 				React.createElement(
 					'div',
-					{ className: 'list-errors' },
-					this.fieldErrors("base")
-				),
-				React.createElement(
-					'div',
 					{ className: 'entry-form-container' },
+					React.createElement(
+						'div',
+						{ className: 'list-errors' },
+						this.fieldErrors("base"),
+						this.fieldErrors("username"),
+						this.fieldErrors("password")
+					),
 					React.createElement(
 						'form',
 						{ onSubmit: this.handleSubmit, className: 'entry-form-box' },
@@ -33360,7 +33362,6 @@
 							'div',
 							{ className: 'entry-form' },
 							React.createElement('br', null),
-							this.fieldErrors("username"),
 							React.createElement('input', { type: 'text',
 								value: this.state.username,
 								onChange: this.update("username"),
@@ -33369,7 +33370,6 @@
 								placeholder: 'Username',
 								id: 'user_username' }),
 							React.createElement('br', null),
-							this.fieldErrors("password"),
 							React.createElement('input', { type: 'password',
 								value: this.state.password,
 								onChange: this.update("password"),
@@ -33386,7 +33386,7 @@
 							'New to Cycl? ',
 							React.createElement(
 								Link,
-								{ to: '/signup' },
+								{ to: '/signup', className: 'switch-link' },
 								'Sign Up!'
 							)
 						)
@@ -33455,7 +33455,7 @@
 	            ),
 	            React.createElement(
 	              'a',
-	              { onClick: this._goProfile },
+	              { onClick: this._goProfile, id: 'last' },
 	              SessionStore.currentUser().username
 	            )
 	          ),
@@ -33552,18 +33552,18 @@
 	        React.createElement(
 	          'p',
 	          null,
-	          'As a warmup, check out some recent rides from the Cycl community below'
+	          'As a warmup, check out some recent rides from the Cycl community below.'
 	        ),
 	        React.createElement(
 	          'p',
 	          null,
-	          'When you\'re ready to start mapping, click on the Create a Route button above!'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'feed' },
-	          rides
+	          'When you\'re ready to start mapping, click on the Create a Ride button above!'
 	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'feed' },
+	        rides
 	      ),
 	      React.createElement(
 	        'div',
@@ -33932,9 +33932,23 @@
 	      );
 	    }
 	
-	    var rides = this.state.rides.map(function (ride) {
-	      return React.createElement(RideItem, { ride: ride, key: ride.ride_name });
-	    });
+	    var rides = void 0;
+	    if (this.state.rides.length > 0) {
+	      rides = this.state.rides.map(function (ride) {
+	        return React.createElement(RideItem, { ride: ride, key: ride.ride_name });
+	      });
+	    } else {
+	      rides = React.createElement(
+	        'div',
+	        { id: 'no-rides-message' },
+	        React.createElement(
+	          'p',
+	          null,
+	          'You haven\'t made any rides yet!'
+	        ),
+	        React.createElement('input', { type: 'submit', id: 'no-rides-button', value: 'Create a Ride' })
+	      );
+	    }
 	
 	    return React.createElement(
 	      'div',
@@ -35129,12 +35143,9 @@
 	
 	RidesStore.find = function (userId) {
 	  var result = [];
-	  if (!_rides) {
-	    return [];
-	  }
 	  _rides.forEach(function (ride) {
 	    if (ride.user_id === userId) {
-	      result.push(ride);
+	      result.unshift(ride);
 	    }
 	  });
 	

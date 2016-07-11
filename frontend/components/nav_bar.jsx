@@ -37,7 +37,7 @@ const NavBar = React.createClass({
               <div className="navbar-buttons">
                 <a onClick={this._createRide}>Create a Ride</a>
                 <a onClick={this._goHome}>Feed</a>
-                <a onClick={this._goProfile}>{SessionStore.currentUser().username}</a>
+                <a onClick={this._goProfile} id="last">{SessionStore.currentUser().username}</a>
               </div>
               <div className="dropdown">
                 <button className="dropbtn">

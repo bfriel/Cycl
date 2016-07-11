@@ -72,13 +72,13 @@ const SignupForm = React.createClass({
 				<div className="landing-title">
 					<h1>Cycl</h1>
 				</div>
-				<div className="list-errors">
-					{ this.fieldErrors("base") }
-					{ this.fieldErrors("username") }
-					{ this.fieldErrors("password") }
-				</div>
 				<div className="entry-form-container">
 					<form className="entry-form-box" onSubmit={this.handleSubmit}>
+            <div className="list-errors">
+              { this.fieldErrors("base") }
+              { this.fieldErrors("username") }
+              { this.fieldErrors("password") }
+            </div>
 						<br/>
 
 						<div className="entry-form">
@@ -109,7 +109,7 @@ const SignupForm = React.createClass({
 							<input type="submit" value="Guest Login" onClick={this._guestLogin} />
 						</div>
 						<div className="switch-form">
-							Already have an account? <Link to="/login">Log In!</Link>
+							Already have an account? <Link to="/login" className="switch-link">Log In!</Link>
 						</div>
 					</form>
 				</div>

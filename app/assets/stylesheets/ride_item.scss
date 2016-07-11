@@ -1,51 +1,17 @@
 .completed-ride {
-  width: 750px;
+  width: 850px;
   height: 250px;
   border-radius: 10px;
   margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
   background-color: rgba(0, 0, 0, .5);
-  box-shadow: 5px 5px 5px black;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 }
 
 .completed-ride:hover {
+  box-shadow: 5px 5px 5px black;
   cursor: pointer;
-
-}
-
-@-webkit-keyframes hvr-pop {
-  50% {
-    -webkit-transform: scale(1.01);
-    transform: scale(1.01);
-  }
-}
-
-@keyframes hvr-pop {
-  50% {
-    -webkit-transform: scale(1.01);
-    transform: scale(1.01);
-  }
-}
-
-.completed-ride.hvr-pop {
-  display: inline-block;
-  vertical-align: middle;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -moz-osx-font-smoothing: grayscale;
-}
-.completed-ride.hvr-pop:hover, .completed-ride.hvr-pop:focus, .completed-ride.hvr-pop:active {
-  -webkit-animation-name: hvr-pop;
-  animation-name: hvr-pop;
-  -webkit-animation-duration: 0.3s;
-  animation-duration: 0.3s;
-  -webkit-animation-timing-function: linear;
-  animation-timing-function: linear;
-  -webkit-animation-iteration-count: 1;
-  animation-iteration-count: 1;
 }
 
 #completed-ride-info {
@@ -61,7 +27,7 @@
 }
 
 #feed-table {
-  margin-left: 50px;
+  margin-left: 90px;
   margin-top: 20px;
 }
 
