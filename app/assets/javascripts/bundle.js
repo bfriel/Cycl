@@ -33918,7 +33918,7 @@
 	      rides = this.state.rides.map(function (ride) {
 	        return React.createElement(RideItem, { ride: ride, key: ride.ride_name });
 	      });
-	    } else if (this.props.params.userId === this.state.currentUser.id) {
+	    } else if (parseInt(this.props.params.userId) === this.state.currentUser.id) {
 	      rides = React.createElement(
 	        'div',
 	        { id: 'no-rides-message' },

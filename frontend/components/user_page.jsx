@@ -66,7 +66,7 @@ const UserPage = React.createClass({
           <RideItem ride={ride} key={ride.ride_name} />
         );
       });
-    } else if (this.props.params.userId === this.state.currentUser.id) {
+    } else if (parseInt(this.props.params.userId) === this.state.currentUser.id) {
       rides = <div id="no-rides-message">
         <p>You haven't made any rides yet!</p>
         <input type="submit" id="no-rides-button" value="Create a Ride" />
