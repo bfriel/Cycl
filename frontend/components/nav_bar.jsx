@@ -47,7 +47,6 @@ const NavBar = React.createClass({
                 </button>
                 <div className="dropdown-content">
                   <a onClick={this._goProfile}>PROFILE</a>
-                  <a href="#">SETTINGS</a>
                   <a onClick={this._handleLogOut}>LOGOUT</a>
                 </div>
               </div>

@@ -79,31 +79,17 @@ const UserInfo = React.createClass({
       }
 
       return (
-        <div className="user-info container">
-          <h2>{PageUserInfo.user.username}</h2>
-          {button}
-          <h4>Lifetime Stats</h4>
+        <div className="user-info-container">
+            <h2>{PageUserInfo.user.username}</h2>
+            <div> {button}</div>
+            <h4>Lifetime Stats</h4>
 
-          <table className="table" id="lifetime-stats">
-            <tbody>
-              <tr>
-                <td>{UserTotals.rideCount} rides</td>
-              </tr>
-              <tr>
-                <td>{UserTotals.totalDistance} miles</td>
-              </tr>
-              <tr>
-                <td>{UserTotals.totalCalories} calories burned</td>
-              </tr>
-              <tr>
-                <td>{hours} hours {minutes} minutes {seconds} seconds </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+            <div id="lifetime-stats">
+              <p>{UserTotals.rideCount} rides</p>
+              <p>{UserTotals.totalDistance} miles</p>
+              <p>{UserTotals.totalCalories} calories burned</p>
+              <p>{hours} hours {minutes} minutes {seconds} seconds</p>
+            </div>
         </div>
       );
     } else {

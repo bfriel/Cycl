@@ -21,6 +21,11 @@ const UserPage = React.createClass({
     this.currentUserListener = SessionStore.addListener(this._currentUser);
   },
 
+  componentWillUnmount() {
+    this.rideListener.remove();
+    this.currentUserListener.remove();
+  },
+
   _onChange(){
     this.setState({
       rides: RidesStore.find(parseInt(this.props.params.userId))
@@ -61,10 +66,14 @@ const UserPage = React.createClass({
           <RideItem ride={ride} key={ride.ride_name} />
         );
       });
-    } else {
+    } else if (this.props.params.userId === this.state.currentUser.id) {
       rides = <div id="no-rides-message">
         <p>You haven't made any rides yet!</p>
         <input type="submit" id="no-rides-button" value="Create a Ride" />
+      </div>;
+    } else {
+      rides = <div id="no-rides-message">
+        <p>They don't have any rides yet!</p>
       </div>;
     }
 

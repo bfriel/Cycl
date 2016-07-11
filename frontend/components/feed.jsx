@@ -18,6 +18,10 @@ const Feed = React.createClass({
     this.rideListener = RidesStore.addListener(this._onChange);
   },
 
+  componentWillUnmount(){
+    this.rideListener.remove();
+  },
+
   _onChange(){
     this.setState({
       rides: RidesStore.rides()

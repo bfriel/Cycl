@@ -44,7 +44,7 @@ RidesStore.__onDispatch = function (payload) {
 };
 
 function resetAllRides(rides) {
-  _rides = rides;
+  _rides = rides.reverse();
   RidesStore.__emitChange();
 }
 

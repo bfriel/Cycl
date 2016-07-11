@@ -26,12 +26,14 @@
   border-radius: 10px;
   box-shadow: 5px 5px 5px black;
   background-color: rgba(0, 0, 0, .7);
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .ride-stats h3 {
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .elev-chart {
@@ -65,7 +67,7 @@
 
 #old-ride-description-container {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 20px;
   height: 40px;
   overflow: hidden;
   overflow-y: scroll;

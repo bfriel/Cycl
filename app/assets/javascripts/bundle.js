@@ -33481,11 +33481,6 @@
 	              ),
 	              React.createElement(
 	                'a',
-	                { href: '#' },
-	                'SETTINGS'
-	              ),
-	              React.createElement(
-	                'a',
 	                { onClick: this._handleLogOut },
 	                'LOGOUT'
 	              )
@@ -33523,6 +33518,9 @@
 	  componentDidMount: function componentDidMount() {
 	    ApiUtil.fetchRides();
 	    this.rideListener = RidesStore.addListener(this._onChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.rideListener.remove();
 	  },
 	  _onChange: function _onChange() {
 	    this.setState({
@@ -33667,74 +33665,53 @@
 	
 	      return React.createElement(
 	        'div',
-	        { className: 'user-info container' },
+	        { className: 'user-info-container' },
 	        React.createElement(
 	          'h2',
 	          null,
 	          PageUserInfo.user.username
 	        ),
-	        button,
+	        React.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          button
+	        ),
 	        React.createElement(
 	          'h4',
 	          null,
 	          'Lifetime Stats'
 	        ),
 	        React.createElement(
-	          'table',
-	          { className: 'table', id: 'lifetime-stats' },
+	          'div',
+	          { id: 'lifetime-stats' },
 	          React.createElement(
-	            'tbody',
+	            'p',
 	            null,
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'td',
-	                null,
-	                UserTotals.rideCount,
-	                ' rides'
-	              )
-	            ),
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'td',
-	                null,
-	                UserTotals.totalDistance,
-	                ' miles'
-	              )
-	            ),
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'td',
-	                null,
-	                UserTotals.totalCalories,
-	                ' calories burned'
-	              )
-	            ),
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement(
-	                'td',
-	                null,
-	                hours,
-	                ' hours ',
-	                minutes,
-	                ' minutes ',
-	                seconds,
-	                ' seconds '
-	              )
-	            ),
-	            React.createElement(
-	              'tr',
-	              null,
-	              React.createElement('td', null),
-	              React.createElement('td', null)
-	            )
+	            UserTotals.rideCount,
+	            ' rides'
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            UserTotals.totalDistance,
+	            ' miles'
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            UserTotals.totalCalories,
+	            ' calories burned'
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            hours,
+	            ' hours ',
+	            minutes,
+	            ' minutes ',
+	            seconds,
+	            ' seconds'
 	          )
 	        )
 	      );
@@ -33893,6 +33870,10 @@
 	
 	    this.currentUserListener = SessionStore.addListener(this._currentUser);
 	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.rideListener.remove();
+	    this.currentUserListener.remove();
+	  },
 	  _onChange: function _onChange() {
 	    this.setState({
 	      rides: RidesStore.find(parseInt(this.props.params.userId))
@@ -33937,7 +33918,7 @@
 	      rides = this.state.rides.map(function (ride) {
 	        return React.createElement(RideItem, { ride: ride, key: ride.ride_name });
 	      });
-	    } else {
+	    } else if (this.props.params.userId === this.state.currentUser.id) {
 	      rides = React.createElement(
 	        'div',
 	        { id: 'no-rides-message' },
@@ -33947,6 +33928,16 @@
 	          'You haven\'t made any rides yet!'
 	        ),
 	        React.createElement('input', { type: 'submit', id: 'no-rides-button', value: 'Create a Ride' })
+	      );
+	    } else {
+	      rides = React.createElement(
+	        'div',
+	        { id: 'no-rides-message' },
+	        React.createElement(
+	          'p',
+	          null,
+	          'They don\'t have any rides yet!'
+	        )
 	      );
 	    }
 	
@@ -35175,7 +35166,7 @@
 	};
 	
 	function resetAllRides(rides) {
-	  _rides = rides;
+	  _rides = rides.reverse();
 	  RidesStore.__emitChange();
 	}
 	

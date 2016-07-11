@@ -120,8 +120,24 @@ input[type="submit"]:hover {
  }
 
 
-
 #follow-button {
+  background: linear-gradient(#67ae55, #578843);
+  background-color: #69a74e;
+  box-shadow: inset 0 1px 1px #a4e388;
+  border: 1px solid;
+  border-radius: 10px;
+  border-color: #3b6e22 #3b6e22 #2c5115;
+  padding: 5px;
+  width: 60px;
+  color: white;
+  margin-left: 200px;
+}
+
+#follow-button:hover {
+    background: linear-gradient(#578843, #67ae55);
+}
+
+/*#follow-button {
   float: right;
   margin-right: 20px;
   border: 1px solid black;
@@ -129,4 +145,4 @@ input[type="submit"]:hover {
   background: #f1ceb0;
   width: 60px;
   border-radius: 2px;
-}
+}*/
