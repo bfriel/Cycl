@@ -67,7 +67,7 @@ const UserPage = React.createClass({
 
     let rides;
     if (this.state.rides.length > 0) {
-      rides = this.state.rides.map( (ride) => {
+      rides= this.state.rides.reverse().map( (ride) => {
         return (
           <RideItem ride={ride} key={ride.ride_name} />
         );

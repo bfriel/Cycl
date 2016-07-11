@@ -33920,7 +33920,7 @@
 	
 	    var rides = void 0;
 	    if (this.state.rides.length > 0) {
-	      rides = this.state.rides.map(function (ride) {
+	      rides = this.state.rides.reverse().map(function (ride) {
 	        return React.createElement(RideItem, { ride: ride, key: ride.ride_name });
 	      });
 	    } else if (parseInt(this.props.params.userId) === this.state.currentUser.id) {
