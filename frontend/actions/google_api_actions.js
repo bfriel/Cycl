@@ -24,7 +24,7 @@ const GoogleApiActions = {
     });
   },
 
-  reciveElevationData(response) {
+  receiveElevationData(response) {
     AppDispatcher.dispatch({
       actionType: RideConstants.RECEIVE_ELEVATION_DATA,
       data: response

@@ -32,7 +32,7 @@ const GoogleApiUtil = {
   },
 
   receiveElevation(elevations) {
-    GoogleApiActions.reciveElevationData(elevations);
+    GoogleApiActions.receiveElevationData(elevations);
   },
 
   storeMarkers(markers) {

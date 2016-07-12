@@ -55,15 +55,15 @@
 	    hashHistory = __webpack_require__(168).hashHistory;
 	//Components
 	var App = __webpack_require__(230),
-	    Feed = __webpack_require__(262),
-	    UserPage = __webpack_require__(265),
-	    CreateRide = __webpack_require__(266),
+	    Feed = __webpack_require__(263),
+	    UserPage = __webpack_require__(273),
+	    CreateRide = __webpack_require__(274),
 	    SignupForm = __webpack_require__(231),
-	    ShowRide = __webpack_require__(284),
-	    LoginForm = __webpack_require__(260);
+	    ShowRide = __webpack_require__(287),
+	    LoginForm = __webpack_require__(261);
 	//Flux
 	var SessionStore = __webpack_require__(241),
-	    RidesStore = __webpack_require__(278),
+	    RidesStore = __webpack_require__(270),
 	    SessionActions = __webpack_require__(232);
 	
 	var routes = React.createElement(
@@ -25974,8 +25974,8 @@
 	    Link = __webpack_require__(168).Link;
 	//Components
 	var SignupForm = __webpack_require__(231),
-	    LoginForm = __webpack_require__(260),
-	    NavBar = __webpack_require__(261);
+	    LoginForm = __webpack_require__(261),
+	    NavBar = __webpack_require__(262);
 	//Flux
 	var SessionStore = __webpack_require__(241),
 	    SessionActions = __webpack_require__(232);
@@ -26041,7 +26041,7 @@
 	    Link = __webpack_require__(168).Link;
 	var SessionActions = __webpack_require__(232),
 	    SessionStore = __webpack_require__(241),
-	    ErrorStore = __webpack_require__(259);
+	    ErrorStore = __webpack_require__(260);
 	
 	var SignupForm = React.createClass({
 		displayName: 'SignupForm',
@@ -26660,7 +26660,7 @@
 	var AppDispatcher = __webpack_require__(233);
 	var Store = __webpack_require__(242).Store;
 	var SessionConstants = __webpack_require__(237),
-	    UserConstants = __webpack_require__(283);
+	    UserConstants = __webpack_require__(259);
 	
 	var SessionStore = new Store(AppDispatcher);
 	
@@ -33193,6 +33193,23 @@
 
 /***/ },
 /* 259 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var UserConstants = {
+	  ADD_FOLLOWING: "ADD_FOLLOWING",
+	  REMOVE_FOLLOWING: "REMOVE_FOLLOWING",
+	  USER_TOTALS: "USER_TOTALS",
+	  RECEIVE_ALL_USERS: "RECEIVE_ALL_USERS",
+	  UPDATE_USER: "UPDATE_USER",
+	  RECEIVE_FOLLOWINGS: "RECEIVE_FOLLOWINGS"
+	};
+	
+	module.exports = UserConstants;
+
+/***/ },
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -33250,7 +33267,7 @@
 	module.exports = ErrorStore;
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -33261,7 +33278,7 @@
 	    Link = __webpack_require__(168).Link;
 	var SessionActions = __webpack_require__(232),
 	    SessionStore = __webpack_require__(241),
-	    ErrorStore = __webpack_require__(259);
+	    ErrorStore = __webpack_require__(260);
 	
 	var LoginForm = React.createClass({
 		displayName: 'LoginForm',
@@ -33399,7 +33416,7 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33495,18 +33512,18 @@
 	module.exports = NavBar;
 
 /***/ },
-/* 262 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var UserInfoPane = __webpack_require__(263),
-	    RidesStore = __webpack_require__(278),
-	    ApiUtil = __webpack_require__(277),
-	    RideItem = __webpack_require__(280),
+	var UserInfoPane = __webpack_require__(264),
+	    RidesStore = __webpack_require__(270),
+	    ApiUtil = __webpack_require__(267),
+	    RideItem = __webpack_require__(271),
 	    SessionStore = __webpack_require__(241),
-	    AllUsersPane = __webpack_require__(264);
+	    AllUsersPane = __webpack_require__(272);
 	
 	var Feed = React.createClass({
 	  displayName: 'Feed',
@@ -33541,27 +33558,31 @@
 	      { className: 'feed-container' },
 	      React.createElement(
 	        'div',
-	        { className: 'intro-message' },
+	        { className: 'left-column' },
 	        React.createElement(
-	          'h3',
-	          null,
-	          'Welcome to Cycl!'
+	          'div',
+	          { className: 'intro-message' },
+	          React.createElement(
+	            'h3',
+	            null,
+	            'Welcome to Cycl!'
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            'As a warmup, check out some recent rides from the Cycl community below.'
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            'When you\'re ready to start mapping, click on the Create a Ride button above!'
+	          )
 	        ),
 	        React.createElement(
-	          'p',
-	          null,
-	          'As a warmup, check out some recent rides from the Cycl community below.'
-	        ),
-	        React.createElement(
-	          'p',
-	          null,
-	          'When you\'re ready to start mapping, click on the Create a Ride button above!'
+	          'div',
+	          { className: 'feed' },
+	          rides
 	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'feed' },
-	        rides
 	      ),
 	      React.createElement(
 	        'div',
@@ -33579,15 +33600,15 @@
 	module.exports = Feed;
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    AllUsersStore = __webpack_require__(281),
-	    UserStore = __webpack_require__(282),
-	    ApiUtil = __webpack_require__(277),
+	    AllUsersStore = __webpack_require__(265),
+	    UserStore = __webpack_require__(266),
+	    ApiUtil = __webpack_require__(267),
 	    SessionStore = __webpack_require__(241);
 	
 	var UserInfo = React.createClass({
@@ -33732,15 +33753,488 @@
 	module.exports = UserInfo;
 
 /***/ },
-/* 264 */
+/* 265 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    UserConstants = __webpack_require__(259);
+	
+	var _users = {};
+	
+	var AllUsersStore = new Store(AppDispatcher);
+	
+	AllUsersStore.all = function () {
+	  return _users;
+	};
+	
+	AllUsersStore.find = function (userId) {
+	  if (_users = {}) {
+	    return;
+	  } else {
+	    _users.filter(function (user) {
+	      return user.id === userId;
+	    });
+	  }
+	  // for (var k in _users) {
+	  //   if (_users.hasOwnProperty(k)) {
+	  //     if (k.id === userId) {
+	  //       return k;
+	  //     }
+	  //   }
+	  // }
+	};
+	
+	AllUsersStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case UserConstants.RECEIVE_ALL_USERS:
+	      updateUsers(payload.users);
+	      break;
+	  }
+	};
+	
+	function updateUsers(users) {
+	  _users = users;
+	  AllUsersStore.__emitChange();
+	}
+	
+	module.exports = AllUsersStore;
+
+/***/ },
+/* 266 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    UserConstants = __webpack_require__(259);
+	
+	var _userTotals = {};
+	var UserStore = new Store(AppDispatcher);
+	
+	UserStore.totals = function () {
+	  return _userTotals;
+	};
+	
+	UserStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case UserConstants.USER_TOTALS:
+	      updateTotals(payload.totals);
+	      break;
+	  }
+	};
+	
+	function updateTotals(totals) {
+	  _userTotals = totals;
+	  UserStore.__emitChange();
+	}
+	
+	module.exports = UserStore;
+
+/***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var ApiActions = __webpack_require__(268);
+	
+	var ApiUtil = {
+	  fetchRides: function fetchRides() {
+	    $.ajax({
+	      url: "api/rides",
+	      success: function success(rides) {
+	        ApiActions.receiveAll(rides);
+	      }
+	    });
+	  },
+	  createRide: function createRide(ride, callback) {
+	    $.ajax({
+	      url: "api/rides",
+	      method: "POST",
+	      data: { ride: ride },
+	      success: function success(newRide) {
+	        ApiActions.receiveNewRide(newRide);
+	        callback();
+	      }
+	    });
+	  },
+	  fetchAllUsers: function fetchAllUsers() {
+	    $.ajax({
+	      url: "/api/users",
+	      method: "GET",
+	      success: function success(users) {
+	        ApiActions.receiveAllUsers(users);
+	      }
+	    });
+	  },
+	  fetchUserTotals: function fetchUserTotals(id) {
+	    $.ajax({
+	      url: "/api/users/" + id,
+	      method: "GET",
+	      success: function success(totals) {
+	        ApiActions.userTotals(totals);
+	      }
+	    });
+	  },
+	  followUser: function followUser(id) {
+	    $.ajax({
+	      url: "/api/users/" + id + "/following",
+	      method: "POST",
+	      success: function success(follow) {
+	        ApiActions.addFollowing(follow);
+	      }
+	    });
+	  },
+	  unfollowUser: function unfollowUser(id) {
+	    $.ajax({
+	      url: "/api/users/" + id + "/following",
+	      method: "DELETE",
+	      success: function success(follow) {
+	        ApiActions.removeFollowing(follow);
+	      }
+	    });
+	  },
+	  fetchAllFollows: function fetchAllFollows(id) {
+	    $.ajax({
+	      url: "/api/users/" + id + "/following",
+	      method: "GET",
+	      success: function success(follows) {
+	        ApiActions.receiveFollowings(follows);
+	      }
+	    });
+	  },
+	  showOldRide: function showOldRide(ride) {
+	    ApiActions.showOldRide(ride);
+	  },
+	  removeRide: function removeRide() {
+	    ApiActions.removeRide();
+	  },
+	  createComment: function createComment(comment, resetFormCallback) {
+	    $.ajax({
+	      url: "/api/rides/" + comment.ride_id + "/comments",
+	      method: "POST",
+	      data: { comment: comment },
+	      success: function success(newComment) {
+	        ApiActions.createComment(newComment);
+	        resetFormCallback();
+	      }
+	    });
+	  }
+	};
+	
+	module.exports = ApiUtil;
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var AppDispatcher = __webpack_require__(233),
+	    UserConstants = __webpack_require__(259),
+	    RideConstants = __webpack_require__(269);
+	
+	var ApiActions = {
+	  receiveAll: function receiveAll(rides) {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.RIDES_RECEIVED,
+	      rides: rides
+	    });
+	  },
+	  receiveNewRide: function receiveNewRide(newRide) {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.ADD_RIDE,
+	      ride: newRide
+	    });
+	  },
+	  receiveAllUsers: function receiveAllUsers(users) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.RECEIVE_ALL_USERS,
+	      users: users
+	    });
+	  },
+	  userTotals: function userTotals(totals) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.USER_TOTALS,
+	      totals: totals
+	    });
+	  },
+	  addFollowing: function addFollowing(following) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.ADD_FOLLOWING,
+	      following: following
+	    });
+	  },
+	  removeFollowing: function removeFollowing(following) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.REMOVE_FOLLOWING,
+	      following: following
+	    });
+	  },
+	  receiveFollowings: function receiveFollowings(followings) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.RECEIVE_FOLLOWINGS,
+	      followings: followings
+	    });
+	  },
+	  showOldRide: function showOldRide(ride) {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.SHOW_OLD_RIDE,
+	      ride: ride
+	    });
+	  },
+	  removeRide: function removeRide() {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.REMOVE_RIDE
+	    });
+	  },
+	  createComment: function createComment(comment) {
+	    AppDispatcher.dispatch({
+	      actionType: RideConstants.NEW_COMMENT,
+	      comment: comment
+	    });
+	  }
+	};
+	
+	module.exports = ApiActions;
+
+/***/ },
+/* 269 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var RideConstants = {
+	  RIDES_RECEIVED: "RIDES_RECEIVED",
+	  NEW_RIDE: "NEW_RIDE",
+	  ADD_RIDE: "ADD_RIDE",
+	  RECEIVE_SAVED_RIDES: "RECEIVE_SAVED_RIDES",
+	  STORE_MARKERS: "STORE_MARKERS",
+	  SHOW_OLD_RIDE: "SHOW_OLD_RIDE",
+	  REMOVE_RIDE: "REMOVE_RIDE",
+	  RECEIVE_ELEVATION_DATA: "RECEIVE_ELEVATION_DATA",
+	  UPDATE_DIRECTIONS: "UPDATE_DIRECTIONS",
+	  REST_CHART: "REST_CHART",
+	  NEW_COMMENT: "NEW_COMMENT"
+	};
+	
+	module.exports = RideConstants;
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
+	
+	var _rides = [];
+	
+	var RidesStore = new Store(AppDispatcher);
+	
+	RidesStore.rides = function () {
+	  return _rides.slice();
+	};
+	
+	RidesStore.find = function (userId) {
+	  var result = [];
+	  _rides.forEach(function (ride) {
+	    if (ride.user_id === userId) {
+	      result.unshift(ride);
+	    }
+	  });
+	
+	  return result;
+	};
+	
+	RidesStore.findOldRide = function (rideId) {
+	  for (var i = 0; i < _rides.length; i++) {
+	    if (_rides[i].ride_id === rideId) {
+	      return _rides[i];
+	    }
+	  }
+	};
+	
+	RidesStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case RideConstants.ADD_RIDE:
+	      addRide(payload.ride);
+	      break;
+	    case RideConstants.RIDES_RECEIVED:
+	      resetAllRides(payload.rides);
+	      break;
+	    case RideConstants.NEW_COMMENT:
+	      addComment(payload.comment);
+	      break;
+	  }
+	};
+	
+	function resetAllRides(rides) {
+	  _rides = rides.reverse();
+	  RidesStore.__emitChange();
+	}
+	
+	function addRide(ride) {
+	  _rides.unshift(ride);
+	  RidesStore.__emitChange();
+	}
+	
+	function addComment(comment) {
+	  var ride = RidesStore.findOldRide(comment.ride_id);
+	  ride.comments.push(comment);
+	  RidesStore.__emitChange();
+	}
+	
+	module.exports = RidesStore;
+
+/***/ },
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    AllUsersStore = __webpack_require__(281),
-	    ApiUtil = __webpack_require__(277),
+	    SessionStore = __webpack_require__(241);
+	
+	var RideItem = React.createClass({
+	  displayName: 'RideItem',
+	  _goToUsersPage: function _goToUsersPage() {
+	    hashHistory.push('user/' + this.props.ride.user_id);
+	  },
+	  _goToShow: function _goToShow() {
+	    hashHistory.push('ride/' + this.props.ride.ride_id);
+	  },
+	  render: function render() {
+	    var currentUser = SessionStore.currentUser();
+	    var ride = this.props.ride;
+	    var hours = (ride.duration / 3600).toFixed(0);
+	    var minutes = (ride.duration % 3600 / 60).toFixed(0);
+	    var seconds = ride.duration % 60;
+	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=200x200&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
+	    return React.createElement(
+	      'div',
+	      { className: 'completed-ride hvr-pop', onClick: this._goToShow },
+	      React.createElement(
+	        'div',
+	        { id: 'completed-ride-info' },
+	        React.createElement(
+	          'div',
+	          null,
+	          React.createElement(
+	            'h2',
+	            { id: 'completed-ride-name' },
+	            ride.ride_name
+	          ),
+	          React.createElement(
+	            'h5',
+	            { onClick: this._goToUsersPage },
+	            ride.rider
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { id: 'completed-ride-details' },
+	          React.createElement(
+	            'table',
+	            { className: 'table', id: 'feed-table' },
+	            React.createElement(
+	              'tbody',
+	              null,
+	              React.createElement(
+	                'tr',
+	                null,
+	                React.createElement(
+	                  'td',
+	                  { className: 'completed-ride-th' },
+	                  'Distance'
+	                ),
+	                React.createElement(
+	                  'td',
+	                  { className: 'completed-ride-tb' },
+	                  ride.distance,
+	                  ' miles'
+	                )
+	              ),
+	              React.createElement(
+	                'tr',
+	                null,
+	                React.createElement(
+	                  'td',
+	                  { className: 'completed-ride-th' },
+	                  'Duration'
+	                ),
+	                React.createElement(
+	                  'td',
+	                  { className: 'completed-ride-tb' },
+	                  hours,
+	                  ' hours ',
+	                  minutes,
+	                  ' minutes ',
+	                  seconds,
+	                  ' seconds'
+	                )
+	              ),
+	              React.createElement(
+	                'tr',
+	                null,
+	                React.createElement(
+	                  'td',
+	                  { className: 'completed-ride-th' },
+	                  'Elevation'
+	                ),
+	                React.createElement(
+	                  'td',
+	                  { className: 'completed-ride-tb' },
+	                  ride.elevation_gain,
+	                  ' feet'
+	                )
+	              ),
+	              React.createElement(
+	                'tr',
+	                null,
+	                React.createElement(
+	                  'td',
+	                  { className: 'completed-ride-th' },
+	                  'Calories'
+	                ),
+	                React.createElement(
+	                  'td',
+	                  { className: 'completed-ride-tb' },
+	                  ride.calories_burned
+	                )
+	              )
+	            )
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'mini-map' },
+	        React.createElement('img', { src: startImg })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = RideItem;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
+	    hashHistory = __webpack_require__(168).hashHistory,
+	    AllUsersStore = __webpack_require__(265),
+	    ApiUtil = __webpack_require__(267),
 	    SessionStore = __webpack_require__(241);
 	
 	var AllUsers = React.createClass({
@@ -33843,19 +34337,19 @@
 	module.exports = AllUsers;
 
 /***/ },
-/* 265 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ApiUtil = __webpack_require__(277),
-	    RideItem = __webpack_require__(280),
-	    UserInfo = __webpack_require__(263),
+	    ApiUtil = __webpack_require__(267),
+	    RideItem = __webpack_require__(271),
+	    UserInfo = __webpack_require__(264),
 	    hashHistory = __webpack_require__(168).hashHistory,
 	    SessionStore = __webpack_require__(241),
-	    AllUsersStore = __webpack_require__(281),
-	    RidesStore = __webpack_require__(278);
+	    AllUsersStore = __webpack_require__(265),
+	    RidesStore = __webpack_require__(270);
 	
 	var UserPage = React.createClass({
 	  displayName: 'UserPage',
@@ -33975,16 +34469,16 @@
 	module.exports = UserPage;
 
 /***/ },
-/* 266 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
 	
-	var ElevationChart = __webpack_require__(267),
-	    CreateRideMap = __webpack_require__(273),
-	    RideInfo = __webpack_require__(275);
+	var ElevationChart = __webpack_require__(275),
+	    CreateRideMap = __webpack_require__(280),
+	    RideInfo = __webpack_require__(282);
 	
 	var CreateRide = React.createClass({
 	  displayName: 'CreateRide',
@@ -34023,15 +34517,15 @@
 	module.exports = CreateRide;
 
 /***/ },
-/* 267 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ElevationStore = __webpack_require__(268),
-	    DirectionsStore = __webpack_require__(270),
-	    GoogleApiUtil = __webpack_require__(271);
+	    ElevationStore = __webpack_require__(276),
+	    DirectionsStore = __webpack_require__(277),
+	    GoogleApiUtil = __webpack_require__(278);
 	
 	var ElevationChart = React.createClass({
 	  displayName: 'ElevationChart',
@@ -34118,7 +34612,7 @@
 	module.exports = ElevationChart;
 
 /***/ },
-/* 268 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34180,29 +34674,7 @@
 	module.exports = ElevationStore;
 
 /***/ },
-/* 269 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	var RideConstants = {
-	  RIDES_RECEIVED: "RIDES_RECEIVED",
-	  NEW_RIDE: "NEW_RIDE",
-	  ADD_RIDE: "ADD_RIDE",
-	  RECEIVE_SAVED_RIDES: "RECEIVE_SAVED_RIDES",
-	  STORE_MARKERS: "STORE_MARKERS",
-	  SHOW_OLD_RIDE: "SHOW_OLD_RIDE",
-	  REMOVE_RIDE: "REMOVE_RIDE",
-	  RECEIVE_ELEVATION_DATA: "RECEIVE_ELEVATION_DATA",
-	  UPDATE_DIRECTIONS: "UPDATE_DIRECTIONS",
-	  REST_CHART: "REST_CHART",
-	  NEW_COMMENT: "NEW_COMMENT"
-	};
-	
-	module.exports = RideConstants;
-
-/***/ },
-/* 270 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34261,12 +34733,12 @@
 	module.exports = DirectionsStore;
 
 /***/ },
-/* 271 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var GoogleApiActions = __webpack_require__(272);
+	var GoogleApiActions = __webpack_require__(279);
 	
 	var GoogleApiUtil = {
 	  getDirections: function getDirections(start, end, waypoints) {
@@ -34297,7 +34769,7 @@
 	    GoogleApiActions.resetElevation();
 	  },
 	  receiveElevation: function receiveElevation(elevations) {
-	    GoogleApiActions.reciveElevationData(elevations);
+	    GoogleApiActions.receiveElevationData(elevations);
 	  },
 	  storeMarkers: function storeMarkers(markers) {
 	    GoogleApiActions.storeMarkers(markers);
@@ -34307,7 +34779,7 @@
 	module.exports = GoogleApiUtil;
 
 /***/ },
-/* 272 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34335,7 +34807,7 @@
 	      actionType: RideConstants.RESET_CHART
 	    });
 	  },
-	  reciveElevationData: function reciveElevationData(response) {
+	  receiveElevationData: function receiveElevationData(response) {
 	    AppDispatcher.dispatch({
 	      actionType: RideConstants.RECEIVE_ELEVATION_DATA,
 	      data: response
@@ -34346,7 +34818,7 @@
 	module.exports = GoogleApiActions;
 
 /***/ },
-/* 273 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34354,9 +34826,9 @@
 	var React = __webpack_require__(1),
 	    ReactDOM = __webpack_require__(38);
 	
-	var GoogleApiUtil = __webpack_require__(271),
-	    DirectionStore = __webpack_require__(270),
-	    OldRideStore = __webpack_require__(274);
+	var GoogleApiUtil = __webpack_require__(278),
+	    DirectionStore = __webpack_require__(277),
+	    OldRideStore = __webpack_require__(281);
 	
 	var CreateRideMap = React.createClass({
 	  displayName: 'CreateRideMap',
@@ -34553,7 +35025,7 @@
 	module.exports = CreateRideMap;
 
 /***/ },
-/* 274 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34598,18 +35070,18 @@
 	module.exports = OldRideStore;
 
 /***/ },
-/* 275 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    ElevationChart = __webpack_require__(267),
-	    CreateRideForm = __webpack_require__(276),
-	    DirectionsStore = __webpack_require__(270),
-	    CommentsIndex = __webpack_require__(285),
-	    ElevationStore = __webpack_require__(268);
+	    ElevationChart = __webpack_require__(275),
+	    CreateRideForm = __webpack_require__(283),
+	    DirectionsStore = __webpack_require__(277),
+	    CommentsIndex = __webpack_require__(284),
+	    ElevationStore = __webpack_require__(276);
 	
 	var RideInfo = React.createClass({
 	  displayName: 'RideInfo',
@@ -34804,7 +35276,7 @@
 	module.exports = RideInfo;
 
 /***/ },
-/* 276 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34814,10 +35286,10 @@
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory;
 	
-	var ApiUtil = __webpack_require__(277),
-	    RidesStore = __webpack_require__(278),
+	var ApiUtil = __webpack_require__(267),
+	    RidesStore = __webpack_require__(270),
 	    SessionStore = __webpack_require__(241),
-	    DirectionsStore = __webpack_require__(270);
+	    DirectionsStore = __webpack_require__(277);
 	
 	var CreateRideForm = React.createClass({
 	  displayName: 'CreateRideForm',
@@ -35026,541 +35498,15 @@
 	module.exports = CreateRideForm;
 
 /***/ },
-/* 277 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var ApiActions = __webpack_require__(279);
-	
-	var ApiUtil = {
-	  fetchRides: function fetchRides() {
-	    $.ajax({
-	      url: "api/rides",
-	      success: function success(rides) {
-	        ApiActions.receiveAll(rides);
-	      }
-	    });
-	  },
-	  createRide: function createRide(ride, callback) {
-	    $.ajax({
-	      url: "api/rides",
-	      method: "POST",
-	      data: { ride: ride },
-	      success: function success(newRide) {
-	        ApiActions.receiveNewRide(newRide);
-	        callback();
-	      }
-	    });
-	  },
-	  fetchAllUsers: function fetchAllUsers() {
-	    $.ajax({
-	      url: "/api/users",
-	      method: "GET",
-	      success: function success(users) {
-	        ApiActions.receiveAllUsers(users);
-	      }
-	    });
-	  },
-	  fetchUserTotals: function fetchUserTotals(id) {
-	    $.ajax({
-	      url: "/api/users/" + id,
-	      method: "GET",
-	      success: function success(totals) {
-	        ApiActions.userTotals(totals);
-	      }
-	    });
-	  },
-	  followUser: function followUser(id) {
-	    $.ajax({
-	      url: "/api/users/" + id + "/following",
-	      method: "POST",
-	      success: function success(follow) {
-	        ApiActions.addFollowing(follow);
-	      }
-	    });
-	  },
-	  unfollowUser: function unfollowUser(id) {
-	    $.ajax({
-	      url: "/api/users/" + id + "/following",
-	      method: "DELETE",
-	      success: function success(follow) {
-	        ApiActions.removeFollowing(follow);
-	      }
-	    });
-	  },
-	  fetchAllFollows: function fetchAllFollows(id) {
-	    $.ajax({
-	      url: "/api/users/" + id + "/following",
-	      method: "GET",
-	      success: function success(follows) {
-	        ApiActions.receiveFollowings(follows);
-	      }
-	    });
-	  },
-	  showOldRide: function showOldRide(ride) {
-	    ApiActions.showOldRide(ride);
-	  },
-	  removeRide: function removeRide() {
-	    ApiActions.removeRide();
-	  },
-	  createComment: function createComment(comment, resetFormCallback) {
-	    $.ajax({
-	      url: "/api/rides/" + comment.ride_id + "/comments",
-	      method: "POST",
-	      data: { comment: comment },
-	      success: function success(newComment) {
-	        ApiActions.createComment(newComment);
-	        resetFormCallback();
-	      }
-	    });
-	  }
-	};
-	
-	module.exports = ApiUtil;
-
-/***/ },
-/* 278 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Store = __webpack_require__(242).Store,
-	    AppDispatcher = __webpack_require__(233),
-	    RideConstants = __webpack_require__(269);
-	
-	var _rides = [];
-	
-	var RidesStore = new Store(AppDispatcher);
-	
-	RidesStore.rides = function () {
-	  return _rides.slice();
-	};
-	
-	RidesStore.find = function (userId) {
-	  var result = [];
-	  _rides.forEach(function (ride) {
-	    if (ride.user_id === userId) {
-	      result.unshift(ride);
-	    }
-	  });
-	
-	  return result;
-	};
-	
-	RidesStore.findOldRide = function (rideId) {
-	  for (var i = 0; i < _rides.length; i++) {
-	    if (_rides[i].ride_id === rideId) {
-	      return _rides[i];
-	    }
-	  }
-	};
-	
-	RidesStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case RideConstants.ADD_RIDE:
-	      addRide(payload.ride);
-	      break;
-	    case RideConstants.RIDES_RECEIVED:
-	      resetAllRides(payload.rides);
-	      break;
-	    case RideConstants.NEW_COMMENT:
-	      addComment(payload.comment);
-	      break;
-	  }
-	};
-	
-	function resetAllRides(rides) {
-	  _rides = rides.reverse();
-	  RidesStore.__emitChange();
-	}
-	
-	function addRide(ride) {
-	  _rides.unshift(ride);
-	  RidesStore.__emitChange();
-	}
-	
-	function addComment(comment) {
-	  var ride = RidesStore.findOldRide(comment.ride_id);
-	  ride.comments.push(comment);
-	  RidesStore.__emitChange();
-	}
-	
-	module.exports = RidesStore;
-
-/***/ },
-/* 279 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var AppDispatcher = __webpack_require__(233),
-	    UserConstants = __webpack_require__(283),
-	    RideConstants = __webpack_require__(269);
-	
-	var ApiActions = {
-	  receiveAll: function receiveAll(rides) {
-	    AppDispatcher.dispatch({
-	      actionType: RideConstants.RIDES_RECEIVED,
-	      rides: rides
-	    });
-	  },
-	  receiveNewRide: function receiveNewRide(newRide) {
-	    AppDispatcher.dispatch({
-	      actionType: RideConstants.ADD_RIDE,
-	      ride: newRide
-	    });
-	  },
-	  receiveAllUsers: function receiveAllUsers(users) {
-	    AppDispatcher.dispatch({
-	      actionType: UserConstants.RECEIVE_ALL_USERS,
-	      users: users
-	    });
-	  },
-	  userTotals: function userTotals(totals) {
-	    AppDispatcher.dispatch({
-	      actionType: UserConstants.USER_TOTALS,
-	      totals: totals
-	    });
-	  },
-	  addFollowing: function addFollowing(following) {
-	    AppDispatcher.dispatch({
-	      actionType: UserConstants.ADD_FOLLOWING,
-	      following: following
-	    });
-	  },
-	  removeFollowing: function removeFollowing(following) {
-	    AppDispatcher.dispatch({
-	      actionType: UserConstants.REMOVE_FOLLOWING,
-	      following: following
-	    });
-	  },
-	  receiveFollowings: function receiveFollowings(followings) {
-	    AppDispatcher.dispatch({
-	      actionType: UserConstants.RECEIVE_FOLLOWINGS,
-	      followings: followings
-	    });
-	  },
-	  showOldRide: function showOldRide(ride) {
-	    AppDispatcher.dispatch({
-	      actionType: RideConstants.SHOW_OLD_RIDE,
-	      ride: ride
-	    });
-	  },
-	  removeRide: function removeRide() {
-	    AppDispatcher.dispatch({
-	      actionType: RideConstants.REMOVE_RIDE
-	    });
-	  },
-	  createComment: function createComment(comment) {
-	    AppDispatcher.dispatch({
-	      actionType: RideConstants.NEW_COMMENT,
-	      comment: comment
-	    });
-	  }
-	};
-	
-	module.exports = ApiActions;
-
-/***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1),
-	    hashHistory = __webpack_require__(168).hashHistory,
-	    SessionStore = __webpack_require__(241);
-	
-	var RideItem = React.createClass({
-	  displayName: 'RideItem',
-	  _goToUsersPage: function _goToUsersPage() {
-	    hashHistory.push('user/' + this.props.ride.user_id);
-	  },
-	  _goToShow: function _goToShow() {
-	    hashHistory.push('ride/' + this.props.ride.ride_id);
-	  },
-	  render: function render() {
-	    var currentUser = SessionStore.currentUser();
-	    var ride = this.props.ride;
-	    var hours = (ride.duration / 3600).toFixed(0);
-	    var minutes = (ride.duration % 3600 / 60).toFixed(0);
-	    var seconds = ride.duration % 60;
-	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=200x200&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
-	    return React.createElement(
-	      'div',
-	      { className: 'completed-ride hvr-pop', onClick: this._goToShow },
-	      React.createElement(
-	        'div',
-	        { id: 'completed-ride-info' },
-	        React.createElement(
-	          'div',
-	          null,
-	          React.createElement(
-	            'h2',
-	            { id: 'completed-ride-name' },
-	            ride.ride_name
-	          ),
-	          React.createElement(
-	            'h5',
-	            { onClick: this._goToUsersPage },
-	            ride.rider
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { id: 'completed-ride-details' },
-	          React.createElement(
-	            'table',
-	            { className: 'table', id: 'feed-table' },
-	            React.createElement(
-	              'tbody',
-	              null,
-	              React.createElement(
-	                'tr',
-	                null,
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-th' },
-	                  'Distance'
-	                ),
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-tb' },
-	                  ride.distance,
-	                  ' miles'
-	                )
-	              ),
-	              React.createElement(
-	                'tr',
-	                null,
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-th' },
-	                  'Duration'
-	                ),
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-tb' },
-	                  hours,
-	                  ' hours ',
-	                  minutes,
-	                  ' minutes ',
-	                  seconds,
-	                  ' seconds'
-	                )
-	              ),
-	              React.createElement(
-	                'tr',
-	                null,
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-th' },
-	                  'Elevation'
-	                ),
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-tb' },
-	                  ride.elevation_gain,
-	                  ' feet'
-	                )
-	              ),
-	              React.createElement(
-	                'tr',
-	                null,
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-th' },
-	                  'Calories'
-	                ),
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-tb' },
-	                  ride.calories_burned
-	                )
-	              )
-	            )
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'mini-map' },
-	        React.createElement('img', { src: startImg })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = RideItem;
-
-/***/ },
-/* 281 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Store = __webpack_require__(242).Store,
-	    AppDispatcher = __webpack_require__(233),
-	    UserConstants = __webpack_require__(283);
-	
-	var _users = {};
-	
-	var AllUsersStore = new Store(AppDispatcher);
-	
-	AllUsersStore.all = function () {
-	  return _users;
-	};
-	
-	AllUsersStore.find = function (userId) {
-	  if (_users = {}) {
-	    return;
-	  } else {
-	    _users.filter(function (user) {
-	      return user.id === userId;
-	    });
-	  }
-	  // for (var k in _users) {
-	  //   if (_users.hasOwnProperty(k)) {
-	  //     if (k.id === userId) {
-	  //       return k;
-	  //     }
-	  //   }
-	  // }
-	};
-	
-	AllUsersStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case UserConstants.RECEIVE_ALL_USERS:
-	      updateUsers(payload.users);
-	      break;
-	  }
-	};
-	
-	function updateUsers(users) {
-	  _users = users;
-	  AllUsersStore.__emitChange();
-	}
-	
-	module.exports = AllUsersStore;
-
-/***/ },
-/* 282 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Store = __webpack_require__(242).Store,
-	    AppDispatcher = __webpack_require__(233),
-	    UserConstants = __webpack_require__(283);
-	
-	var _userTotals = {};
-	var UserStore = new Store(AppDispatcher);
-	
-	UserStore.totals = function () {
-	  return _userTotals;
-	};
-	
-	UserStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case UserConstants.USER_TOTALS:
-	      updateTotals(payload.totals);
-	      break;
-	  }
-	};
-	
-	function updateTotals(totals) {
-	  _userTotals = totals;
-	  UserStore.__emitChange();
-	}
-	
-	module.exports = UserStore;
-
-/***/ },
-/* 283 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	var UserConstants = {
-	  ADD_FOLLOWING: "ADD_FOLLOWING",
-	  REMOVE_FOLLOWING: "REMOVE_FOLLOWING",
-	  USER_TOTALS: "USER_TOTALS",
-	  RECEIVE_ALL_USERS: "RECEIVE_ALL_USERS",
-	  UPDATE_USER: "UPDATE_USER",
-	  RECEIVE_FOLLOWINGS: "RECEIVE_FOLLOWINGS"
-	};
-	
-	module.exports = UserConstants;
-
-/***/ },
 /* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var React = __webpack_require__(1);
-	
-	var ElevationChart = __webpack_require__(267),
-	    RideMap = __webpack_require__(273),
-	    ApiUtil = __webpack_require__(277),
-	    RidesStore = __webpack_require__(278),
-	    OldRideStore = __webpack_require__(274),
-	    RideInfo = __webpack_require__(275);
-	
-	var CreateRide = React.createClass({
-	  displayName: 'CreateRide',
-	  getInitialState: function getInitialState() {
-	    return { ride: RidesStore.findOldRide(parseInt(this.props.params.rideId)) };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    ApiUtil.showOldRide(this.state.ride);
-	  },
-	  render: function render() {
-	    var ride = this.state.ride;
-	    return React.createElement(
-	      'div',
-	      { className: 'create-ride-page clear-fix' },
-	      React.createElement(
-	        'div',
-	        { className: 'instructions clear-fix' },
-	        React.createElement(
-	          'h5',
-	          null,
-	          ride.ride_name
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'block-for-map' },
-	        React.createElement(RideMap, { ride: ride })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'ride-info-pane' },
-	        React.createElement(RideInfo, { rideStatus: 'old', ride: ride })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'elev-chart' },
-	        React.createElement(ElevationChart, { ride: ride })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = CreateRide;
-
-/***/ },
-/* 285 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
 	var React = __webpack_require__(1),
-	    CommentForm = __webpack_require__(286),
-	    RidesStore = __webpack_require__(278),
-	    CommentIndexItem = __webpack_require__(287);
+	    CommentForm = __webpack_require__(285),
+	    RidesStore = __webpack_require__(270),
+	    CommentIndexItem = __webpack_require__(286);
 	
 	var CommentIndex = React.createClass({
 	  displayName: 'CommentIndex',
@@ -35600,13 +35546,13 @@
 	module.exports = CommentIndex;
 
 /***/ },
-/* 286 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ApiUtil = __webpack_require__(277),
+	    ApiUtil = __webpack_require__(267),
 	    SessionStore = __webpack_require__(241);
 	
 	var CommentForm = React.createClass({
@@ -35660,7 +35606,7 @@
 	module.exports = CommentForm;
 
 /***/ },
-/* 287 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -35688,6 +35634,64 @@
 	});
 	
 	module.exports = CommentIndexItem;
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var ElevationChart = __webpack_require__(275),
+	    RideMap = __webpack_require__(280),
+	    ApiUtil = __webpack_require__(267),
+	    RidesStore = __webpack_require__(270),
+	    OldRideStore = __webpack_require__(281),
+	    RideInfo = __webpack_require__(282);
+	
+	var CreateRide = React.createClass({
+	  displayName: 'CreateRide',
+	  getInitialState: function getInitialState() {
+	    return { ride: RidesStore.findOldRide(parseInt(this.props.params.rideId)) };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    ApiUtil.showOldRide(this.state.ride);
+	  },
+	  render: function render() {
+	    var ride = this.state.ride;
+	    return React.createElement(
+	      'div',
+	      { className: 'create-ride-page clear-fix' },
+	      React.createElement(
+	        'div',
+	        { className: 'instructions clear-fix' },
+	        React.createElement(
+	          'h5',
+	          null,
+	          ride.ride_name
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'block-for-map' },
+	        React.createElement(RideMap, { ride: ride })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'ride-info-pane' },
+	        React.createElement(RideInfo, { rideStatus: 'old', ride: ride })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'elev-chart' },
+	        React.createElement(ElevationChart, { ride: ride })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CreateRide;
 
 /***/ }
 /******/ ]);

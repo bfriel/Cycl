@@ -1,3 +1,14 @@
+.feed-container {
+  height: 100%;
+  display: flex;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  width: 75%
+}
+
 .intro-message {
   float: left;
   font-weight: 100;
@@ -14,6 +25,7 @@
   position: fixed;
   top: 10%;
   left: 72%;
+  min-width: 100px;
 }
 
 .feed-side-bar-item {
