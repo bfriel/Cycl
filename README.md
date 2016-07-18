@@ -4,106 +4,30 @@
 
 [heroku]: http://www.cycl.tech
 
-## Minimum Viable Product
+Cycl is a full-stack web application for mapping and sharing bicycle rides.
+It combines a Ruby on Rails backend, PostgreSQL database, and React.js/Flux frontend to deliver an efficient single page app.
 
-Cycl is a web application inspired by MapMyRun that will be build using Ruby on Rails and React.js.  By the end of Week 9, this app will, at a minimum, satisfy the following criteria:
+## Features
 
-- [x] Hosting on Heroku
-- [x] New account creation, login, and guest/demo login
-- [ ] A production README, replacing this README
-- [x] Creation of cycling routes via Google Maps
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [x] Feed of completed routes
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [x] Comments on routes
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [x] Following of other users
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
+### Create Routes
+Cycl combines the Google Maps and Google Roads APIs to present an intuitive and visually appealing UI.
+Users simply click on the map to drop waypoints of where they rode. As they click, their ride's statistics are automatically
+updated and their elevation is graphed below.
 
-## Design Docs
-* [View Wireframes][views]
-* [React Components][components]
-* [Flux Cycles][flux-cycles]
-* [API endpoints][api-endpoints]
-* [DB schema][schema]
+![alt text](http://i.imgur.com/pI8LF2c.jpg "Create a Ride page")
 
-[views]: docs/views.md
-[components]: docs/components.md
-[flux-cycles]: docs/flux-cycles.md
-[api-endpoints]: docs/api-endpoints.md
-[schema]: docs/schema.md
+### Follow Users
+Users can follow each other with the click of a button.
 
-## Implementation Timeline
+![alt text](http://i.imgur.com/pHUL5eC.png "User page")
 
-### Phase 1: Backend setup and Front End User Authentication (2 days)
+Once followed, the followee's rides will be shown in the user's feed. Additionally, users will have easy access to their
+followers through menu which follows them while they scroll.
 
-**Objective:** Functioning rails project with Authentication. Set up on Heroku
+![alt text](http://i.imgur.com/cqHHjTX.png "Users you follow menu")
 
-- [x] Create new project
-- [x] Create `User` model
-- [x] Authentication
-- [x] User signup/signin pages
-- [x] Styled landing page with Navbar after login
+### Comments
+Each ride has space for displaying comments which is automatically updated whenever a new comment is created.
+When a large volume of comments are left, users can simply scroll down within the box to view all of the comments.
 
-* [Phase One][phase-one]
-[phase-one]: docs/phases/phase1.md
-
-### Phase 2: Create Routes using Google Maps (2 days)
-
-**Objective:** Routes can be created through the API/User interface.
-
-- [x] Allow users to create routes using Google Maps API
-- [x] Routes can be saved along with their mileage, duration, elevation gain, calories burned, description, and picture of route
-- [x] Routes can be reused
-- [x] Create Route page is styled
-
-* [Phase Two][phase-three]
-[phase-three]: docs/phases/phase3.md
-
-### Phase 3: Save Routes to Feed and User Page (2 days)
-
-**Objective:** Routes can be viewed through the API/User interface.
-
-- [x] Saved Routes appear automatically on User Page
-- [x] Feed shows routes of all users
-- [x] Feed and User Page are styled
-
-* [Phase Three][phase-three]
-[phase-three]: docs/phases/phase3.md
-
-### Phase 4: Following Implementation (1 day)
-
-**Objective:** Seamless navigation from Dashboard to User and Follower pages.
-
-- [x] Create `Follower` model
-- [x] Seed the database with a small amount of test data
-- [x] CRUD API for routes (`FollowersController`)
-- [x] jBuilder views for users
-- [x] Setup Webpack & Flux scaffold
-- [x] Setup `APIUtil` to interact with the API
-- [x] Test out API interaction in the console
-
-
-### Phase 5: Adding Comments to Routes (1 day)
-
-**Objective:** Existing route pages will show comments.
-
-- [x] Allow users to leave comments on a Route Show page
-
-* [Phase Five][phase-five]
-[phase-five]: docs/phases/phase5.md
-
-### Bonus Phase
-
-  - [ ] Cheers for friends
-  - [ ] Search for rides by location
-  - [ ] Goals
-  - [ ] Ranking system for current users
+![alt text](http://i.imgur.com/4DpAj28.png "Comments box")
