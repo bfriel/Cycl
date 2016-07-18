@@ -73,6 +73,9 @@ const LoginForm = React.createClass({
 				<div className="landing-title">
 					<h1>Cycl</h1>
 				</div>
+        <div className="tagline">
+          <p>Connect with friends and make the most of your rides</p>
+        </div>
 				<div className="entry-form-container">
           <div className="list-errors">
             { this.fieldErrors("base") }
