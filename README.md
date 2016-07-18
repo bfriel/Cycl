@@ -31,3 +31,12 @@ Each ride has space for displaying comments which is automatically updated whene
 When a large volume of comments are left, users can simply scroll down within the box to view all of the comments.
 
 ![alt text](http://i.imgur.com/4DpAj28.png "Comments box")
+
+## Future Directions
+
+I look forward to adding the following features:
+
+* Searching for rides by location
+* Cheers for friends
+* Ranking users by lifetime statistics
+* Infinite scrolling on feed
