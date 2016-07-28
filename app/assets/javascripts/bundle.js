@@ -55,16 +55,16 @@
 	    hashHistory = __webpack_require__(168).hashHistory;
 	//Components
 	var App = __webpack_require__(230),
-	    Feed = __webpack_require__(262),
-	    UserPage = __webpack_require__(272),
-	    CreateRide = __webpack_require__(273),
+	    Feed = __webpack_require__(263),
+	    UserPage = __webpack_require__(273),
+	    CreateRide = __webpack_require__(274),
 	    SignupForm = __webpack_require__(231),
-	    ShowRide = __webpack_require__(286),
-	    LoginForm = __webpack_require__(232);
+	    ShowRide = __webpack_require__(287),
+	    LoginForm = __webpack_require__(261);
 	//Flux
-	var SessionStore = __webpack_require__(234),
-	    RidesStore = __webpack_require__(269),
-	    SessionActions = __webpack_require__(258);
+	var SessionStore = __webpack_require__(241),
+	    RidesStore = __webpack_require__(270),
+	    SessionActions = __webpack_require__(232);
 	
 	var routes = React.createElement(
 	  Route,
@@ -25974,11 +25974,11 @@
 	    Link = __webpack_require__(168).Link;
 	//Components
 	var SignupForm = __webpack_require__(231),
-	    LoginForm = __webpack_require__(232),
-	    NavBar = __webpack_require__(233);
+	    LoginForm = __webpack_require__(261),
+	    NavBar = __webpack_require__(262);
 	//Flux
-	var SessionStore = __webpack_require__(234),
-	    SessionActions = __webpack_require__(258);
+	var SessionStore = __webpack_require__(241),
+	    SessionActions = __webpack_require__(232);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -26039,9 +26039,9 @@
 	
 	var React = __webpack_require__(1),
 	    Link = __webpack_require__(168).Link;
-	var SessionActions = __webpack_require__(258),
-	    SessionStore = __webpack_require__(234),
-	    ErrorStore = __webpack_require__(287);
+	var SessionActions = __webpack_require__(232),
+	    SessionStore = __webpack_require__(241),
+	    ErrorStore = __webpack_require__(260);
 	
 	var SignupForm = React.createClass({
 	  displayName: 'SignupForm',
@@ -26195,363 +26195,53 @@
 
 	"use strict";
 	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	var AppDispatcher = __webpack_require__(233);
+	var SessionConstants = __webpack_require__(237);
+	var SessionApiUtil = __webpack_require__(238);
+	var ErrorActions = __webpack_require__(239);
+	var hashHistory = __webpack_require__(168).hashHistory;
 	
-	var React = __webpack_require__(1),
-	    Link = __webpack_require__(168).Link;
-	var SessionActions = __webpack_require__(258),
-	    SessionStore = __webpack_require__(234),
-	    ErrorStore = __webpack_require__(287);
-	
-	var LoginForm = React.createClass({
-	  displayName: 'LoginForm',
-	
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
+	var SessionActions = {
+	  signUp: function signUp(formData) {
+	    SessionApiUtil.signUp(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
 	  },
-	
-	  getInitialState: function getInitialState() {
-	    return {
-	      username: "",
-	      password: ""
-	    };
+	  logIn: function logIn(formData) {
+	    SessionApiUtil.logIn(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
 	  },
-	  componentDidMount: function componentDidMount() {
-	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	  logOut: function logOut() {
+	    SessionApiUtil.logOut(SessionActions.removeCurrentUser);
 	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.errorListener.remove();
-	    this.sessionListener.remove();
+	  fetchCurrentUser: function fetchCurrentUser(complete) {
+	    SessionApiUtil.fetchCurrentUser(SessionActions.receiveCurrentUser, complete);
 	  },
-	  redirectIfLoggedIn: function redirectIfLoggedIn() {
-	    if (SessionStore.isUserLoggedIn()) {
-	      this.context.router.push("/");
-	    }
-	  },
-	  handleSubmit: function handleSubmit(e) {
-	    e.preventDefault();
-	    SessionActions.logIn(this.state);
-	  },
-	  _guestLogin: function _guestLogin(e) {
-	    e.preventDefault();
-	    var demoUser = { username: 'Haley', password: 'password' };
-	    SessionActions.logIn(demoUser);
-	  },
-	  fieldErrors: function fieldErrors(field) {
-	    var errors = ErrorStore.formErrors(this.formType());
-	
-	    if (!errors[field]) {
-	      return;
-	    }
-	
-	    var messages = errors[field].map(function (errorMsg, i) {
-	      return React.createElement(
-	        'li',
-	        { key: i },
-	        errorMsg
-	      );
+	  receiveCurrentUser: function receiveCurrentUser(currentUser) {
+	    AppDispatcher.dispatch({
+	      actionType: SessionConstants.LOGIN,
+	      currentUser: currentUser
 	    });
-	
-	    return React.createElement(
-	      'ul',
-	      null,
-	      messages
-	    );
 	  },
-	  formType: function formType() {
-	    return this.props.location.pathname.slice(1);
-	  },
-	  update: function update(property) {
-	    var _this = this;
-	
-	    return function (e) {
-	      return _this.setState(_defineProperty({}, property, e.target.value));
-	    };
-	  },
-	  render: function render() {
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'entry-page-container' },
-	      React.createElement(
-	        'div',
-	        { className: 'landing-title' },
-	        React.createElement(
-	          'h1',
-	          null,
-	          'Cycl'
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'tagline' },
-	        React.createElement(
-	          'p',
-	          null,
-	          'Connect with friends and make the most of your rides'
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'entry-form-container' },
-	        React.createElement(
-	          'div',
-	          { className: 'list-errors' },
-	          this.fieldErrors("base"),
-	          this.fieldErrors("username"),
-	          this.fieldErrors("password")
-	        ),
-	        React.createElement(
-	          'form',
-	          { onSubmit: this.handleSubmit, className: 'entry-form-box' },
-	          React.createElement('br', null),
-	          React.createElement(
-	            'div',
-	            { className: 'entry-form' },
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'text',
-	              value: this.state.username,
-	              onChange: this.update("username"),
-	              autoFocus: true,
-	              className: 'entry-input',
-	              placeholder: 'Username',
-	              id: 'user_username' }),
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'password',
-	              value: this.state.password,
-	              onChange: this.update("password"),
-	              className: 'entry-input',
-	              placeholder: 'Password',
-	              id: 'user_password' }),
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'submit', value: 'Log In!' }),
-	            React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'switch-form' },
-	            'New to Cycl? ',
-	            React.createElement(
-	              Link,
-	              { to: '/signup', className: 'switch-link' },
-	              'Sign Up!'
-	            )
-	          )
-	        )
-	      )
-	    );
+	  removeCurrentUser: function removeCurrentUser() {
+	    AppDispatcher.dispatch({
+	      actionType: SessionConstants.LOGOUT
+	    });
+	    hashHistory.push("/login");
 	  }
-	});
+	};
 	
-	module.exports = LoginForm;
+	module.exports = SessionActions;
 
 /***/ },
 /* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	var React = __webpack_require__(1),
-	    hashHistory = __webpack_require__(168).hashHistory,
-	    Link = __webpack_require__(168).Link;
-	
-	var SessionStore = __webpack_require__(234),
-	    SessionActions = __webpack_require__(258);
-	
-	var NavBar = React.createClass({
-	  displayName: 'NavBar',
-	  _goHome: function _goHome() {
-	    hashHistory.push("/");
-	  },
-	  _goProfile: function _goProfile() {
-	    hashHistory.push("user/" + SessionStore.currentUser().id);
-	  },
-	  _createRide: function _createRide() {
-	    hashHistory.push("create_ride");
-	  },
-	  _handleLogOut: function _handleLogOut() {
-	    SessionActions.logOut();
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'nav',
-	        { id: 'navbar' },
-	        React.createElement(
-	          'div',
-	          { className: 'nav-title', onClick: this._goHome },
-	          'Cycl'
-	        ),
-	        React.createElement(
-	          'div',
-	          { id: 'right' },
-	          React.createElement(
-	            'div',
-	            { className: 'navbar-buttons' },
-	            React.createElement(
-	              'a',
-	              { onClick: this._createRide },
-	              'Create a Ride'
-	            ),
-	            React.createElement(
-	              'a',
-	              { onClick: this._goHome },
-	              'Feed'
-	            ),
-	            React.createElement(
-	              'a',
-	              { onClick: this._goProfile, id: 'last' },
-	              SessionStore.currentUser().username
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'dropdown' },
-	            React.createElement(
-	              'button',
-	              { className: 'dropbtn' },
-	              React.createElement(
-	                'div',
-	                { id: 'menu' },
-	                React.createElement('img', { src: 'http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467853219/whitearrowdown1_abyhs8.png' })
-	              )
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'dropdown-content' },
-	              React.createElement(
-	                'a',
-	                { onClick: this._goProfile },
-	                'PROFILE'
-	              ),
-	              React.createElement(
-	                'a',
-	                { onClick: this._handleLogOut },
-	                'LOGOUT'
-	              )
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = NavBar;
-
-/***/ },
-/* 234 */
-/***/ function(module, exports, __webpack_require__) {
-
 	"use strict";
 	
-	var AppDispatcher = __webpack_require__(235);
-	var Store = __webpack_require__(239).Store;
-	var SessionConstants = __webpack_require__(256),
-	    UserConstants = __webpack_require__(257);
-	
-	var SessionStore = new Store(AppDispatcher);
-	
-	var _currentUser = {};
-	var _followings = [];
-	var _currentUserHasBeenFetched = false;
-	
-	function _login(currentUser) {
-	  _currentUser = currentUser;
-	  _currentUserHasBeenFetched = true;
-	}
-	
-	function _logout() {
-	  _currentUser = {};
-	  _currentUserHasBeenFetched = true;
-	}
-	
-	function _removeFollowing(following) {
-	  var idx = -1;
-	  _followings.forEach(function (follow, i) {
-	    if (follow.id === following.id) {
-	      idx = i;
-	    }
-	  });
-	
-	  if (idx >= 0) {
-	    _followings.splice(idx, 1);
-	  }
-	}
-	
-	function _addFollowing(following) {
-	  _followings.push(following);
-	}
-	
-	function _resetFollowings(followings) {
-	  _followings = followings;
-	}
-	
-	SessionStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case SessionConstants.LOGIN:
-	      _login(payload.currentUser);
-	      SessionStore.__emitChange();
-	      break;
-	    case SessionConstants.LOGOUT:
-	      _logout();
-	      SessionStore.__emitChange();
-	      break;
-	    case UserConstants.ADD_FOLLOWING:
-	      _addFollowing(payload.following);
-	      SessionStore.__emitChange();
-	      break;
-	    case UserConstants.REMOVE_FOLLOWING:
-	      _removeFollowing(payload.following);
-	      SessionStore.__emitChange();
-	      break;
-	    case UserConstants.RECEIVE_FOLLOWINGS:
-	      _resetFollowings(payload.followings);
-	      SessionStore.__emitChange();
-	  }
-	};
-	
-	SessionStore.followings = function () {
-	  var usersFollowings = [];
-	
-	  _followings.map(function (following) {
-	    if (following.followersId === SessionStore.currentUser().id) {
-	      usersFollowings.push(following);
-	    }
-	  });
-	  return usersFollowings;
-	};
-	
-	SessionStore.currentUser = function () {
-	  return Object.assign({}, _currentUser);
-	};
-	
-	SessionStore.currentUserHasBeenFetched = function () {
-	  return !!_currentUserHasBeenFetched;
-	};
-	
-	SessionStore.isUserLoggedIn = function () {
-	  return !!_currentUser.id;
-	};
-	
-	module.exports = SessionStore;
-
-/***/ },
-/* 235 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var Dispatcher = __webpack_require__(236).Dispatcher;
+	var Dispatcher = __webpack_require__(234).Dispatcher;
 	
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 236 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26563,11 +26253,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(237);
+	module.exports.Dispatcher = __webpack_require__(235);
 
 
 /***/ },
-/* 237 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26589,7 +26279,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(236);
 	
 	var _prefix = 'ID_';
 	
@@ -26804,7 +26494,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 238 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26859,7 +26549,216 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
+/* 237 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var SessionConstants = {
+		LOGIN: "LOGIN",
+		LOGOUT: "LOGOUT"
+	};
+	
+	module.exports = SessionConstants;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var SessionApiUtil = {
+		logIn: function logIn(user, success, _error) {
+			$.ajax({
+				url: '/api/session',
+				type: 'POST',
+				data: { user: user },
+				success: success,
+				error: function error(xhr) {
+					var errors = xhr.responseJSON;
+	
+					_error("login", errors);
+				}
+			});
+		},
+		logOut: function logOut(success) {
+			$.ajax({
+				url: '/api/session',
+				method: 'delete',
+				success: success,
+				error: function error() {
+					console.log("Logout error in SessionApiUtil#logout");
+				}
+			});
+		},
+		signUp: function signUp(user, success, _error2) {
+			$.ajax({
+				url: '/api/users',
+				type: 'POST',
+				dataType: 'json',
+				data: { user: user },
+				success: success,
+				error: function error(xhr) {
+					var errors = xhr.responseJSON;
+					_error2("signup", errors);
+				}
+			});
+		},
+		fetchCurrentUser: function fetchCurrentUser(success, _complete) {
+			$.ajax({
+				url: '/api/session',
+				method: 'GET',
+				success: success,
+				error: function error(xhr) {
+					console.log("Error in SessionApiUtil#fetchCurrentUser");
+				},
+				complete: function complete() {
+					_complete();
+				}
+			});
+		}
+	};
+	
+	module.exports = SessionApiUtil;
+
+/***/ },
 /* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var AppDispatcher = __webpack_require__(233);
+	var ErrorConstants = __webpack_require__(240);
+	
+	var ErrorActions = {
+	  setErrors: function setErrors(form, errors) {
+	    AppDispatcher.dispatch({
+	      actionType: ErrorConstants.SET_ERRORS,
+	      form: form,
+	      errors: errors
+	    });
+	  },
+	  clearErrors: function clearErrors() {
+	    AppDispatcher.dispatch({
+	      actionType: ErrorConstants.CLEAR_ERRORS
+	    });
+	  }
+	};
+	
+	module.exports = ErrorActions;
+
+/***/ },
+/* 240 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var ErrorConstants = {
+	  SET_ERRORS: "SET_ERRORS",
+	  CLEAR_ERRORS: "CLEAR_ERRORS"
+	};
+	
+	module.exports = ErrorConstants;
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var AppDispatcher = __webpack_require__(233);
+	var Store = __webpack_require__(242).Store;
+	var SessionConstants = __webpack_require__(237),
+	    UserConstants = __webpack_require__(259);
+	
+	var SessionStore = new Store(AppDispatcher);
+	
+	var _currentUser = {};
+	var _followings = [];
+	var _currentUserHasBeenFetched = false;
+	
+	function _login(currentUser) {
+	  _currentUser = currentUser;
+	  _currentUserHasBeenFetched = true;
+	}
+	
+	function _logout() {
+	  _currentUser = {};
+	  _currentUserHasBeenFetched = true;
+	}
+	
+	function _removeFollowing(following) {
+	  var idx = -1;
+	  _followings.forEach(function (follow, i) {
+	    if (follow.id === following.id) {
+	      idx = i;
+	    }
+	  });
+	
+	  if (idx >= 0) {
+	    _followings.splice(idx, 1);
+	  }
+	}
+	
+	function _addFollowing(following) {
+	  _followings.push(following);
+	}
+	
+	function _resetFollowings(followings) {
+	  _followings = followings;
+	}
+	
+	SessionStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case SessionConstants.LOGIN:
+	      _login(payload.currentUser);
+	      SessionStore.__emitChange();
+	      break;
+	    case SessionConstants.LOGOUT:
+	      _logout();
+	      SessionStore.__emitChange();
+	      break;
+	    case UserConstants.ADD_FOLLOWING:
+	      _addFollowing(payload.following);
+	      SessionStore.__emitChange();
+	      break;
+	    case UserConstants.REMOVE_FOLLOWING:
+	      _removeFollowing(payload.following);
+	      SessionStore.__emitChange();
+	      break;
+	    case UserConstants.RECEIVE_FOLLOWINGS:
+	      _resetFollowings(payload.followings);
+	      SessionStore.__emitChange();
+	  }
+	};
+	
+	SessionStore.followings = function () {
+	  var usersFollowings = [];
+	
+	  _followings.map(function (following) {
+	    if (following.followersId === SessionStore.currentUser().id) {
+	      usersFollowings.push(following);
+	    }
+	  });
+	  return usersFollowings;
+	};
+	
+	SessionStore.currentUser = function () {
+	  return Object.assign({}, _currentUser);
+	};
+	
+	SessionStore.currentUserHasBeenFetched = function () {
+	  return !!_currentUserHasBeenFetched;
+	};
+	
+	SessionStore.isUserLoggedIn = function () {
+	  return !!_currentUser.id;
+	};
+	
+	module.exports = SessionStore;
+
+/***/ },
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26871,15 +26770,15 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(240);
-	module.exports.MapStore = __webpack_require__(243);
-	module.exports.Mixin = __webpack_require__(255);
-	module.exports.ReduceStore = __webpack_require__(244);
-	module.exports.Store = __webpack_require__(245);
+	module.exports.Container = __webpack_require__(243);
+	module.exports.MapStore = __webpack_require__(246);
+	module.exports.Mixin = __webpack_require__(258);
+	module.exports.ReduceStore = __webpack_require__(247);
+	module.exports.Store = __webpack_require__(248);
 
 
 /***/ },
-/* 240 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26901,10 +26800,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(241);
+	var FluxStoreGroup = __webpack_require__(244);
 	
-	var invariant = __webpack_require__(238);
-	var shallowEqual = __webpack_require__(242);
+	var invariant = __webpack_require__(236);
+	var shallowEqual = __webpack_require__(245);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -27062,7 +26961,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 241 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27081,7 +26980,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(236);
 	
 	/**
 	 * FluxStoreGroup allows you to execute a callback on every dispatch after
@@ -27143,7 +27042,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 242 */
+/* 245 */
 /***/ function(module, exports) {
 
 	/**
@@ -27198,7 +27097,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 243 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27219,10 +27118,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(244);
-	var Immutable = __webpack_require__(254);
+	var FluxReduceStore = __webpack_require__(247);
+	var Immutable = __webpack_require__(257);
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(236);
 	
 	/**
 	 * This is a simple store. It allows caching key value pairs. An implementation
@@ -27348,7 +27247,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 244 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27369,10 +27268,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(245);
+	var FluxStore = __webpack_require__(248);
 	
-	var abstractMethod = __webpack_require__(253);
-	var invariant = __webpack_require__(238);
+	var abstractMethod = __webpack_require__(256);
+	var invariant = __webpack_require__(236);
 	
 	var FluxReduceStore = (function (_FluxStore) {
 	  _inherits(FluxReduceStore, _FluxStore);
@@ -27455,7 +27354,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 245 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27474,11 +27373,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(246);
+	var _require = __webpack_require__(249);
 	
 	var EventEmitter = _require.EventEmitter;
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(236);
 	
 	/**
 	 * This class should be extended by the stores in your application, like so:
@@ -27638,7 +27537,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 246 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27651,14 +27550,14 @@
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(247)
+	  EventEmitter: __webpack_require__(250)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 247 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27677,11 +27576,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(248);
-	var EventSubscriptionVendor = __webpack_require__(250);
+	var EmitterSubscription = __webpack_require__(251);
+	var EventSubscriptionVendor = __webpack_require__(253);
 	
-	var emptyFunction = __webpack_require__(252);
-	var invariant = __webpack_require__(251);
+	var emptyFunction = __webpack_require__(255);
+	var invariant = __webpack_require__(254);
 	
 	/**
 	 * @class BaseEventEmitter
@@ -27855,7 +27754,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 248 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27876,7 +27775,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(249);
+	var EventSubscription = __webpack_require__(252);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -27908,7 +27807,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 249 */
+/* 252 */
 /***/ function(module, exports) {
 
 	/**
@@ -27962,7 +27861,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 250 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27981,7 +27880,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(251);
+	var invariant = __webpack_require__(254);
 	
 	/**
 	 * EventSubscriptionVendor stores a set of EventSubscriptions that are
@@ -28071,7 +27970,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 251 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -28126,7 +28025,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 252 */
+/* 255 */
 /***/ function(module, exports) {
 
 	/**
@@ -28168,7 +28067,7 @@
 	module.exports = emptyFunction;
 
 /***/ },
-/* 253 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -28185,7 +28084,7 @@
 	
 	'use strict';
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(236);
 	
 	function abstractMethod(className, methodName) {
 	   true ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Subclasses of %s must override %s() with their own implementation.', className, methodName) : invariant(false) : undefined;
@@ -28195,7 +28094,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 254 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33179,7 +33078,7 @@
 	}));
 
 /***/ },
-/* 255 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -33196,9 +33095,9 @@
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(241);
+	var FluxStoreGroup = __webpack_require__(244);
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(236);
 	
 	/**
 	 * `FluxContainer` should be preferred over this mixin, but it requires using
@@ -33302,20 +33201,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 256 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	var SessionConstants = {
-		LOGIN: "LOGIN",
-		LOGOUT: "LOGOUT"
-	};
-	
-	module.exports = SessionConstants;
-
-/***/ },
-/* 257 */
+/* 259 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33332,144 +33218,220 @@
 	module.exports = UserConstants;
 
 /***/ },
-/* 258 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var AppDispatcher = __webpack_require__(235);
-	var SessionConstants = __webpack_require__(256);
-	var SessionApiUtil = __webpack_require__(259);
-	var ErrorActions = __webpack_require__(260);
-	var hashHistory = __webpack_require__(168).hashHistory;
-	
-	var SessionActions = {
-	  signUp: function signUp(formData) {
-	    SessionApiUtil.signUp(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
-	  },
-	  logIn: function logIn(formData) {
-	    SessionApiUtil.logIn(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
-	  },
-	  logOut: function logOut() {
-	    SessionApiUtil.logOut(SessionActions.removeCurrentUser);
-	  },
-	  fetchCurrentUser: function fetchCurrentUser(complete) {
-	    SessionApiUtil.fetchCurrentUser(SessionActions.receiveCurrentUser, complete);
-	  },
-	  receiveCurrentUser: function receiveCurrentUser(currentUser) {
-	    AppDispatcher.dispatch({
-	      actionType: SessionConstants.LOGIN,
-	      currentUser: currentUser
-	    });
-	  },
-	  removeCurrentUser: function removeCurrentUser() {
-	    AppDispatcher.dispatch({
-	      actionType: SessionConstants.LOGOUT
-	    });
-	    hashHistory.push("/login");
-	  }
-	};
-	
-	module.exports = SessionActions;
-
-/***/ },
-/* 259 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	var SessionApiUtil = {
-		logIn: function logIn(user, success, _error) {
-			$.ajax({
-				url: '/api/session',
-				type: 'POST',
-				data: { user: user },
-				success: success,
-				error: function error(xhr) {
-					var errors = xhr.responseJSON;
-	
-					_error("login", errors);
-				}
-			});
-		},
-		logOut: function logOut(success) {
-			$.ajax({
-				url: '/api/session',
-				method: 'delete',
-				success: success,
-				error: function error() {
-					console.log("Logout error in SessionApiUtil#logout");
-				}
-			});
-		},
-		signUp: function signUp(user, success, _error2) {
-			$.ajax({
-				url: '/api/users',
-				type: 'POST',
-				dataType: 'json',
-				data: { user: user },
-				success: success,
-				error: function error(xhr) {
-					var errors = xhr.responseJSON;
-					_error2("signup", errors);
-				}
-			});
-		},
-		fetchCurrentUser: function fetchCurrentUser(success, _complete) {
-			$.ajax({
-				url: '/api/session',
-				method: 'GET',
-				success: success,
-				error: function error(xhr) {
-					console.log("Error in SessionApiUtil#fetchCurrentUser");
-				},
-				complete: function complete() {
-					_complete();
-				}
-			});
-		}
-	};
-	
-	module.exports = SessionApiUtil;
-
-/***/ },
 /* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var AppDispatcher = __webpack_require__(235);
-	var ErrorConstants = __webpack_require__(261);
+	var Store = __webpack_require__(242).Store;
+	var AppDispatcher = __webpack_require__(233);
+	var ErrorConstants = __webpack_require__(240);
 	
-	var ErrorActions = {
-	  setErrors: function setErrors(form, errors) {
-	    AppDispatcher.dispatch({
-	      actionType: ErrorConstants.SET_ERRORS,
-	      form: form,
-	      errors: errors
-	    });
-	  },
-	  clearErrors: function clearErrors() {
-	    AppDispatcher.dispatch({
-	      actionType: ErrorConstants.CLEAR_ERRORS
-	    });
+	var ErrorStore = new Store(AppDispatcher);
+	
+	var _errors = {};
+	var _form = "";
+	
+	function setErrors(payload) {
+	  _errors = payload.errors;
+	  _form = payload.form;
+	  ErrorStore.__emitChange();
+	}
+	
+	function clearErrors() {
+	  _errors = {};
+	  _form = "";
+	  ErrorStore.__emitChange();
+	}
+	
+	ErrorStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case ErrorConstants.SET_ERRORS:
+	      setErrors(payload);
+	      break;
+	    case ErrorConstants.CLEAR_ERRORS:
+	      clearErrors();
+	      break;
 	  }
 	};
 	
-	module.exports = ErrorActions;
+	ErrorStore.formErrors = function (form) {
+	  if (form !== _form) {
+	    return {};
+	  }
+	
+	  // copies the _errors object into a new object
+	  var result = {};
+	  for (var field in _errors) {
+	    result[field] = Array.from(_errors[field]);
+	  }
+	
+	  return result;
+	};
+	
+	ErrorStore.form = function () {
+	  return _form;
+	};
+	
+	module.exports = ErrorStore;
 
 /***/ },
 /* 261 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var ErrorConstants = {
-	  SET_ERRORS: "SET_ERRORS",
-	  CLEAR_ERRORS: "CLEAR_ERRORS"
-	};
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	module.exports = ErrorConstants;
+	var React = __webpack_require__(1),
+	    Link = __webpack_require__(168).Link;
+	var SessionActions = __webpack_require__(232),
+	    SessionStore = __webpack_require__(241),
+	    ErrorStore = __webpack_require__(260);
+	
+	var LoginForm = React.createClass({
+	  displayName: 'LoginForm',
+	
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      username: "",
+	      password: ""
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
+	  },
+	  redirectIfLoggedIn: function redirectIfLoggedIn() {
+	    if (SessionStore.isUserLoggedIn()) {
+	      this.context.router.push("/");
+	    }
+	  },
+	  handleSubmit: function handleSubmit(e) {
+	    e.preventDefault();
+	    SessionActions.logIn(this.state);
+	  },
+	  _guestLogin: function _guestLogin(e) {
+	    e.preventDefault();
+	    var demoUser = { username: 'Haley', password: 'password' };
+	    SessionActions.logIn(demoUser);
+	  },
+	  fieldErrors: function fieldErrors(field) {
+	    var errors = ErrorStore.formErrors(this.formType());
+	
+	    if (!errors[field]) {
+	      return;
+	    }
+	
+	    var messages = errors[field].map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i },
+	        errorMsg
+	      );
+	    });
+	
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
+	  },
+	  formType: function formType() {
+	    return this.props.location.pathname.slice(1);
+	  },
+	  update: function update(property) {
+	    var _this = this;
+	
+	    return function (e) {
+	      return _this.setState(_defineProperty({}, property, e.target.value));
+	    };
+	  },
+	  render: function render() {
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'entry-page-container' },
+	      React.createElement(
+	        'div',
+	        { className: 'landing-title' },
+	        React.createElement(
+	          'h1',
+	          null,
+	          'Cycl'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'tagline' },
+	        React.createElement(
+	          'p',
+	          null,
+	          'Connect with friends and make the most of your rides'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'entry-form-container' },
+	        React.createElement(
+	          'div',
+	          { className: 'list-errors' },
+	          this.fieldErrors("base"),
+	          this.fieldErrors("username"),
+	          this.fieldErrors("password")
+	        ),
+	        React.createElement(
+	          'form',
+	          { onSubmit: this.handleSubmit, className: 'entry-form-box' },
+	          React.createElement('br', null),
+	          React.createElement(
+	            'div',
+	            { className: 'entry-form' },
+	            React.createElement('br', null),
+	            React.createElement('input', { type: 'text',
+	              value: this.state.username,
+	              onChange: this.update("username"),
+	              autoFocus: true,
+	              className: 'entry-input',
+	              placeholder: 'Username',
+	              id: 'user_username' }),
+	            React.createElement('br', null),
+	            React.createElement('input', { type: 'password',
+	              value: this.state.password,
+	              onChange: this.update("password"),
+	              className: 'entry-input',
+	              placeholder: 'Password',
+	              id: 'user_password' }),
+	            React.createElement('br', null),
+	            React.createElement('input', { type: 'submit', value: 'Log In!' }),
+	            React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'switch-form' },
+	            'New to Cycl? ',
+	            React.createElement(
+	              Link,
+	              { to: '/signup', className: 'switch-link' },
+	              'Sign Up!'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = LoginForm;
 
 /***/ },
 /* 262 */
@@ -33477,13 +33439,109 @@
 
 	'use strict';
 	
+	var React = __webpack_require__(1),
+	    hashHistory = __webpack_require__(168).hashHistory,
+	    Link = __webpack_require__(168).Link;
+	
+	var SessionStore = __webpack_require__(241),
+	    SessionActions = __webpack_require__(232);
+	
+	var NavBar = React.createClass({
+	  displayName: 'NavBar',
+	  _goHome: function _goHome() {
+	    hashHistory.push("/");
+	  },
+	  _goProfile: function _goProfile() {
+	    hashHistory.push("user/" + SessionStore.currentUser().id);
+	  },
+	  _createRide: function _createRide() {
+	    hashHistory.push("create_ride");
+	  },
+	  _handleLogOut: function _handleLogOut() {
+	    SessionActions.logOut();
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'nav',
+	        { id: 'navbar' },
+	        React.createElement(
+	          'div',
+	          { className: 'nav-title', onClick: this._goHome },
+	          'Cycl'
+	        ),
+	        React.createElement(
+	          'div',
+	          { id: 'right' },
+	          React.createElement(
+	            'div',
+	            { className: 'navbar-buttons' },
+	            React.createElement(
+	              'a',
+	              { onClick: this._createRide },
+	              'Create a Ride'
+	            ),
+	            React.createElement(
+	              'a',
+	              { onClick: this._goHome },
+	              'Feed'
+	            ),
+	            React.createElement(
+	              'a',
+	              { onClick: this._goProfile, id: 'last' },
+	              SessionStore.currentUser().username
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'dropdown' },
+	            React.createElement(
+	              'button',
+	              { className: 'dropbtn' },
+	              React.createElement(
+	                'div',
+	                { id: 'menu' },
+	                React.createElement('img', { src: 'http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467853219/whitearrowdown1_abyhs8.png' })
+	              )
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'dropdown-content' },
+	              React.createElement(
+	                'a',
+	                { onClick: this._goProfile },
+	                'PROFILE'
+	              ),
+	              React.createElement(
+	                'a',
+	                { onClick: this._handleLogOut },
+	                'LOGOUT'
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = NavBar;
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
 	var React = __webpack_require__(1);
-	var UserInfoPane = __webpack_require__(263),
-	    RidesStore = __webpack_require__(269),
-	    ApiUtil = __webpack_require__(266),
-	    RideItem = __webpack_require__(270),
-	    SessionStore = __webpack_require__(234),
-	    AllUsersPane = __webpack_require__(271);
+	var UserInfoPane = __webpack_require__(264),
+	    RidesStore = __webpack_require__(270),
+	    ApiUtil = __webpack_require__(267),
+	    RideItem = __webpack_require__(271),
+	    SessionStore = __webpack_require__(241),
+	    AllUsersPane = __webpack_require__(272);
 	
 	var Feed = React.createClass({
 	  displayName: 'Feed',
@@ -33560,16 +33618,16 @@
 	module.exports = Feed;
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    AllUsersStore = __webpack_require__(264),
-	    UserStore = __webpack_require__(265),
-	    ApiUtil = __webpack_require__(266),
-	    SessionStore = __webpack_require__(234);
+	    AllUsersStore = __webpack_require__(265),
+	    UserStore = __webpack_require__(266),
+	    ApiUtil = __webpack_require__(267),
+	    SessionStore = __webpack_require__(241);
 	
 	var UserInfo = React.createClass({
 	  displayName: 'UserInfo',
@@ -33713,14 +33771,14 @@
 	module.exports = UserInfo;
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(239).Store,
-	    AppDispatcher = __webpack_require__(235),
-	    UserConstants = __webpack_require__(257);
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    UserConstants = __webpack_require__(259);
 	
 	var _users = {};
 	
@@ -33763,14 +33821,14 @@
 	module.exports = AllUsersStore;
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(239).Store,
-	    AppDispatcher = __webpack_require__(235),
-	    UserConstants = __webpack_require__(257);
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    UserConstants = __webpack_require__(259);
 	
 	var _userTotals = {};
 	var UserStore = new Store(AppDispatcher);
@@ -33795,12 +33853,12 @@
 	module.exports = UserStore;
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var ApiActions = __webpack_require__(267);
+	var ApiActions = __webpack_require__(268);
 	
 	var ApiUtil = {
 	  fetchRides: function fetchRides() {
@@ -33889,14 +33947,14 @@
 	module.exports = ApiUtil;
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var AppDispatcher = __webpack_require__(235),
-	    UserConstants = __webpack_require__(257),
-	    RideConstants = __webpack_require__(268);
+	var AppDispatcher = __webpack_require__(233),
+	    UserConstants = __webpack_require__(259),
+	    RideConstants = __webpack_require__(269);
 	
 	var ApiActions = {
 	  receiveAll: function receiveAll(rides) {
@@ -33963,7 +34021,7 @@
 	module.exports = ApiActions;
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33985,14 +34043,14 @@
 	module.exports = RideConstants;
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(239).Store,
-	    AppDispatcher = __webpack_require__(235),
-	    RideConstants = __webpack_require__(268);
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
 	
 	var _rides = [];
 	
@@ -34054,14 +34112,14 @@
 	module.exports = RidesStore;
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    SessionStore = __webpack_require__(234);
+	    SessionStore = __webpack_require__(241);
 	
 	var RideItem = React.createClass({
 	  displayName: 'RideItem',
@@ -34186,16 +34244,16 @@
 	module.exports = RideItem;
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    AllUsersStore = __webpack_require__(264),
-	    ApiUtil = __webpack_require__(266),
-	    SessionStore = __webpack_require__(234);
+	    AllUsersStore = __webpack_require__(265),
+	    ApiUtil = __webpack_require__(267),
+	    SessionStore = __webpack_require__(241);
 	
 	var AllUsers = React.createClass({
 	  displayName: 'AllUsers',
@@ -34297,19 +34355,19 @@
 	module.exports = AllUsers;
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ApiUtil = __webpack_require__(266),
-	    RideItem = __webpack_require__(270),
-	    UserInfo = __webpack_require__(263),
+	    ApiUtil = __webpack_require__(267),
+	    RideItem = __webpack_require__(271),
+	    UserInfo = __webpack_require__(264),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    SessionStore = __webpack_require__(234),
-	    AllUsersStore = __webpack_require__(264),
-	    RidesStore = __webpack_require__(269);
+	    SessionStore = __webpack_require__(241),
+	    AllUsersStore = __webpack_require__(265),
+	    RidesStore = __webpack_require__(270);
 	
 	var UserPage = React.createClass({
 	  displayName: 'UserPage',
@@ -34429,16 +34487,16 @@
 	module.exports = UserPage;
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
 	
-	var ElevationChart = __webpack_require__(274),
-	    CreateRideMap = __webpack_require__(279),
-	    RideInfo = __webpack_require__(281);
+	var ElevationChart = __webpack_require__(275),
+	    CreateRideMap = __webpack_require__(280),
+	    RideInfo = __webpack_require__(282);
 	
 	var CreateRide = React.createClass({
 	  displayName: 'CreateRide',
@@ -34477,15 +34535,15 @@
 	module.exports = CreateRide;
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ElevationStore = __webpack_require__(275),
-	    DirectionsStore = __webpack_require__(276),
-	    GoogleApiUtil = __webpack_require__(277);
+	    ElevationStore = __webpack_require__(276),
+	    DirectionsStore = __webpack_require__(277),
+	    GoogleApiUtil = __webpack_require__(278);
 	
 	var ElevationChart = React.createClass({
 	  displayName: 'ElevationChart',
@@ -34572,14 +34630,14 @@
 	module.exports = ElevationChart;
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(239).Store,
-	    AppDispatcher = __webpack_require__(235),
-	    RideConstants = __webpack_require__(268);
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
 	
 	var _elevations = {};
 	var _elevationGain = 0;
@@ -34634,14 +34692,14 @@
 	module.exports = ElevationStore;
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(239).Store,
-	    AppDispatcher = __webpack_require__(235),
-	    RideConstants = __webpack_require__(268);
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
 	
 	var _directions = {};
 	var _distance = 0;
@@ -34693,12 +34751,12 @@
 	module.exports = DirectionsStore;
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var GoogleApiActions = __webpack_require__(278);
+	var GoogleApiActions = __webpack_require__(279);
 	
 	var GoogleApiUtil = {
 	  getDirections: function getDirections(start, end, waypoints) {
@@ -34739,13 +34797,13 @@
 	module.exports = GoogleApiUtil;
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var AppDispatcher = __webpack_require__(235),
-	    RideConstants = __webpack_require__(268);
+	var AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
 	
 	var GoogleApiActions = {
 	  setDirections: function setDirections(result, status) {
@@ -34778,7 +34836,7 @@
 	module.exports = GoogleApiActions;
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34786,9 +34844,9 @@
 	var React = __webpack_require__(1),
 	    ReactDOM = __webpack_require__(38);
 	
-	var GoogleApiUtil = __webpack_require__(277),
-	    DirectionStore = __webpack_require__(276),
-	    OldRideStore = __webpack_require__(280);
+	var GoogleApiUtil = __webpack_require__(278),
+	    DirectionStore = __webpack_require__(277),
+	    OldRideStore = __webpack_require__(281);
 	
 	var CreateRideMap = React.createClass({
 	  displayName: 'CreateRideMap',
@@ -34985,14 +35043,14 @@
 	module.exports = CreateRideMap;
 
 /***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(239).Store,
-	    AppDispatcher = __webpack_require__(235),
-	    RideConstants = __webpack_require__(268);
+	var Store = __webpack_require__(242).Store,
+	    AppDispatcher = __webpack_require__(233),
+	    RideConstants = __webpack_require__(269);
 	
 	var _oldRide = {};
 	
@@ -35030,18 +35088,18 @@
 	module.exports = OldRideStore;
 
 /***/ },
-/* 281 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    ElevationChart = __webpack_require__(274),
-	    CreateRideForm = __webpack_require__(282),
-	    DirectionsStore = __webpack_require__(276),
-	    CommentsIndex = __webpack_require__(283),
-	    ElevationStore = __webpack_require__(275);
+	    ElevationChart = __webpack_require__(275),
+	    CreateRideForm = __webpack_require__(283),
+	    DirectionsStore = __webpack_require__(277),
+	    CommentsIndex = __webpack_require__(284),
+	    ElevationStore = __webpack_require__(276);
 	
 	var RideInfo = React.createClass({
 	  displayName: 'RideInfo',
@@ -35236,7 +35294,7 @@
 	module.exports = RideInfo;
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35246,10 +35304,10 @@
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory;
 	
-	var ApiUtil = __webpack_require__(266),
-	    RidesStore = __webpack_require__(269),
-	    SessionStore = __webpack_require__(234),
-	    DirectionsStore = __webpack_require__(276);
+	var ApiUtil = __webpack_require__(267),
+	    RidesStore = __webpack_require__(270),
+	    SessionStore = __webpack_require__(241),
+	    DirectionsStore = __webpack_require__(277);
 	
 	var CreateRideForm = React.createClass({
 	  displayName: 'CreateRideForm',
@@ -35458,15 +35516,15 @@
 	module.exports = CreateRideForm;
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    CommentForm = __webpack_require__(284),
-	    RidesStore = __webpack_require__(269),
-	    CommentIndexItem = __webpack_require__(285);
+	    CommentForm = __webpack_require__(285),
+	    RidesStore = __webpack_require__(270),
+	    CommentIndexItem = __webpack_require__(286);
 	
 	var CommentIndex = React.createClass({
 	  displayName: 'CommentIndex',
@@ -35506,14 +35564,14 @@
 	module.exports = CommentIndex;
 
 /***/ },
-/* 284 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ApiUtil = __webpack_require__(266),
-	    SessionStore = __webpack_require__(234);
+	    ApiUtil = __webpack_require__(267),
+	    SessionStore = __webpack_require__(241);
 	
 	var CommentForm = React.createClass({
 	  displayName: 'CommentForm',
@@ -35566,7 +35624,7 @@
 	module.exports = CommentForm;
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -35596,19 +35654,19 @@
 	module.exports = CommentIndexItem;
 
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
 	
-	var ElevationChart = __webpack_require__(274),
-	    RideMap = __webpack_require__(279),
-	    ApiUtil = __webpack_require__(266),
-	    RidesStore = __webpack_require__(269),
-	    OldRideStore = __webpack_require__(280),
-	    RideInfo = __webpack_require__(281);
+	var ElevationChart = __webpack_require__(275),
+	    RideMap = __webpack_require__(280),
+	    ApiUtil = __webpack_require__(267),
+	    RidesStore = __webpack_require__(270),
+	    OldRideStore = __webpack_require__(281),
+	    RideInfo = __webpack_require__(282);
 	
 	var CreateRide = React.createClass({
 	  displayName: 'CreateRide',
@@ -35652,64 +35710,6 @@
 	});
 	
 	module.exports = CreateRide;
-
-/***/ },
-/* 287 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var Store = __webpack_require__(239).Store;
-	var AppDispatcher = __webpack_require__(235);
-	var ErrorConstants = __webpack_require__(261);
-	
-	var ErrorStore = new Store(AppDispatcher);
-	
-	var _errors = {};
-	var _form = "";
-	
-	function setErrors(payload) {
-	  _errors = payload.errors;
-	  _form = payload.form;
-	  ErrorStore.__emitChange();
-	}
-	
-	function clearErrors() {
-	  _errors = {};
-	  _form = "";
-	  ErrorStore.__emitChange();
-	}
-	
-	ErrorStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case ErrorConstants.SET_ERRORS:
-	      setErrors(payload);
-	      break;
-	    case ErrorConstants.CLEAR_ERRORS:
-	      clearErrors();
-	      break;
-	  }
-	};
-	
-	ErrorStore.formErrors = function (form) {
-	  if (form !== _form) {
-	    return {};
-	  }
-	
-	  // copies the _errors object into a new object
-	  var result = {};
-	  for (var field in _errors) {
-	    result[field] = Array.from(_errors[field]);
-	  }
-	
-	  return result;
-	};
-	
-	ErrorStore.form = function () {
-	  return _form;
-	};
-	
-	module.exports = ErrorStore;
 
 /***/ }
 /******/ ]);
