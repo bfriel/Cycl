@@ -42,9 +42,9 @@ const App = React.createClass({
     }
     return (
       <div className="app-container">
-          <header>
-            {navbar}
-          </header>
+        <nav>
+          {navbar}
+        </nav>
         {this.props.children}
       </div>
     );

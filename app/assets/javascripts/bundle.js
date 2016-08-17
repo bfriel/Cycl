@@ -26013,7 +26013,7 @@
 	      'div',
 	      { className: 'app-container' },
 	      React.createElement(
-	        'header',
+	        'nav',
 	        null,
 	        navbar
 	      ),
@@ -35532,64 +35532,111 @@
 	      );
 	      formButtonText = "Sign Up!";
 	    }
-	    return React.createElement(
-	      'div',
-	      { className: 'entry-page-container' },
+	    return(
+	      // <div>
+	      //   <div className="row">
+	      //     <div className="portal-intro col-lg-6 col-md-6 col-sm-6 col-xs-12">
+	      //       <h1>Cycl</h1>
+	      //       <p>Connect with friends and make the most of your rides</p>
+	      //     </div>
+	      //     <div className="portal-form col-lg-6 col-md-6 col-sm-6 col-xs-12">
+	      //       <form className="entry-form-box" onSubmit={this.handleSubmit}>
+	      //         <div className="list-errors">
+	      //           { this.fieldErrors("base") }
+	      //           { this.fieldErrors("username") }
+	      //           { this.fieldErrors("password") }
+	      //         </div>
+	      //         <br/>
+	      //
+	      //         <div className="entry-form">
+	      //           <br />
+	      //             <input type="text"
+	      //               value={this.state.username}
+	      //               onChange={this.update("username")}
+	      //               autoFocus
+	      //               className="entry-input"
+	      //               placeholder="Username"
+	      //               id="user_username" />
+	      //
+	      //
+	      //           <br />
+	      //             <input type="password"
+	      //               value={this.state.password}
+	      //               onChange={this.update("password")}
+	      //               className="entry-input"
+	      //               placeholder="Password"
+	      //               id="user_password" />
+	      //
+	      //           <br />
+	      //
+	      //           <input type="submit" value={formButtonText} />
+	      //           <input type="submit" value="Guest Login" onClick={this._guestLogin} />
+	      //         </div>
+	      //         {otherFormLink}
+	      //       </form>
+	      //     </div>
+	      //   </div>
+	      // </div>
+	
 	      React.createElement(
 	        'div',
-	        { className: 'landing-title' },
+	        { className: 'entry-page-container' },
 	        React.createElement(
-	          'h1',
-	          null,
-	          'Cycl'
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'tagline' },
-	        React.createElement(
-	          'p',
-	          null,
-	          'Connect with friends and make the most of your rides'
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'entry-form-container' },
-	        React.createElement(
-	          'form',
-	          { className: 'entry-form-box', onSubmit: this.handleSubmit },
+	          'div',
+	          { className: 'landing-title' },
 	          React.createElement(
-	            'div',
-	            { className: 'list-errors' },
-	            this.fieldErrors("base"),
-	            this.fieldErrors("username"),
-	            this.fieldErrors("password")
-	          ),
-	          React.createElement('br', null),
+	            'h1',
+	            null,
+	            'Cycl'
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'tagline' },
 	          React.createElement(
-	            'div',
-	            { className: 'entry-form' },
+	            'p',
+	            null,
+	            'Connect with friends and make the most of your rides'
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'entry-form-container' },
+	          React.createElement(
+	            'form',
+	            { className: 'entry-form-box', onSubmit: this.handleSubmit },
+	            React.createElement(
+	              'div',
+	              { className: 'list-errors' },
+	              this.fieldErrors("base"),
+	              this.fieldErrors("username"),
+	              this.fieldErrors("password")
+	            ),
 	            React.createElement('br', null),
-	            React.createElement('input', { type: 'text',
-	              value: this.state.username,
-	              onChange: this.update("username"),
-	              autoFocus: true,
-	              className: 'entry-input',
-	              placeholder: 'Username',
-	              id: 'user_username' }),
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'password',
-	              value: this.state.password,
-	              onChange: this.update("password"),
-	              className: 'entry-input',
-	              placeholder: 'Password',
-	              id: 'user_password' }),
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'submit', value: formButtonText }),
-	            React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin })
-	          ),
-	          otherFormLink
+	            React.createElement(
+	              'div',
+	              { className: 'entry-form' },
+	              React.createElement('br', null),
+	              React.createElement('input', { type: 'text',
+	                value: this.state.username,
+	                onChange: this.update("username"),
+	                autoFocus: true,
+	                className: 'entry-input',
+	                placeholder: 'Username',
+	                id: 'user_username' }),
+	              React.createElement('br', null),
+	              React.createElement('input', { type: 'password',
+	                value: this.state.password,
+	                onChange: this.update("password"),
+	                className: 'entry-input',
+	                placeholder: 'Password',
+	                id: 'user_password' }),
+	              React.createElement('br', null),
+	              React.createElement('input', { type: 'submit', value: formButtonText }),
+	              React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin })
+	            ),
+	            otherFormLink
+	          )
 	        )
 	      )
 	    );

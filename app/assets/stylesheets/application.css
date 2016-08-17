@@ -23,9 +23,6 @@
  *= require ride_comments
  */
 
-html {
-}
-
 body {
   font-family: 'Roboto', sans-serif;
   color: white;
@@ -101,11 +98,11 @@ input[type="submit"]:hover {
   color: rgba(255, 255, 255, 0.5);
 }
 
-:-moz-placeholder { /* Firefox 18- */
+:-moz-placeholder {
    color: rgba(255, 255, 255, 0.5);
 }
 
-::-moz-placeholder {  /* Firefox 19+ */
+::-moz-placeholder {
    color: rgba(255, 255, 255, 0.5);
 }
 
@@ -137,7 +134,7 @@ input[type="submit"]:hover {
     background: linear-gradient(#578843, #67ae55);
 }
 
-/*#follow-button {
+#follow-button {
   float: right;
   margin-right: 20px;
   border: 1px solid black;
@@ -145,4 +142,4 @@ input[type="submit"]:hover {
   background: #f1ceb0;
   width: 60px;
   border-radius: 2px;
-}*/
+}
