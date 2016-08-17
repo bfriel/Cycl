@@ -1,11 +1,8 @@
 const React = require('react'),
       Link = require('react-router').Link;
 //Components
-const SignupForm = require('./signup_form'),
-      LoginForm = require('./login_form'),
-      NavBar = require('./nav_bar');
-//Flux
-const SessionStore = require('../stores/session_store'),
+const NavBar = require('./nav_bar'),
+      SessionStore = require('../stores/session_store'),
       SessionActions = require('../actions/session_actions');
 
 const App = React.createClass({

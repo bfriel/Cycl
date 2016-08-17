@@ -1,7 +1,8 @@
 "use strict";
 
 const React = require('react'),
- 		  Link = require('react-router').Link;
+ 		  Link = require('react-router').Link,
+      hashHistory = require('react-router').hashHistory;
 const SessionActions = require('../actions/session_actions'),
       SessionStore = require('../stores/session_store'),
       ErrorStore = require('../stores/error_store');
@@ -15,7 +16,8 @@ const SignupForm = React.createClass({
   getInitialState() {
     return {
       username: "",
-      password: ""
+      password: "",
+      type: this.props.route.type
     };
   },
 
@@ -29,6 +31,12 @@ const SignupForm = React.createClass({
     this.sessionListener.remove();
   },
 
+  componentWillReceiveProps() {
+    this.setState({
+      type: this.props.route.type
+    });
+  },
+
   redirectIfLoggedIn() {
     if (SessionStore.isUserLoggedIn()) {
       this.context.router.push("/");
@@ -36,8 +44,12 @@ const SignupForm = React.createClass({
   },
 
 	handleSubmit(e) {
-		e.preventDefault();
-    SessionActions.signUp(this.state);
+    e.preventDefault();
+    if (this.state.type === "signup") {
+      SessionActions.signUp(this.state);
+    } else {
+      SessionActions.logIn(this.state);
+    }
 	},
 
 	_guestLogin(e) {
@@ -47,26 +59,52 @@ const SignupForm = React.createClass({
 	},
 
   fieldErrors(field) {
-    let errors = ErrorStore.formErrors(this.formType());
+    let errors = ErrorStore.formErrors(this.state.type);
+
     if (!errors[field]) { return; }
 
-    let messages = errors[field].map( (errorMsg, i) => {
-      return <li key={ i }>{ field } { errorMsg } </li>;
-    });
+    let messages;
+    if (this.state.type === "login") {
+      messages = errors[field].map( (errorMsg, i) => {
+        return <li key={ i }>{ errorMsg }</li>;
+      });
+    } else {
+      messages = errors[field].map( (errorMsg, i) => {
+        return <li key={ i }>{ field } { errorMsg } </li>;
+        });
+    }
 
     return <ul>{ messages }</ul>;
   },
 
-  formType() {
-    return this.props.location.pathname.slice(1);
-  },
+  // formType() {
+  //   return this.props.location.pathname.slice(1);
+  // },
 
   update(property) {
     return (e) => this.setState({[property]: e.target.value});
   },
 
-	render() {
+  _switchForm(type) {
+    this.setState({
+      type: type
+    });
+  },
 
+	render() {
+    let otherFormLink;
+    let formButtonText;
+    if (this.state.type === "login") {
+      otherFormLink = <div className="switch-form">
+                        New to Cycl? <a onClick={this._switchForm.bind(null, "signup")}>Sign Up!</a>
+                      </div>;
+      formButtonText = "Log In!";
+    } else {
+      otherFormLink = <div className="switch-form">
+                        Already have an account? <a onClick={this._switchForm.bind(null, "login")}>Log In!</a>
+                      </div>;
+      formButtonText = "Sign Up!";
+    }
 		return (
 			<div className="entry-page-container">
 				<div className="landing-title">
@@ -85,9 +123,7 @@ const SignupForm = React.createClass({
 						<br/>
 
 						<div className="entry-form">
-
 			        <br />
-
 								<input type="text"
 			            value={this.state.username}
 			            onChange={this.update("username")}
@@ -98,7 +134,6 @@ const SignupForm = React.createClass({
 
 
 			        <br />
-
 			          <input type="password"
 			            value={this.state.password}
 			            onChange={this.update("password")}
@@ -108,12 +143,10 @@ const SignupForm = React.createClass({
 
 	            <br />
 
-							<input type="submit" value="Sign Up!" />
+							<input type="submit" value={formButtonText} />
 							<input type="submit" value="Guest Login" onClick={this._guestLogin} />
 						</div>
-						<div className="switch-form">
-							Already have an account? <Link to="/login" className="switch-link">Log In!</Link>
-						</div>
+						{otherFormLink}
 					</form>
 				</div>
 			</div>

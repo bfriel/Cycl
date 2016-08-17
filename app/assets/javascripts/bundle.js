@@ -58,9 +58,8 @@
 	    Feed = __webpack_require__(263),
 	    UserPage = __webpack_require__(273),
 	    CreateRide = __webpack_require__(274),
-	    SignupForm = __webpack_require__(231),
-	    ShowRide = __webpack_require__(287),
-	    LoginForm = __webpack_require__(261);
+	    Portal = __webpack_require__(288),
+	    ShowRide = __webpack_require__(287);
 	//Flux
 	var SessionStore = __webpack_require__(241),
 	    RidesStore = __webpack_require__(270),
@@ -70,8 +69,7 @@
 	  Route,
 	  { path: '/', component: App },
 	  React.createElement(IndexRoute, { component: Feed, onEnter: _ensureLoggedIn }),
-	  React.createElement(Route, { path: '/login', component: LoginForm }),
-	  React.createElement(Route, { path: '/signup', component: SignupForm }),
+	  React.createElement(Route, { path: '/portal', component: Portal, type: 'signup' }),
 	  React.createElement(Route, { path: 'create_ride', component: CreateRide }),
 	  React.createElement(Route, { path: 'user/:userId', component: UserPage, onEnter: _ensureLoggedIn }),
 	  React.createElement(Route, { path: 'ride/:rideId', component: ShowRide, onEnter: _ensureLoggedIn })
@@ -79,7 +77,7 @@
 	
 	function _ensureLoggedIn(nextState, replace) {
 	  if (!SessionStore.isUserLoggedIn()) {
-	    replace('/signup');
+	    replace('/portal');
 	  }
 	}
 	
@@ -25973,11 +25971,8 @@
 	var React = __webpack_require__(1),
 	    Link = __webpack_require__(168).Link;
 	//Components
-	var SignupForm = __webpack_require__(231),
-	    LoginForm = __webpack_require__(261),
-	    NavBar = __webpack_require__(262);
-	//Flux
-	var SessionStore = __webpack_require__(241),
+	var NavBar = __webpack_require__(262),
+	    SessionStore = __webpack_require__(241),
 	    SessionActions = __webpack_require__(232);
 	
 	var App = React.createClass({
@@ -26030,166 +26025,7 @@
 	module.exports = App;
 
 /***/ },
-/* 231 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var React = __webpack_require__(1),
-	    Link = __webpack_require__(168).Link;
-	var SessionActions = __webpack_require__(232),
-	    SessionStore = __webpack_require__(241),
-	    ErrorStore = __webpack_require__(260);
-	
-	var SignupForm = React.createClass({
-	  displayName: 'SignupForm',
-	
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getInitialState: function getInitialState() {
-	    return {
-	      username: "",
-	      password: ""
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.errorListener.remove();
-	    this.sessionListener.remove();
-	  },
-	  redirectIfLoggedIn: function redirectIfLoggedIn() {
-	    if (SessionStore.isUserLoggedIn()) {
-	      this.context.router.push("/");
-	    }
-	  },
-	  handleSubmit: function handleSubmit(e) {
-	    e.preventDefault();
-	    SessionActions.signUp(this.state);
-	  },
-	  _guestLogin: function _guestLogin(e) {
-	    e.preventDefault();
-	    var demoUser = { username: 'Haley', password: 'password' };
-	    SessionActions.logIn(demoUser);
-	  },
-	  fieldErrors: function fieldErrors(field) {
-	    var errors = ErrorStore.formErrors(this.formType());
-	    if (!errors[field]) {
-	      return;
-	    }
-	
-	    var messages = errors[field].map(function (errorMsg, i) {
-	      return React.createElement(
-	        'li',
-	        { key: i },
-	        field,
-	        ' ',
-	        errorMsg,
-	        ' '
-	      );
-	    });
-	
-	    return React.createElement(
-	      'ul',
-	      null,
-	      messages
-	    );
-	  },
-	  formType: function formType() {
-	    return this.props.location.pathname.slice(1);
-	  },
-	  update: function update(property) {
-	    var _this = this;
-	
-	    return function (e) {
-	      return _this.setState(_defineProperty({}, property, e.target.value));
-	    };
-	  },
-	  render: function render() {
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'entry-page-container' },
-	      React.createElement(
-	        'div',
-	        { className: 'landing-title' },
-	        React.createElement(
-	          'h1',
-	          null,
-	          'Cycl'
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'tagline' },
-	        React.createElement(
-	          'p',
-	          null,
-	          'Connect with friends and make the most of your rides'
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'entry-form-container' },
-	        React.createElement(
-	          'form',
-	          { className: 'entry-form-box', onSubmit: this.handleSubmit },
-	          React.createElement(
-	            'div',
-	            { className: 'list-errors' },
-	            this.fieldErrors("base"),
-	            this.fieldErrors("username"),
-	            this.fieldErrors("password")
-	          ),
-	          React.createElement('br', null),
-	          React.createElement(
-	            'div',
-	            { className: 'entry-form' },
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'text',
-	              value: this.state.username,
-	              onChange: this.update("username"),
-	              autoFocus: true,
-	              className: 'entry-input',
-	              placeholder: 'Username',
-	              id: 'user_username' }),
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'password',
-	              value: this.state.password,
-	              onChange: this.update("password"),
-	              className: 'entry-input',
-	              placeholder: 'Password',
-	              id: 'user_password' }),
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'submit', value: 'Sign Up!' }),
-	            React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'switch-form' },
-	            'Already have an account? ',
-	            React.createElement(
-	              Link,
-	              { to: '/login', className: 'switch-link' },
-	              'Log In!'
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = SignupForm;
-
-/***/ },
+/* 231 */,
 /* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -26224,7 +26060,7 @@
 	    AppDispatcher.dispatch({
 	      actionType: SessionConstants.LOGOUT
 	    });
-	    hashHistory.push("/login");
+	    hashHistory.push("/portal");
 	  }
 	};
 	
@@ -33276,164 +33112,7 @@
 	module.exports = ErrorStore;
 
 /***/ },
-/* 261 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var React = __webpack_require__(1),
-	    Link = __webpack_require__(168).Link;
-	var SessionActions = __webpack_require__(232),
-	    SessionStore = __webpack_require__(241),
-	    ErrorStore = __webpack_require__(260);
-	
-	var LoginForm = React.createClass({
-	  displayName: 'LoginForm',
-	
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getInitialState: function getInitialState() {
-	    return {
-	      username: "",
-	      password: ""
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.errorListener.remove();
-	    this.sessionListener.remove();
-	  },
-	  redirectIfLoggedIn: function redirectIfLoggedIn() {
-	    if (SessionStore.isUserLoggedIn()) {
-	      this.context.router.push("/");
-	    }
-	  },
-	  handleSubmit: function handleSubmit(e) {
-	    e.preventDefault();
-	    SessionActions.logIn(this.state);
-	  },
-	  _guestLogin: function _guestLogin(e) {
-	    e.preventDefault();
-	    var demoUser = { username: 'Haley', password: 'password' };
-	    SessionActions.logIn(demoUser);
-	  },
-	  fieldErrors: function fieldErrors(field) {
-	    var errors = ErrorStore.formErrors(this.formType());
-	
-	    if (!errors[field]) {
-	      return;
-	    }
-	
-	    var messages = errors[field].map(function (errorMsg, i) {
-	      return React.createElement(
-	        'li',
-	        { key: i },
-	        errorMsg
-	      );
-	    });
-	
-	    return React.createElement(
-	      'ul',
-	      null,
-	      messages
-	    );
-	  },
-	  formType: function formType() {
-	    return this.props.location.pathname.slice(1);
-	  },
-	  update: function update(property) {
-	    var _this = this;
-	
-	    return function (e) {
-	      return _this.setState(_defineProperty({}, property, e.target.value));
-	    };
-	  },
-	  render: function render() {
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'entry-page-container' },
-	      React.createElement(
-	        'div',
-	        { className: 'landing-title' },
-	        React.createElement(
-	          'h1',
-	          null,
-	          'Cycl'
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'tagline' },
-	        React.createElement(
-	          'p',
-	          null,
-	          'Connect with friends and make the most of your rides'
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'entry-form-container' },
-	        React.createElement(
-	          'div',
-	          { className: 'list-errors' },
-	          this.fieldErrors("base"),
-	          this.fieldErrors("username"),
-	          this.fieldErrors("password")
-	        ),
-	        React.createElement(
-	          'form',
-	          { onSubmit: this.handleSubmit, className: 'entry-form-box' },
-	          React.createElement('br', null),
-	          React.createElement(
-	            'div',
-	            { className: 'entry-form' },
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'text',
-	              value: this.state.username,
-	              onChange: this.update("username"),
-	              autoFocus: true,
-	              className: 'entry-input',
-	              placeholder: 'Username',
-	              id: 'user_username' }),
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'password',
-	              value: this.state.password,
-	              onChange: this.update("password"),
-	              className: 'entry-input',
-	              placeholder: 'Password',
-	              id: 'user_password' }),
-	            React.createElement('br', null),
-	            React.createElement('input', { type: 'submit', value: 'Log In!' }),
-	            React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin })
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'switch-form' },
-	            'New to Cycl? ',
-	            React.createElement(
-	              Link,
-	              { to: '/signup', className: 'switch-link' },
-	              'Sign Up!'
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = LoginForm;
-
-/***/ },
+/* 261 */,
 /* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -35710,6 +35389,214 @@
 	});
 	
 	module.exports = CreateRide;
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var React = __webpack_require__(1),
+	    Link = __webpack_require__(168).Link,
+	    hashHistory = __webpack_require__(168).hashHistory;
+	var SessionActions = __webpack_require__(232),
+	    SessionStore = __webpack_require__(241),
+	    ErrorStore = __webpack_require__(260);
+	
+	var SignupForm = React.createClass({
+	  displayName: 'SignupForm',
+	
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getInitialState: function getInitialState() {
+	    return {
+	      username: "",
+	      password: "",
+	      type: this.props.route.type
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.errorListener.remove();
+	    this.sessionListener.remove();
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps() {
+	    this.setState({
+	      type: this.props.route.type
+	    });
+	  },
+	  redirectIfLoggedIn: function redirectIfLoggedIn() {
+	    if (SessionStore.isUserLoggedIn()) {
+	      this.context.router.push("/");
+	    }
+	  },
+	  handleSubmit: function handleSubmit(e) {
+	    e.preventDefault();
+	    if (this.state.type === "signup") {
+	      SessionActions.signUp(this.state);
+	    } else {
+	      SessionActions.logIn(this.state);
+	    }
+	  },
+	  _guestLogin: function _guestLogin(e) {
+	    e.preventDefault();
+	    var demoUser = { username: 'Haley', password: 'password' };
+	    SessionActions.logIn(demoUser);
+	  },
+	  fieldErrors: function fieldErrors(field) {
+	    var errors = ErrorStore.formErrors(this.state.type);
+	
+	    if (!errors[field]) {
+	      return;
+	    }
+	
+	    var messages = void 0;
+	    if (this.state.type === "login") {
+	      messages = errors[field].map(function (errorMsg, i) {
+	        return React.createElement(
+	          'li',
+	          { key: i },
+	          errorMsg
+	        );
+	      });
+	    } else {
+	      messages = errors[field].map(function (errorMsg, i) {
+	        return React.createElement(
+	          'li',
+	          { key: i },
+	          field,
+	          ' ',
+	          errorMsg,
+	          ' '
+	        );
+	      });
+	    }
+	
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
+	  },
+	
+	
+	  // formType() {
+	  //   return this.props.location.pathname.slice(1);
+	  // },
+	
+	  update: function update(property) {
+	    var _this = this;
+	
+	    return function (e) {
+	      return _this.setState(_defineProperty({}, property, e.target.value));
+	    };
+	  },
+	  _switchForm: function _switchForm(type) {
+	    this.setState({
+	      type: type
+	    });
+	  },
+	  render: function render() {
+	    var otherFormLink = void 0;
+	    var formButtonText = void 0;
+	    if (this.state.type === "login") {
+	      otherFormLink = React.createElement(
+	        'div',
+	        { className: 'switch-form' },
+	        'New to Cycl? ',
+	        React.createElement(
+	          'a',
+	          { onClick: this._switchForm.bind(null, "signup") },
+	          'Sign Up!'
+	        )
+	      );
+	      formButtonText = "Log In!";
+	    } else {
+	      otherFormLink = React.createElement(
+	        'div',
+	        { className: 'switch-form' },
+	        'Already have an account? ',
+	        React.createElement(
+	          'a',
+	          { onClick: this._switchForm.bind(null, "login") },
+	          'Log In!'
+	        )
+	      );
+	      formButtonText = "Sign Up!";
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'entry-page-container' },
+	      React.createElement(
+	        'div',
+	        { className: 'landing-title' },
+	        React.createElement(
+	          'h1',
+	          null,
+	          'Cycl'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'tagline' },
+	        React.createElement(
+	          'p',
+	          null,
+	          'Connect with friends and make the most of your rides'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'entry-form-container' },
+	        React.createElement(
+	          'form',
+	          { className: 'entry-form-box', onSubmit: this.handleSubmit },
+	          React.createElement(
+	            'div',
+	            { className: 'list-errors' },
+	            this.fieldErrors("base"),
+	            this.fieldErrors("username"),
+	            this.fieldErrors("password")
+	          ),
+	          React.createElement('br', null),
+	          React.createElement(
+	            'div',
+	            { className: 'entry-form' },
+	            React.createElement('br', null),
+	            React.createElement('input', { type: 'text',
+	              value: this.state.username,
+	              onChange: this.update("username"),
+	              autoFocus: true,
+	              className: 'entry-input',
+	              placeholder: 'Username',
+	              id: 'user_username' }),
+	            React.createElement('br', null),
+	            React.createElement('input', { type: 'password',
+	              value: this.state.password,
+	              onChange: this.update("password"),
+	              className: 'entry-input',
+	              placeholder: 'Password',
+	              id: 'user_password' }),
+	            React.createElement('br', null),
+	            React.createElement('input', { type: 'submit', value: formButtonText }),
+	            React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin })
+	          ),
+	          otherFormLink
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = SignupForm;
 
 /***/ }
 /******/ ]);
