@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (window.currentUser) {
     SessionActions.receiveCurrentUser(window.currentUser);
   }
-
+  
   ReactDOM.render(
     <Router history={hashHistory}>{routes}</Router>,
     document.getElementById('root')
