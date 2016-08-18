@@ -35532,114 +35532,106 @@
 	      );
 	      formButtonText = "Sign Up!";
 	    }
-	    return(
-	      // <div>
-	      //   <div className="row">
-	      //     <div className="portal-intro col-lg-6 col-md-6 col-sm-6 col-xs-12">
-	      //       <h1>Cycl</h1>
-	      //       <p>Connect with friends and make the most of your rides</p>
-	      //     </div>
-	      //     <div className="portal-form col-lg-6 col-md-6 col-sm-6 col-xs-12">
-	      //       <form className="entry-form-box" onSubmit={this.handleSubmit}>
-	      //         <div className="list-errors">
-	      //           { this.fieldErrors("base") }
-	      //           { this.fieldErrors("username") }
-	      //           { this.fieldErrors("password") }
-	      //         </div>
-	      //         <br/>
-	      //
-	      //         <div className="entry-form">
-	      //           <br />
-	      //             <input type="text"
-	      //               value={this.state.username}
-	      //               onChange={this.update("username")}
-	      //               autoFocus
-	      //               className="entry-input"
-	      //               placeholder="Username"
-	      //               id="user_username" />
-	      //
-	      //
-	      //           <br />
-	      //             <input type="password"
-	      //               value={this.state.password}
-	      //               onChange={this.update("password")}
-	      //               className="entry-input"
-	      //               placeholder="Password"
-	      //               id="user_password" />
-	      //
-	      //           <br />
-	      //
-	      //           <input type="submit" value={formButtonText} />
-	      //           <input type="submit" value="Guest Login" onClick={this._guestLogin} />
-	      //         </div>
-	      //         {otherFormLink}
-	      //       </form>
-	      //     </div>
-	      //   </div>
-	      // </div>
-	
+	    return React.createElement(
+	      'div',
+	      { className: 'portal-container' },
 	      React.createElement(
 	        'div',
-	        { className: 'entry-page-container' },
+	        { className: 'portal-title col col-1-2' },
 	        React.createElement(
-	          'div',
-	          { className: 'landing-title' },
-	          React.createElement(
-	            'h1',
-	            null,
-	            'Cycl'
-	          )
+	          'h1',
+	          null,
+	          'Cycl'
 	        ),
 	        React.createElement(
-	          'div',
-	          { className: 'tagline' },
-	          React.createElement(
-	            'p',
-	            null,
-	            'Connect with friends and make the most of your rides'
-	          )
-	        ),
+	          'p',
+	          null,
+	          'Connect with friends and make the most of your rides'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'portal-form col col-1-2' },
 	        React.createElement(
-	          'div',
-	          { className: 'entry-form-container' },
+	          'form',
+	          { onSubmit: this.handleSubmit },
 	          React.createElement(
-	            'form',
-	            { className: 'entry-form-box', onSubmit: this.handleSubmit },
-	            React.createElement(
-	              'div',
-	              { className: 'list-errors' },
-	              this.fieldErrors("base"),
-	              this.fieldErrors("username"),
-	              this.fieldErrors("password")
-	            ),
-	            React.createElement('br', null),
-	            React.createElement(
-	              'div',
-	              { className: 'entry-form' },
-	              React.createElement('br', null),
-	              React.createElement('input', { type: 'text',
-	                value: this.state.username,
-	                onChange: this.update("username"),
-	                autoFocus: true,
-	                className: 'entry-input',
-	                placeholder: 'Username',
-	                id: 'user_username' }),
-	              React.createElement('br', null),
-	              React.createElement('input', { type: 'password',
-	                value: this.state.password,
-	                onChange: this.update("password"),
-	                className: 'entry-input',
-	                placeholder: 'Password',
-	                id: 'user_password' }),
-	              React.createElement('br', null),
-	              React.createElement('input', { type: 'submit', value: formButtonText }),
-	              React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin })
-	            ),
-	            otherFormLink
-	          )
+	            'div',
+	            { id: 'portal-errors' },
+	            this.fieldErrors("base"),
+	            this.fieldErrors("username"),
+	            this.fieldErrors("password")
+	          ),
+	          React.createElement('br', null),
+	          React.createElement('input', { type: 'text',
+	            value: this.state.username,
+	            onChange: this.update("username"),
+	            autoFocus: true,
+	            className: 'entry-input',
+	            placeholder: 'Username',
+	            id: 'user_username'
+	          }),
+	          React.createElement('br', null),
+	          React.createElement('input', { type: 'password',
+	            value: this.state.password,
+	            onChange: this.update("password"),
+	            className: 'entry-input',
+	            placeholder: 'Password',
+	            id: 'user_password'
+	          }),
+	          React.createElement('br', null),
+	          React.createElement('input', { type: 'submit', value: formButtonText }),
+	          React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin }),
+	          otherFormLink
 	        )
 	      )
-	    );
+	    )
+	
+	    // <div className="entry-page-container">
+	    // 	<div className="landing-title">
+	    // 		<h1>Cycl</h1>
+	    // 	</div>
+	    //   <div className="tagline">
+	    //     <p>Connect with friends and make the most of your rides</p>
+	    //   </div>
+	    // 	<div className="entry-form-container">
+	    // 		<form className="entry-form-box" onSubmit={this.handleSubmit}>
+	    //       <div className="list-errors">
+	    //         { this.fieldErrors("base") }
+	    //         { this.fieldErrors("username") }
+	    //         { this.fieldErrors("password") }
+	    //       </div>
+	    // 			<br/>
+	    //
+	    // 			<div className="entry-form">
+	    //         <br />
+	    // 					<input type="text"
+	    //             value={this.state.username}
+	    //             onChange={this.update("username")}
+	    // 						autoFocus
+	    // 						className="entry-input"
+	    //             placeholder="Username"
+	    // 						id="user_username" />
+	    //
+	    //
+	    //         <br />
+	    //           <input type="password"
+	    //             value={this.state.password}
+	    //             onChange={this.update("password")}
+	    // 						className="entry-input"
+	    //             placeholder="Password"
+	    // 						id="user_password" />
+	    //
+	    //         <br />
+	    //
+	    // 				<input type="submit" value={formButtonText} />
+	    // 				<input type="submit" value="Guest Login" onClick={this._guestLogin} />
+	    // 			</div>
+	    // 			{otherFormLink}
+	    // 		</form>
+	    // 	</div>
+	    // </div>
+	    ;
 	  }
 	});
 	

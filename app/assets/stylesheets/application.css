@@ -12,6 +12,7 @@
  *
  *= require reset
  *= require_self
+ *= require grid
  *= require portal
  *= require navbar
  *= require feed
@@ -50,7 +51,7 @@ body {
 
  input[type=text] {
    width: 65%;
-   font-size: 35px;
+   font-size: 1.5em;
    margin-bottom: 20px;
    color: white;
    font-family: inherit;
@@ -58,7 +59,7 @@ body {
  }
  input[type=password] {
    width: 65%;
-   font-size: 35px;
+   font-size: 1.5em;
    margin-bottom: 20px;
    color: white;
    font-family: inherit;
@@ -91,7 +92,6 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background: linear-gradient( #578843, #67ae55);
   color: white;
-  box-sizing: border-box;
 }
 
 ::-webkit-input-placeholder {

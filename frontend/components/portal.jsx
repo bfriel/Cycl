@@ -106,97 +106,89 @@ const SignupForm = React.createClass({
       formButtonText = "Sign Up!";
     }
 		return (
-      // <div>
-      //   <div className="row">
-      //     <div className="portal-intro col-lg-6 col-md-6 col-sm-6 col-xs-12">
-      //       <h1>Cycl</h1>
-      //       <p>Connect with friends and make the most of your rides</p>
-      //     </div>
-      //     <div className="portal-form col-lg-6 col-md-6 col-sm-6 col-xs-12">
-      //       <form className="entry-form-box" onSubmit={this.handleSubmit}>
-      //         <div className="list-errors">
-      //           { this.fieldErrors("base") }
-      //           { this.fieldErrors("username") }
-      //           { this.fieldErrors("password") }
-      //         </div>
-      //         <br/>
-      //
-      //         <div className="entry-form">
-      //           <br />
-      //             <input type="text"
-      //               value={this.state.username}
-      //               onChange={this.update("username")}
-      //               autoFocus
-      //               className="entry-input"
-      //               placeholder="Username"
-      //               id="user_username" />
-      //
-      //
-      //           <br />
-      //             <input type="password"
-      //               value={this.state.password}
-      //               onChange={this.update("password")}
-      //               className="entry-input"
-      //               placeholder="Password"
-      //               id="user_password" />
-      //
-      //           <br />
-      //
-      //           <input type="submit" value={formButtonText} />
-      //           <input type="submit" value="Guest Login" onClick={this._guestLogin} />
-      //         </div>
-      //         {otherFormLink}
-      //       </form>
-      //     </div>
-      //   </div>
-      // </div>
-
-
-
-			<div className="entry-page-container">
-				<div className="landing-title">
-					<h1>Cycl</h1>
-				</div>
-        <div className="tagline">
+      <div className="portal-container">
+        <div className="portal-title col col-1-2">
+          <h1>Cycl</h1>
           <p>Connect with friends and make the most of your rides</p>
         </div>
-				<div className="entry-form-container">
-					<form className="entry-form-box" onSubmit={this.handleSubmit}>
-            <div className="list-errors">
+        <div className="portal-form col col-1-2">
+          <form onSubmit={this.handleSubmit}>
+            <div id="portal-errors">
               { this.fieldErrors("base") }
               { this.fieldErrors("username") }
               { this.fieldErrors("password") }
             </div>
-						<br/>
+            <br />
+            <input type="text"
+              value={this.state.username}
+              onChange={this.update("username")}
+              autoFocus
+              className="entry-input"
+              placeholder="Username"
+              id="user_username"
+            />
+            <br />
+            <input type="password"
+              value={this.state.password}
+              onChange={this.update("password")}
+              className="entry-input"
+              placeholder="Password"
+              id="user_password"
+            />
+            <br />
+            <input type="submit" value={formButtonText} />
+            <input type="submit" value="Guest Login" onClick={this._guestLogin} />
+            {otherFormLink}
+          </form>
+        </div>
+      </div>
 
-						<div className="entry-form">
-			        <br />
-								<input type="text"
-			            value={this.state.username}
-			            onChange={this.update("username")}
-									autoFocus
-									className="entry-input"
-                  placeholder="Username"
-									id="user_username" />
 
 
-			        <br />
-			          <input type="password"
-			            value={this.state.password}
-			            onChange={this.update("password")}
-									className="entry-input"
-                  placeholder="Password"
-									id="user_password" />
-
-	            <br />
-
-							<input type="submit" value={formButtonText} />
-							<input type="submit" value="Guest Login" onClick={this._guestLogin} />
-						</div>
-						{otherFormLink}
-					</form>
-				</div>
-			</div>
+			// <div className="entry-page-container">
+			// 	<div className="landing-title">
+			// 		<h1>Cycl</h1>
+			// 	</div>
+      //   <div className="tagline">
+      //     <p>Connect with friends and make the most of your rides</p>
+      //   </div>
+			// 	<div className="entry-form-container">
+			// 		<form className="entry-form-box" onSubmit={this.handleSubmit}>
+      //       <div className="list-errors">
+      //         { this.fieldErrors("base") }
+      //         { this.fieldErrors("username") }
+      //         { this.fieldErrors("password") }
+      //       </div>
+			// 			<br/>
+      //
+			// 			<div className="entry-form">
+			//         <br />
+			// 					<input type="text"
+			//             value={this.state.username}
+			//             onChange={this.update("username")}
+			// 						autoFocus
+			// 						className="entry-input"
+      //             placeholder="Username"
+			// 						id="user_username" />
+      //
+      //
+			//         <br />
+			//           <input type="password"
+			//             value={this.state.password}
+			//             onChange={this.update("password")}
+			// 						className="entry-input"
+      //             placeholder="Password"
+			// 						id="user_password" />
+      //
+	    //         <br />
+      //
+			// 				<input type="submit" value={formButtonText} />
+			// 				<input type="submit" value="Guest Login" onClick={this._guestLogin} />
+			// 			</div>
+			// 			{otherFormLink}
+			// 		</form>
+			// 	</div>
+			// </div>
 		);
 	}
 });

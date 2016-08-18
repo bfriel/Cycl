@@ -1,84 +1,89 @@
-.entry-page-container {
-  height: 100%;
-  display: flex;
-}
-.entry-form-container {
-  margin: 0 auto;
-  width : 700px;
-  padding: 20px;
-  font-size: 40px;
-  float: right;
-  margin-top: 50px;
+// .entry-page-container {
+//   height: 100%;
+//   display: flex;
+// }
+// .entry-form-container {
+//   margin: 0 auto;
+//   width : 700px;
+//   padding: 20px;
+//   font-size: 40px;
+//   float: right;
+//   margin-top: 50px;
+// }
+//
+
+// TITLE
+// .portal-title {
+//   border: 1px solid black;
+// }
+
+.portal-title h1 {
+  margin-left: 30px;
+  font-size: 20vmin;
+  font-family: 'Pacifico', cursive;
 }
 
-.landing-title {
- font-size: 80px;
- margin: 0 auto;
- margin-left: 30px;
- font-family: 'Pacifico', cursive;
- float: left;
-}
-
-.tagline {
-  float: left;
-  margin-top: 335px;
-  margin-left: -260px;
+.portal-title p {
+  font-size: 3vmin;
   font-weight: 100;
-  font-size: 24px;
-  font-family: Roboto;
   font-style: italic;
+  margin-left: 50px;
+  margin-top: 30px;
 }
 
-.entry-form-box {
+// FORM
+
+.portal-form {
+  margin-top: 40px;
   font-weight: 100;
-}
-
-.entry-form {
-  margin-top: -100px;
-}
-
-.entry-form > label {
-  margin-left: 20px;
-  font-weight: 100;
-}
-
-
-.entry-form-box > h3 {
+  // border: 1px solid black;
   text-align: center;
-  font-weight: 100;
+  font-size: 3vmin;
+}
+
+#portal-errors {
+  height: 7vmin;
+  font-size: 2.5vmin;
+  margin-top: 10px;
 }
 
 
+//
+// .entry-form {
+//   margin-top: -100px;
+// }
+//
+// .entry-form > label {
+//   margin-left: 20px;
+//   font-weight: 100;
+// }
+//
+//
+// .entry-form-box > h3 {
+//   text-align: center;
+//   font-weight: 100;
+// }
+//
+//
 .entry-input {
-  text-align: center;
   border: 1px solid white;
   border-radius: 5px;
   display: block;
   margin: 0 auto;
 }
-
-#user_username {
-  margin-bottom: -20px;
-}
-
-#user_password {
-  margin-bottom: -20px;
-}
-
+//
+// #user_username {
+//   margin-bottom: -20px;
+// }
+//
+// #user_password {
+//   margin-bottom: -20px;
+// }
+//
 .switch-form {
-  margin-bottom: 5px;
-  text-align: center;
-  font-size: 22px;
+  font-size: 3vmin;
 }
 
-.switch-link {
-  color: white;
+.switch-form a {
   font-weight: 400
-}
-
-.list-errors {
-  text-align: center;
-  height: 40px;
-  font-size: 16px;
-  margin-bottom: 60px;
 }
