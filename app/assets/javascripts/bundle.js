@@ -35449,7 +35449,7 @@
 	            value: this.state.username,
 	            onChange: this.update("username"),
 	            autoFocus: true,
-	            className: 'entry-input',
+	            className: 'portal-input',
 	            placeholder: 'Username',
 	            id: 'user_username'
 	          }),
@@ -35457,7 +35457,7 @@
 	          React.createElement('input', { type: 'password',
 	            value: this.state.password,
 	            onChange: this.update("password"),
-	            className: 'entry-input',
+	            className: 'portal-input',
 	            placeholder: 'Password',
 	            id: 'user_password'
 	          }),
@@ -35467,53 +35467,7 @@
 	          otherFormLink
 	        )
 	      )
-	    )
-	
-	    // <div className="entry-page-container">
-	    // 	<div className="landing-title">
-	    // 		<h1>Cycl</h1>
-	    // 	</div>
-	    //   <div className="tagline">
-	    //     <p>Connect with friends and make the most of your rides</p>
-	    //   </div>
-	    // 	<div className="entry-form-container">
-	    // 		<form className="entry-form-box" onSubmit={this.handleSubmit}>
-	    //       <div className="list-errors">
-	    //         { this.fieldErrors("base") }
-	    //         { this.fieldErrors("username") }
-	    //         { this.fieldErrors("password") }
-	    //       </div>
-	    // 			<br/>
-	    //
-	    // 			<div className="entry-form">
-	    //         <br />
-	    // 					<input type="text"
-	    //             value={this.state.username}
-	    //             onChange={this.update("username")}
-	    // 						autoFocus
-	    // 						className="entry-input"
-	    //             placeholder="Username"
-	    // 						id="user_username" />
-	    //
-	    //
-	    //         <br />
-	    //           <input type="password"
-	    //             value={this.state.password}
-	    //             onChange={this.update("password")}
-	    // 						className="entry-input"
-	    //             placeholder="Password"
-	    // 						id="user_password" />
-	    //
-	    //         <br />
-	    //
-	    // 				<input type="submit" value={formButtonText} />
-	    // 				<input type="submit" value="Guest Login" onClick={this._guestLogin} />
-	    // 			</div>
-	    // 			{otherFormLink}
-	    // 		</form>
-	    // 	</div>
-	    // </div>
-	    ;
+	    );
 	  }
 	});
 	

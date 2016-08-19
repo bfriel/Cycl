@@ -1,33 +1,19 @@
-// .entry-page-container {
-//   height: 100%;
-//   display: flex;
-// }
-// .entry-form-container {
-//   margin: 0 auto;
-//   width : 700px;
-//   padding: 20px;
-//   font-size: 40px;
-//   float: right;
-//   margin-top: 50px;
-// }
-//
+.portal-container {
+  height: 100%;
+  width: 100%;
+}
 
 // TITLE
-// .portal-title {
-//   border: 1px solid black;
-// }
 
 .portal-title h1 {
-  margin-left: 30px;
-  font-size: 20vmin;
+  font-size: 10em;
   font-family: 'Pacifico', cursive;
 }
 
 .portal-title p {
-  font-size: 3vmin;
+  font-size: 1.5em;
   font-weight: 100;
   font-style: italic;
-  margin-left: 50px;
   margin-top: 30px;
 }
 
@@ -36,54 +22,67 @@
 .portal-form {
   margin-top: 40px;
   font-weight: 100;
-  // border: 1px solid black;
   text-align: center;
-  font-size: 3vmin;
+  font-size: 1.5em;
 }
 
 #portal-errors {
   height: 7vmin;
-  font-size: 2.5vmin;
+  font-size: .75em;
   margin-top: 10px;
 }
 
+.portal-form input[type="submit"] {
+  display: inline-block;
+  width: 200px;
+  margin: 20px;
+}
 
-//
-// .entry-form {
-//   margin-top: -100px;
-// }
-//
-// .entry-form > label {
-//   margin-left: 20px;
-//   font-weight: 100;
-// }
-//
-//
-// .entry-form-box > h3 {
-//   text-align: center;
-//   font-weight: 100;
-// }
-//
-//
-.entry-input {
+.portal-input {
+  width: 500px;
   border: 1px solid white;
   border-radius: 5px;
   display: block;
   margin: 0 auto;
+  margin-bottom: 20px;
 }
-//
-// #user_username {
-//   margin-bottom: -20px;
-// }
-//
-// #user_password {
-//   margin-bottom: -20px;
-// }
-//
+
 .switch-form {
-  font-size: 3vmin;
+  margin-top: 10px;
+  font-size: 1em;
 }
 
 .switch-form a {
   font-weight: 400
+}
+
+@media (max-width: 525px) {
+  .portal-input {
+    width: 300px;
+  }
+}
+
+@media (max-width: 1243px) {
+  .portal-title, .portal-form {
+    clear: both;
+    display: block;
+    width: 100%;
+  }
+
+  .portal-container * {
+    text-align: center;
+    margin-left: 0;
+    margin: 0 auto;
+  }
+
+}
+
+@media (min-width: 1243px) {
+  .portal-title h1 {
+    margin-left: 30px;
+  }
+
+  .portal-title p {
+    margin-left: 50px;
+  }
 }
