@@ -33192,47 +33192,35 @@
 	    });
 	    return React.createElement(
 	      'div',
-	      { className: 'feed-container' },
+	      { id: 'feed-container' },
 	      React.createElement(
-	        'div',
-	        { className: 'left-column' },
-	        React.createElement(
-	          'div',
-	          { className: 'intro-message' },
-	          React.createElement(
-	            'h3',
-	            null,
-	            'Welcome to Cycl!'
-	          ),
-	          React.createElement(
-	            'p',
-	            null,
-	            'As a warmup, check out some recent rides from the Cycl community below.'
-	          ),
-	          React.createElement(
-	            'p',
-	            null,
-	            'When you\'re ready to start mapping, click on the Create a Ride button above!'
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'feed' },
-	          rides
-	        )
+	        'h3',
+	        null,
+	        'Welcome to Cycl!'
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        'As a warmup, check out some recent rides from the Cycl community below.'
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        'When you are ready to start mapping, click on the Create a Ride button above!'
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'feed-side-bar' },
-	        React.createElement(
-	          'div',
-	          { className: 'feed-side-bar-item' },
-	          React.createElement(AllUsersPane, null)
-	        )
+	        { id: 'feed-rides-index' },
+	        rides
 	      )
 	    );
 	  }
 	});
+	// <div className="feed-side-bar">
+	//   <div className="feed-side-bar-item">
+	//     <AllUsersPane />
+	//   </div>
+	// </div>
 	
 	module.exports = Feed;
 
@@ -33754,111 +33742,51 @@
 	    var hours = (ride.duration / 3600).toFixed(0);
 	    var minutes = (ride.duration % 3600 / 60).toFixed(0);
 	    var seconds = ride.duration % 60;
-	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=200x200&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
+	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=300x300&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
 	    return React.createElement(
 	      'div',
-	      { className: 'completed-ride hvr-pop', onClick: this._goToShow },
+	      { className: 'completed-ride' },
 	      React.createElement(
-	        'div',
-	        { id: 'completed-ride-info' },
-	        React.createElement(
-	          'div',
-	          null,
-	          React.createElement(
-	            'h2',
-	            { id: 'completed-ride-name' },
-	            ride.ride_name
-	          ),
-	          React.createElement(
-	            'h5',
-	            { onClick: this._goToUsersPage },
-	            ride.rider
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { id: 'completed-ride-details' },
-	          React.createElement(
-	            'table',
-	            { className: 'table', id: 'feed-table' },
-	            React.createElement(
-	              'tbody',
-	              null,
-	              React.createElement(
-	                'tr',
-	                null,
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-th' },
-	                  'Distance'
-	                ),
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-tb' },
-	                  ride.distance,
-	                  ' miles'
-	                )
-	              ),
-	              React.createElement(
-	                'tr',
-	                null,
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-th' },
-	                  'Duration'
-	                ),
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-tb' },
-	                  hours,
-	                  ' hours ',
-	                  minutes,
-	                  ' minutes ',
-	                  seconds,
-	                  ' seconds'
-	                )
-	              ),
-	              React.createElement(
-	                'tr',
-	                null,
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-th' },
-	                  'Elevation'
-	                ),
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-tb' },
-	                  ride.elevation_gain,
-	                  ' feet'
-	                )
-	              ),
-	              React.createElement(
-	                'tr',
-	                null,
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-th' },
-	                  'Calories'
-	                ),
-	                React.createElement(
-	                  'td',
-	                  { className: 'completed-ride-tb' },
-	                  ride.calories_burned
-	                )
-	              )
-	            )
-	          )
-	        )
+	        'h2',
+	        { onClick: this._goToShow },
+	        ride.ride_name
+	      ),
+	      React.createElement(
+	        'h5',
+	        { onClick: this._goToUsersPage },
+	        ride.rider
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'mini-map' },
+	        { className: 'mini-map', onClick: this._goToShow },
 	        React.createElement('img', { src: startImg })
 	      )
 	    );
 	  }
 	});
+	
+	// <div id="completed-ride-details">
+	//   <table className="table" id="feed-table">
+	//     <tbody>
+	//       <tr>
+	//         <td className="completed-ride-th">Distance</td>
+	//         <td className="completed-ride-tb">{ride.distance} miles</td>
+	//       </tr>
+	//       <tr>
+	//         <td className="completed-ride-th">Duration</td>
+	//         <td className="completed-ride-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
+	//       </tr>
+	//       <tr>
+	//         <td className="completed-ride-th">Elevation</td>
+	//         <td className="completed-ride-tb">{ride.elevation_gain} feet</td>
+	//       </tr>
+	//       <tr>
+	//         <td className="completed-ride-th">Calories</td>
+	//         <td className="completed-ride-tb">{ride.calories_burned}</td>
+	//       </tr>
+	//     </tbody>
+	//   </table>
+	// </div>
 	
 	module.exports = RideItem;
 

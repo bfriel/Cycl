@@ -20,48 +20,43 @@ const RideItem = React.createClass({
     let seconds = (ride.duration % 60);
     let startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" +
                    ride.start_pos +
-                   "&size=200x200&zoom=15&markers=color:blue%7Clabel:S%7C" +
+                   "&size=300x300&zoom=15&markers=color:blue%7Clabel:S%7C" +
                    ride.start_pos +
                    "&key=" +
                    window.GOOGLE_KEYS.GOOGLE_MAPS;
     return(
-      <div className="completed-ride hvr-pop" onClick={this._goToShow}>
-        <div id="completed-ride-info">
-          <div>
-            <h2 id="completed-ride-name">{ride.ride_name}</h2>
-            <h5 onClick={this._goToUsersPage}>{ride.rider}</h5>
-          </div>
-
-          <div id="completed-ride-details">
-            <table className="table" id="feed-table">
-              <tbody>
-                <tr>
-                  <td className="completed-ride-th">Distance</td>
-                  <td className="completed-ride-tb">{ride.distance} miles</td>
-                </tr>
-                <tr>
-                  <td className="completed-ride-th">Duration</td>
-                  <td className="completed-ride-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
-                </tr>
-                <tr>
-                  <td className="completed-ride-th">Elevation</td>
-                  <td className="completed-ride-tb">{ride.elevation_gain} feet</td>
-                </tr>
-                <tr>
-                  <td className="completed-ride-th">Calories</td>
-                  <td className="completed-ride-tb">{ride.calories_burned}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div className='mini-map'>
+      <div className="completed-ride">
+        <h2 onClick={this._goToShow}>{ride.ride_name}</h2>
+        <h5 onClick={this._goToUsersPage}>{ride.rider}</h5>
+        <div className='mini-map' onClick={this._goToShow}>
           <img src={startImg} />
         </div>
       </div>
     );
   }
 });
+
+// <div id="completed-ride-details">
+//   <table className="table" id="feed-table">
+//     <tbody>
+//       <tr>
+//         <td className="completed-ride-th">Distance</td>
+//         <td className="completed-ride-tb">{ride.distance} miles</td>
+//       </tr>
+//       <tr>
+//         <td className="completed-ride-th">Duration</td>
+//         <td className="completed-ride-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
+//       </tr>
+//       <tr>
+//         <td className="completed-ride-th">Elevation</td>
+//         <td className="completed-ride-tb">{ride.elevation_gain} feet</td>
+//       </tr>
+//       <tr>
+//         <td className="completed-ride-th">Calories</td>
+//         <td className="completed-ride-tb">{ride.calories_burned}</td>
+//       </tr>
+//     </tbody>
+//   </table>
+// </div>
 
 module.exports = RideItem;

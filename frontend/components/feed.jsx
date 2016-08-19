@@ -41,26 +41,21 @@ const Feed = React.createClass({
       );
     });
     return (
-      <div className="feed-container">
-        <div className ="left-column">
-          <div className="intro-message">
+      <div id="feed-container">
             <h3>Welcome to Cycl!</h3>
             <p>As a warmup, check out some recent rides from the Cycl community below.</p>
-            <p>When you're ready to start mapping, click on the Create a Ride button above!</p>
-          </div>
-          <div className="feed">
-            {rides}
-          </div>
-        </div>
-
-        <div className="feed-side-bar">
-          <div className="feed-side-bar-item">
-            <AllUsersPane />
-          </div>
+            <p>When you are ready to start mapping, click on the Create a Ride button above!</p>
+        <div id="feed-rides-index">
+          {rides}
         </div>
       </div>
     );
   }
 });
+// <div className="feed-side-bar">
+//   <div className="feed-side-bar-item">
+//     <AllUsersPane />
+//   </div>
+// </div>
 
 module.exports = Feed;

@@ -1,53 +1,67 @@
+
+
 .completed-ride {
-  width: 850px;
-  height: 250px;
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  margin: 20px;
   border-radius: 10px;
-  margin: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  background-color: rgba(0, 0, 0, .5);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, .8);
+  text-align: center;
+  // box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.completed-ride h2 {
+  padding-top: 8px;
+  font-weight: 200;
+  margin: 0;
+}
+
+.completed-ride h5 {
+  padding: 8px 0px;
+  font-weight: 100;
+  margin: 0;
 }
 
 .completed-ride:hover {
-  box-shadow: 5px 5px 5px black;
+  // box-shadow: 5px 5px 5px rgba(255, 255, 255, .8);
   cursor: pointer;
 }
-
-#completed-ride-info {
-  width: 500px;
-  float: left;
-  margin: 24px;
-  margin-right: 0px;
-}
-
-#completed-ride-name {
-  width: 350px;
-  margin: 0px
-}
-
-#feed-table {
-  margin-left: 90px;
-  margin-top: 20px;
-}
-
-.completed-ride-th {
-  padding: 2px;
-  width: 150px;
-}
-
-.completed-ride-tb {
-  padding: 2px;
-  text-align: left;
-}
+//
+// #completed-ride-info {
+//   width: 500px;
+//   float: left;
+//   margin: 24px;
+//   margin-right: 0px;
+// }
+//
+// #completed-ride-name {
+//   width: 350px;
+//   margin: 0px
+// }
+//
+// #feed-table {
+//   margin-left: 90px;
+//   margin-top: 20px;
+// }
+//
+// .completed-ride-th {
+//   padding: 2px;
+//   width: 150px;
+// }
+//
+// .completed-ride-tb {
+//   padding: 2px;
+//   text-align: left;
+// }
 
 .mini-map {
-  float: right;
-  width: 200px;
-  height: 200px;
-  border: 1px solid black;
-  border-radius: 10px;
-  margin-top: 24px;
-  margin-right: 24px;
+  // float: right;
+  // width: 200px;
+  // height: 200px;
+  max-width: 100%;
+  height: auto;
+  // border: 1px solid black;
+  border-radius: 9px;
   overflow: hidden;
 }
