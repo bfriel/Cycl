@@ -35450,16 +35450,14 @@
 	            onChange: this.update("username"),
 	            autoFocus: true,
 	            className: 'portal-input',
-	            placeholder: 'Username',
-	            id: 'user_username'
+	            placeholder: 'Username'
 	          }),
 	          React.createElement('br', null),
 	          React.createElement('input', { type: 'password',
 	            value: this.state.password,
 	            onChange: this.update("password"),
 	            className: 'portal-input',
-	            placeholder: 'Password',
-	            id: 'user_password'
+	            placeholder: 'Password'
 	          }),
 	          React.createElement('br', null),
 	          React.createElement('input', { type: 'submit', value: formButtonText }),

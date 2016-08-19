@@ -125,7 +125,6 @@ const SignupForm = React.createClass({
               autoFocus
               className="portal-input"
               placeholder="Username"
-              id="user_username"
             />
             <br />
             <input type="password"
@@ -133,7 +132,6 @@ const SignupForm = React.createClass({
               onChange={this.update("password")}
               className="portal-input"
               placeholder="Password"
-              id="user_password"
             />
             <br />
             <input type="submit" value={formButtonText} />
