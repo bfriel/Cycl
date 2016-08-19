@@ -55,15 +55,15 @@
 	    hashHistory = __webpack_require__(168).hashHistory;
 	//Components
 	var App = __webpack_require__(230),
-	    Feed = __webpack_require__(263),
-	    UserPage = __webpack_require__(273),
-	    CreateRide = __webpack_require__(274),
-	    Portal = __webpack_require__(288),
-	    ShowRide = __webpack_require__(287);
+	    Feed = __webpack_require__(260),
+	    UserPage = __webpack_require__(270),
+	    CreateRide = __webpack_require__(271),
+	    Portal = __webpack_require__(284),
+	    ShowRide = __webpack_require__(286);
 	//Flux
-	var SessionStore = __webpack_require__(241),
-	    RidesStore = __webpack_require__(270),
-	    SessionActions = __webpack_require__(232);
+	var SessionStore = __webpack_require__(232),
+	    RidesStore = __webpack_require__(267),
+	    SessionActions = __webpack_require__(256);
 	
 	var routes = React.createElement(
 	  Route,
@@ -25971,9 +25971,9 @@
 	var React = __webpack_require__(1),
 	    Link = __webpack_require__(168).Link;
 	//Components
-	var NavBar = __webpack_require__(262),
-	    SessionStore = __webpack_require__(241),
-	    SessionActions = __webpack_require__(232);
+	var NavBar = __webpack_require__(231),
+	    SessionStore = __webpack_require__(232),
+	    SessionActions = __webpack_require__(256);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -26025,46 +26025,197 @@
 	module.exports = App;
 
 /***/ },
-/* 231 */,
+/* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
+	    hashHistory = __webpack_require__(168).hashHistory,
+	    Link = __webpack_require__(168).Link;
+	
+	var SessionStore = __webpack_require__(232),
+	    SessionActions = __webpack_require__(256);
+	
+	var NavBar = React.createClass({
+	  displayName: 'NavBar',
+	  _goHome: function _goHome() {
+	    hashHistory.push("/");
+	  },
+	  _goProfile: function _goProfile() {
+	    hashHistory.push("user/" + SessionStore.currentUser().id);
+	  },
+	  _createRide: function _createRide() {
+	    hashHistory.push("create_ride");
+	  },
+	  _handleLogOut: function _handleLogOut() {
+	    SessionActions.logOut();
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'nav',
+	        { id: 'navbar' },
+	        React.createElement(
+	          'div',
+	          { className: 'nav-title', onClick: this._goHome },
+	          'Cycl'
+	        ),
+	        React.createElement(
+	          'div',
+	          { id: 'right' },
+	          React.createElement(
+	            'div',
+	            { className: 'navbar-buttons' },
+	            React.createElement(
+	              'a',
+	              { onClick: this._createRide },
+	              'Create a Ride'
+	            ),
+	            React.createElement(
+	              'a',
+	              { onClick: this._goHome },
+	              'Feed'
+	            ),
+	            React.createElement(
+	              'a',
+	              { onClick: this._goProfile, id: 'last' },
+	              SessionStore.currentUser().username
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'dropdown' },
+	            React.createElement(
+	              'button',
+	              { className: 'dropbtn' },
+	              React.createElement(
+	                'div',
+	                { id: 'menu' },
+	                React.createElement('img', { src: 'http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467853219/whitearrowdown1_abyhs8.png' })
+	              )
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'dropdown-content' },
+	              React.createElement(
+	                'a',
+	                { onClick: this._goProfile },
+	                'PROFILE'
+	              ),
+	              React.createElement(
+	                'a',
+	                { onClick: this._handleLogOut },
+	                'LOGOUT'
+	              )
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = NavBar;
+
+/***/ },
 /* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	var AppDispatcher = __webpack_require__(233);
-	var SessionConstants = __webpack_require__(237);
-	var SessionApiUtil = __webpack_require__(238);
-	var ErrorActions = __webpack_require__(239);
-	var hashHistory = __webpack_require__(168).hashHistory;
+	var Store = __webpack_require__(237).Store;
+	var SessionConstants = __webpack_require__(254),
+	    UserConstants = __webpack_require__(255);
 	
-	var SessionActions = {
-	  signUp: function signUp(formData) {
-	    SessionApiUtil.signUp(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
-	  },
-	  logIn: function logIn(formData) {
-	    SessionApiUtil.logIn(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
-	  },
-	  logOut: function logOut() {
-	    SessionApiUtil.logOut(SessionActions.removeCurrentUser);
-	  },
-	  fetchCurrentUser: function fetchCurrentUser(complete) {
-	    SessionApiUtil.fetchCurrentUser(SessionActions.receiveCurrentUser, complete);
-	  },
-	  receiveCurrentUser: function receiveCurrentUser(currentUser) {
-	    AppDispatcher.dispatch({
-	      actionType: SessionConstants.LOGIN,
-	      currentUser: currentUser
-	    });
-	  },
-	  removeCurrentUser: function removeCurrentUser() {
-	    AppDispatcher.dispatch({
-	      actionType: SessionConstants.LOGOUT
-	    });
-	    hashHistory.push("/portal");
+	var SessionStore = new Store(AppDispatcher);
+	
+	var _currentUser = {};
+	var _followings = [];
+	var _currentUserHasBeenFetched = false;
+	
+	function _login(currentUser) {
+	  _currentUser = currentUser;
+	  _currentUserHasBeenFetched = true;
+	}
+	
+	function _logout() {
+	  _currentUser = {};
+	  _currentUserHasBeenFetched = true;
+	}
+	
+	function _removeFollowing(following) {
+	  var idx = -1;
+	  _followings.forEach(function (follow, i) {
+	    if (follow.id === following.id) {
+	      idx = i;
+	    }
+	  });
+	
+	  if (idx >= 0) {
+	    _followings.splice(idx, 1);
+	  }
+	}
+	
+	function _addFollowing(following) {
+	  _followings.push(following);
+	}
+	
+	function _resetFollowings(followings) {
+	  _followings = followings;
+	}
+	
+	SessionStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case SessionConstants.LOGIN:
+	      _login(payload.currentUser);
+	      SessionStore.__emitChange();
+	      break;
+	    case SessionConstants.LOGOUT:
+	      _logout();
+	      SessionStore.__emitChange();
+	      break;
+	    case UserConstants.ADD_FOLLOWING:
+	      _addFollowing(payload.following);
+	      SessionStore.__emitChange();
+	      break;
+	    case UserConstants.REMOVE_FOLLOWING:
+	      _removeFollowing(payload.following);
+	      SessionStore.__emitChange();
+	      break;
+	    case UserConstants.RECEIVE_FOLLOWINGS:
+	      _resetFollowings(payload.followings);
+	      SessionStore.__emitChange();
 	  }
 	};
 	
-	module.exports = SessionActions;
+	SessionStore.followings = function () {
+	  var usersFollowings = [];
+	
+	  _followings.map(function (following) {
+	    if (following.followersId === SessionStore.currentUser().id) {
+	      usersFollowings.push(following);
+	    }
+	  });
+	  return usersFollowings;
+	};
+	
+	SessionStore.currentUser = function () {
+	  return Object.assign({}, _currentUser);
+	};
+	
+	SessionStore.currentUserHasBeenFetched = function () {
+	  return !!_currentUserHasBeenFetched;
+	};
+	
+	SessionStore.isUserLoggedIn = function () {
+	  return !!_currentUser.id;
+	};
+	
+	module.exports = SessionStore;
 
 /***/ },
 /* 233 */
@@ -26386,215 +26537,6 @@
 
 /***/ },
 /* 237 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	var SessionConstants = {
-		LOGIN: "LOGIN",
-		LOGOUT: "LOGOUT"
-	};
-	
-	module.exports = SessionConstants;
-
-/***/ },
-/* 238 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	var SessionApiUtil = {
-		logIn: function logIn(user, success, _error) {
-			$.ajax({
-				url: '/api/session',
-				type: 'POST',
-				data: { user: user },
-				success: success,
-				error: function error(xhr) {
-					var errors = xhr.responseJSON;
-	
-					_error("login", errors);
-				}
-			});
-		},
-		logOut: function logOut(success) {
-			$.ajax({
-				url: '/api/session',
-				method: 'delete',
-				success: success,
-				error: function error() {
-					console.log("Logout error in SessionApiUtil#logout");
-				}
-			});
-		},
-		signUp: function signUp(user, success, _error2) {
-			$.ajax({
-				url: '/api/users',
-				type: 'POST',
-				dataType: 'json',
-				data: { user: user },
-				success: success,
-				error: function error(xhr) {
-					var errors = xhr.responseJSON;
-					_error2("signup", errors);
-				}
-			});
-		},
-		fetchCurrentUser: function fetchCurrentUser(success, _complete) {
-			$.ajax({
-				url: '/api/session',
-				method: 'GET',
-				success: success,
-				error: function error(xhr) {
-					console.log("Error in SessionApiUtil#fetchCurrentUser");
-				},
-				complete: function complete() {
-					_complete();
-				}
-			});
-		}
-	};
-	
-	module.exports = SessionApiUtil;
-
-/***/ },
-/* 239 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var AppDispatcher = __webpack_require__(233);
-	var ErrorConstants = __webpack_require__(240);
-	
-	var ErrorActions = {
-	  setErrors: function setErrors(form, errors) {
-	    AppDispatcher.dispatch({
-	      actionType: ErrorConstants.SET_ERRORS,
-	      form: form,
-	      errors: errors
-	    });
-	  },
-	  clearErrors: function clearErrors() {
-	    AppDispatcher.dispatch({
-	      actionType: ErrorConstants.CLEAR_ERRORS
-	    });
-	  }
-	};
-	
-	module.exports = ErrorActions;
-
-/***/ },
-/* 240 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	var ErrorConstants = {
-	  SET_ERRORS: "SET_ERRORS",
-	  CLEAR_ERRORS: "CLEAR_ERRORS"
-	};
-	
-	module.exports = ErrorConstants;
-
-/***/ },
-/* 241 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var AppDispatcher = __webpack_require__(233);
-	var Store = __webpack_require__(242).Store;
-	var SessionConstants = __webpack_require__(237),
-	    UserConstants = __webpack_require__(259);
-	
-	var SessionStore = new Store(AppDispatcher);
-	
-	var _currentUser = {};
-	var _followings = [];
-	var _currentUserHasBeenFetched = false;
-	
-	function _login(currentUser) {
-	  _currentUser = currentUser;
-	  _currentUserHasBeenFetched = true;
-	}
-	
-	function _logout() {
-	  _currentUser = {};
-	  _currentUserHasBeenFetched = true;
-	}
-	
-	function _removeFollowing(following) {
-	  var idx = -1;
-	  _followings.forEach(function (follow, i) {
-	    if (follow.id === following.id) {
-	      idx = i;
-	    }
-	  });
-	
-	  if (idx >= 0) {
-	    _followings.splice(idx, 1);
-	  }
-	}
-	
-	function _addFollowing(following) {
-	  _followings.push(following);
-	}
-	
-	function _resetFollowings(followings) {
-	  _followings = followings;
-	}
-	
-	SessionStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case SessionConstants.LOGIN:
-	      _login(payload.currentUser);
-	      SessionStore.__emitChange();
-	      break;
-	    case SessionConstants.LOGOUT:
-	      _logout();
-	      SessionStore.__emitChange();
-	      break;
-	    case UserConstants.ADD_FOLLOWING:
-	      _addFollowing(payload.following);
-	      SessionStore.__emitChange();
-	      break;
-	    case UserConstants.REMOVE_FOLLOWING:
-	      _removeFollowing(payload.following);
-	      SessionStore.__emitChange();
-	      break;
-	    case UserConstants.RECEIVE_FOLLOWINGS:
-	      _resetFollowings(payload.followings);
-	      SessionStore.__emitChange();
-	  }
-	};
-	
-	SessionStore.followings = function () {
-	  var usersFollowings = [];
-	
-	  _followings.map(function (following) {
-	    if (following.followersId === SessionStore.currentUser().id) {
-	      usersFollowings.push(following);
-	    }
-	  });
-	  return usersFollowings;
-	};
-	
-	SessionStore.currentUser = function () {
-	  return Object.assign({}, _currentUser);
-	};
-	
-	SessionStore.currentUserHasBeenFetched = function () {
-	  return !!_currentUserHasBeenFetched;
-	};
-	
-	SessionStore.isUserLoggedIn = function () {
-	  return !!_currentUser.id;
-	};
-	
-	module.exports = SessionStore;
-
-/***/ },
-/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26606,15 +26548,15 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(243);
-	module.exports.MapStore = __webpack_require__(246);
-	module.exports.Mixin = __webpack_require__(258);
-	module.exports.ReduceStore = __webpack_require__(247);
-	module.exports.Store = __webpack_require__(248);
+	module.exports.Container = __webpack_require__(238);
+	module.exports.MapStore = __webpack_require__(241);
+	module.exports.Mixin = __webpack_require__(253);
+	module.exports.ReduceStore = __webpack_require__(242);
+	module.exports.Store = __webpack_require__(243);
 
 
 /***/ },
-/* 243 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26636,10 +26578,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(244);
+	var FluxStoreGroup = __webpack_require__(239);
 	
 	var invariant = __webpack_require__(236);
-	var shallowEqual = __webpack_require__(245);
+	var shallowEqual = __webpack_require__(240);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -26797,7 +26739,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 244 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26878,7 +26820,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 245 */
+/* 240 */
 /***/ function(module, exports) {
 
 	/**
@@ -26933,7 +26875,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 246 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26954,8 +26896,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(247);
-	var Immutable = __webpack_require__(257);
+	var FluxReduceStore = __webpack_require__(242);
+	var Immutable = __webpack_require__(252);
 	
 	var invariant = __webpack_require__(236);
 	
@@ -27083,7 +27025,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 247 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27104,9 +27046,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(248);
+	var FluxStore = __webpack_require__(243);
 	
-	var abstractMethod = __webpack_require__(256);
+	var abstractMethod = __webpack_require__(251);
 	var invariant = __webpack_require__(236);
 	
 	var FluxReduceStore = (function (_FluxStore) {
@@ -27190,7 +27132,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 248 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27209,7 +27151,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(249);
+	var _require = __webpack_require__(244);
 	
 	var EventEmitter = _require.EventEmitter;
 	
@@ -27373,7 +27315,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 249 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27386,14 +27328,14 @@
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(250)
+	  EventEmitter: __webpack_require__(245)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 250 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27412,11 +27354,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(251);
-	var EventSubscriptionVendor = __webpack_require__(253);
+	var EmitterSubscription = __webpack_require__(246);
+	var EventSubscriptionVendor = __webpack_require__(248);
 	
-	var emptyFunction = __webpack_require__(255);
-	var invariant = __webpack_require__(254);
+	var emptyFunction = __webpack_require__(250);
+	var invariant = __webpack_require__(249);
 	
 	/**
 	 * @class BaseEventEmitter
@@ -27590,7 +27532,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 251 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27611,7 +27553,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(252);
+	var EventSubscription = __webpack_require__(247);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -27643,7 +27585,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 252 */
+/* 247 */
 /***/ function(module, exports) {
 
 	/**
@@ -27697,7 +27639,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 253 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27716,7 +27658,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(254);
+	var invariant = __webpack_require__(249);
 	
 	/**
 	 * EventSubscriptionVendor stores a set of EventSubscriptions that are
@@ -27806,7 +27748,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 254 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27861,7 +27803,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 255 */
+/* 250 */
 /***/ function(module, exports) {
 
 	/**
@@ -27903,7 +27845,7 @@
 	module.exports = emptyFunction;
 
 /***/ },
-/* 256 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27930,7 +27872,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 257 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32914,7 +32856,7 @@
 	}));
 
 /***/ },
-/* 258 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -32931,7 +32873,7 @@
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(244);
+	var FluxStoreGroup = __webpack_require__(239);
 	
 	var invariant = __webpack_require__(236);
 	
@@ -33037,7 +32979,20 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 259 */
+/* 254 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var SessionConstants = {
+		LOGIN: "LOGIN",
+		LOGOUT: "LOGOUT"
+	};
+	
+	module.exports = SessionConstants;
+
+/***/ },
+/* 255 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33054,173 +33009,158 @@
 	module.exports = UserConstants;
 
 /***/ },
-/* 260 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var Store = __webpack_require__(242).Store;
 	var AppDispatcher = __webpack_require__(233);
-	var ErrorConstants = __webpack_require__(240);
+	var SessionConstants = __webpack_require__(254);
+	var SessionApiUtil = __webpack_require__(257);
+	var ErrorActions = __webpack_require__(258);
+	var hashHistory = __webpack_require__(168).hashHistory;
 	
-	var ErrorStore = new Store(AppDispatcher);
-	
-	var _errors = {};
-	var _form = "";
-	
-	function setErrors(payload) {
-	  _errors = payload.errors;
-	  _form = payload.form;
-	  ErrorStore.__emitChange();
-	}
-	
-	function clearErrors() {
-	  _errors = {};
-	  _form = "";
-	  ErrorStore.__emitChange();
-	}
-	
-	ErrorStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case ErrorConstants.SET_ERRORS:
-	      setErrors(payload);
-	      break;
-	    case ErrorConstants.CLEAR_ERRORS:
-	      clearErrors();
-	      break;
+	var SessionActions = {
+	  signUp: function signUp(formData) {
+	    SessionApiUtil.signUp(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
+	  },
+	  logIn: function logIn(formData) {
+	    SessionApiUtil.logIn(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
+	  },
+	  logOut: function logOut() {
+	    SessionApiUtil.logOut(SessionActions.removeCurrentUser);
+	  },
+	  fetchCurrentUser: function fetchCurrentUser(complete) {
+	    SessionApiUtil.fetchCurrentUser(SessionActions.receiveCurrentUser, complete);
+	  },
+	  receiveCurrentUser: function receiveCurrentUser(currentUser) {
+	    AppDispatcher.dispatch({
+	      actionType: SessionConstants.LOGIN,
+	      currentUser: currentUser
+	    });
+	  },
+	  removeCurrentUser: function removeCurrentUser() {
+	    AppDispatcher.dispatch({
+	      actionType: SessionConstants.LOGOUT
+	    });
+	    hashHistory.push("/portal");
 	  }
 	};
 	
-	ErrorStore.formErrors = function (form) {
-	  if (form !== _form) {
-	    return {};
-	  }
-	
-	  // copies the _errors object into a new object
-	  var result = {};
-	  for (var field in _errors) {
-	    result[field] = Array.from(_errors[field]);
-	  }
-	
-	  return result;
-	};
-	
-	ErrorStore.form = function () {
-	  return _form;
-	};
-	
-	module.exports = ErrorStore;
+	module.exports = SessionActions;
 
 /***/ },
-/* 261 */,
-/* 262 */
+/* 257 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var SessionApiUtil = {
+		logIn: function logIn(user, success, _error) {
+			$.ajax({
+				url: '/api/session',
+				type: 'POST',
+				data: { user: user },
+				success: success,
+				error: function error(xhr) {
+					var errors = xhr.responseJSON;
+	
+					_error("login", errors);
+				}
+			});
+		},
+		logOut: function logOut(success) {
+			$.ajax({
+				url: '/api/session',
+				method: 'delete',
+				success: success,
+				error: function error() {
+					console.log("Logout error in SessionApiUtil#logout");
+				}
+			});
+		},
+		signUp: function signUp(user, success, _error2) {
+			$.ajax({
+				url: '/api/users',
+				type: 'POST',
+				dataType: 'json',
+				data: { user: user },
+				success: success,
+				error: function error(xhr) {
+					var errors = xhr.responseJSON;
+					_error2("signup", errors);
+				}
+			});
+		},
+		fetchCurrentUser: function fetchCurrentUser(success, _complete) {
+			$.ajax({
+				url: '/api/session',
+				method: 'GET',
+				success: success,
+				error: function error(xhr) {
+					console.log("Error in SessionApiUtil#fetchCurrentUser");
+				},
+				complete: function complete() {
+					_complete();
+				}
+			});
+		}
+	};
+	
+	module.exports = SessionApiUtil;
+
+/***/ },
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
-	var React = __webpack_require__(1),
-	    hashHistory = __webpack_require__(168).hashHistory,
-	    Link = __webpack_require__(168).Link;
+	var AppDispatcher = __webpack_require__(233);
+	var ErrorConstants = __webpack_require__(259);
 	
-	var SessionStore = __webpack_require__(241),
-	    SessionActions = __webpack_require__(232);
-	
-	var NavBar = React.createClass({
-	  displayName: 'NavBar',
-	  _goHome: function _goHome() {
-	    hashHistory.push("/");
+	var ErrorActions = {
+	  setErrors: function setErrors(form, errors) {
+	    AppDispatcher.dispatch({
+	      actionType: ErrorConstants.SET_ERRORS,
+	      form: form,
+	      errors: errors
+	    });
 	  },
-	  _goProfile: function _goProfile() {
-	    hashHistory.push("user/" + SessionStore.currentUser().id);
-	  },
-	  _createRide: function _createRide() {
-	    hashHistory.push("create_ride");
-	  },
-	  _handleLogOut: function _handleLogOut() {
-	    SessionActions.logOut();
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'nav',
-	        { id: 'navbar' },
-	        React.createElement(
-	          'div',
-	          { className: 'nav-title', onClick: this._goHome },
-	          'Cycl'
-	        ),
-	        React.createElement(
-	          'div',
-	          { id: 'right' },
-	          React.createElement(
-	            'div',
-	            { className: 'navbar-buttons' },
-	            React.createElement(
-	              'a',
-	              { onClick: this._createRide },
-	              'Create a Ride'
-	            ),
-	            React.createElement(
-	              'a',
-	              { onClick: this._goHome },
-	              'Feed'
-	            ),
-	            React.createElement(
-	              'a',
-	              { onClick: this._goProfile, id: 'last' },
-	              SessionStore.currentUser().username
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'dropdown' },
-	            React.createElement(
-	              'button',
-	              { className: 'dropbtn' },
-	              React.createElement(
-	                'div',
-	                { id: 'menu' },
-	                React.createElement('img', { src: 'http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467853219/whitearrowdown1_abyhs8.png' })
-	              )
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'dropdown-content' },
-	              React.createElement(
-	                'a',
-	                { onClick: this._goProfile },
-	                'PROFILE'
-	              ),
-	              React.createElement(
-	                'a',
-	                { onClick: this._handleLogOut },
-	                'LOGOUT'
-	              )
-	            )
-	          )
-	        )
-	      )
-	    );
+	  clearErrors: function clearErrors() {
+	    AppDispatcher.dispatch({
+	      actionType: ErrorConstants.CLEAR_ERRORS
+	    });
 	  }
-	});
+	};
 	
-	module.exports = NavBar;
+	module.exports = ErrorActions;
 
 /***/ },
-/* 263 */
+/* 259 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var ErrorConstants = {
+	  SET_ERRORS: "SET_ERRORS",
+	  CLEAR_ERRORS: "CLEAR_ERRORS"
+	};
+	
+	module.exports = ErrorConstants;
+
+/***/ },
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var UserInfoPane = __webpack_require__(264),
-	    RidesStore = __webpack_require__(270),
-	    ApiUtil = __webpack_require__(267),
-	    RideItem = __webpack_require__(271),
-	    SessionStore = __webpack_require__(241),
-	    AllUsersPane = __webpack_require__(272);
+	var UserInfoPane = __webpack_require__(261),
+	    RidesStore = __webpack_require__(267),
+	    ApiUtil = __webpack_require__(264),
+	    RideItem = __webpack_require__(268),
+	    SessionStore = __webpack_require__(232),
+	    AllUsersPane = __webpack_require__(269);
 	
 	var Feed = React.createClass({
 	  displayName: 'Feed',
@@ -33297,16 +33237,16 @@
 	module.exports = Feed;
 
 /***/ },
-/* 264 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    AllUsersStore = __webpack_require__(265),
-	    UserStore = __webpack_require__(266),
-	    ApiUtil = __webpack_require__(267),
-	    SessionStore = __webpack_require__(241);
+	    AllUsersStore = __webpack_require__(262),
+	    UserStore = __webpack_require__(263),
+	    ApiUtil = __webpack_require__(264),
+	    SessionStore = __webpack_require__(232);
 	
 	var UserInfo = React.createClass({
 	  displayName: 'UserInfo',
@@ -33450,14 +33390,14 @@
 	module.exports = UserInfo;
 
 /***/ },
-/* 265 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(242).Store,
+	var Store = __webpack_require__(237).Store,
 	    AppDispatcher = __webpack_require__(233),
-	    UserConstants = __webpack_require__(259);
+	    UserConstants = __webpack_require__(255);
 	
 	var _users = {};
 	
@@ -33500,14 +33440,14 @@
 	module.exports = AllUsersStore;
 
 /***/ },
-/* 266 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(242).Store,
+	var Store = __webpack_require__(237).Store,
 	    AppDispatcher = __webpack_require__(233),
-	    UserConstants = __webpack_require__(259);
+	    UserConstants = __webpack_require__(255);
 	
 	var _userTotals = {};
 	var UserStore = new Store(AppDispatcher);
@@ -33532,12 +33472,12 @@
 	module.exports = UserStore;
 
 /***/ },
-/* 267 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var ApiActions = __webpack_require__(268);
+	var ApiActions = __webpack_require__(265);
 	
 	var ApiUtil = {
 	  fetchRides: function fetchRides() {
@@ -33626,14 +33566,14 @@
 	module.exports = ApiUtil;
 
 /***/ },
-/* 268 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var AppDispatcher = __webpack_require__(233),
-	    UserConstants = __webpack_require__(259),
-	    RideConstants = __webpack_require__(269);
+	    UserConstants = __webpack_require__(255),
+	    RideConstants = __webpack_require__(266);
 	
 	var ApiActions = {
 	  receiveAll: function receiveAll(rides) {
@@ -33700,7 +33640,7 @@
 	module.exports = ApiActions;
 
 /***/ },
-/* 269 */
+/* 266 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33722,14 +33662,14 @@
 	module.exports = RideConstants;
 
 /***/ },
-/* 270 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(242).Store,
+	var Store = __webpack_require__(237).Store,
 	    AppDispatcher = __webpack_require__(233),
-	    RideConstants = __webpack_require__(269);
+	    RideConstants = __webpack_require__(266);
 	
 	var _rides = [];
 	
@@ -33791,14 +33731,14 @@
 	module.exports = RidesStore;
 
 /***/ },
-/* 271 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    SessionStore = __webpack_require__(241);
+	    SessionStore = __webpack_require__(232);
 	
 	var RideItem = React.createClass({
 	  displayName: 'RideItem',
@@ -33923,16 +33863,16 @@
 	module.exports = RideItem;
 
 /***/ },
-/* 272 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    AllUsersStore = __webpack_require__(265),
-	    ApiUtil = __webpack_require__(267),
-	    SessionStore = __webpack_require__(241);
+	    AllUsersStore = __webpack_require__(262),
+	    ApiUtil = __webpack_require__(264),
+	    SessionStore = __webpack_require__(232);
 	
 	var AllUsers = React.createClass({
 	  displayName: 'AllUsers',
@@ -34034,19 +33974,19 @@
 	module.exports = AllUsers;
 
 /***/ },
-/* 273 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ApiUtil = __webpack_require__(267),
-	    RideItem = __webpack_require__(271),
-	    UserInfo = __webpack_require__(264),
+	    ApiUtil = __webpack_require__(264),
+	    RideItem = __webpack_require__(268),
+	    UserInfo = __webpack_require__(261),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    SessionStore = __webpack_require__(241),
-	    AllUsersStore = __webpack_require__(265),
-	    RidesStore = __webpack_require__(270);
+	    SessionStore = __webpack_require__(232),
+	    AllUsersStore = __webpack_require__(262),
+	    RidesStore = __webpack_require__(267);
 	
 	var UserPage = React.createClass({
 	  displayName: 'UserPage',
@@ -34166,16 +34106,16 @@
 	module.exports = UserPage;
 
 /***/ },
-/* 274 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
 	
-	var ElevationChart = __webpack_require__(275),
-	    CreateRideMap = __webpack_require__(280),
-	    RideInfo = __webpack_require__(282);
+	var ElevationChart = __webpack_require__(272),
+	    CreateRideMap = __webpack_require__(277),
+	    RideInfo = __webpack_require__(279);
 	
 	var CreateRide = React.createClass({
 	  displayName: 'CreateRide',
@@ -34214,15 +34154,15 @@
 	module.exports = CreateRide;
 
 /***/ },
-/* 275 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ElevationStore = __webpack_require__(276),
-	    DirectionsStore = __webpack_require__(277),
-	    GoogleApiUtil = __webpack_require__(278);
+	    ElevationStore = __webpack_require__(273),
+	    DirectionsStore = __webpack_require__(274),
+	    GoogleApiUtil = __webpack_require__(275);
 	
 	var ElevationChart = React.createClass({
 	  displayName: 'ElevationChart',
@@ -34309,14 +34249,14 @@
 	module.exports = ElevationChart;
 
 /***/ },
-/* 276 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(242).Store,
+	var Store = __webpack_require__(237).Store,
 	    AppDispatcher = __webpack_require__(233),
-	    RideConstants = __webpack_require__(269);
+	    RideConstants = __webpack_require__(266);
 	
 	var _elevations = {};
 	var _elevationGain = 0;
@@ -34371,14 +34311,14 @@
 	module.exports = ElevationStore;
 
 /***/ },
-/* 277 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(242).Store,
+	var Store = __webpack_require__(237).Store,
 	    AppDispatcher = __webpack_require__(233),
-	    RideConstants = __webpack_require__(269);
+	    RideConstants = __webpack_require__(266);
 	
 	var _directions = {};
 	var _distance = 0;
@@ -34430,12 +34370,12 @@
 	module.exports = DirectionsStore;
 
 /***/ },
-/* 278 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var GoogleApiActions = __webpack_require__(279);
+	var GoogleApiActions = __webpack_require__(276);
 	
 	var GoogleApiUtil = {
 	  getDirections: function getDirections(start, end, waypoints) {
@@ -34476,13 +34416,13 @@
 	module.exports = GoogleApiUtil;
 
 /***/ },
-/* 279 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var AppDispatcher = __webpack_require__(233),
-	    RideConstants = __webpack_require__(269);
+	    RideConstants = __webpack_require__(266);
 	
 	var GoogleApiActions = {
 	  setDirections: function setDirections(result, status) {
@@ -34515,7 +34455,7 @@
 	module.exports = GoogleApiActions;
 
 /***/ },
-/* 280 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34523,9 +34463,9 @@
 	var React = __webpack_require__(1),
 	    ReactDOM = __webpack_require__(38);
 	
-	var GoogleApiUtil = __webpack_require__(278),
-	    DirectionStore = __webpack_require__(277),
-	    OldRideStore = __webpack_require__(281);
+	var GoogleApiUtil = __webpack_require__(275),
+	    DirectionStore = __webpack_require__(274),
+	    OldRideStore = __webpack_require__(278);
 	
 	var CreateRideMap = React.createClass({
 	  displayName: 'CreateRideMap',
@@ -34722,14 +34662,14 @@
 	module.exports = CreateRideMap;
 
 /***/ },
-/* 281 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Store = __webpack_require__(242).Store,
+	var Store = __webpack_require__(237).Store,
 	    AppDispatcher = __webpack_require__(233),
-	    RideConstants = __webpack_require__(269);
+	    RideConstants = __webpack_require__(266);
 	
 	var _oldRide = {};
 	
@@ -34767,18 +34707,18 @@
 	module.exports = OldRideStore;
 
 /***/ },
-/* 282 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    ElevationChart = __webpack_require__(275),
-	    CreateRideForm = __webpack_require__(283),
-	    DirectionsStore = __webpack_require__(277),
-	    CommentsIndex = __webpack_require__(284),
-	    ElevationStore = __webpack_require__(276);
+	    ElevationChart = __webpack_require__(272),
+	    CreateRideForm = __webpack_require__(280),
+	    DirectionsStore = __webpack_require__(274),
+	    CommentsIndex = __webpack_require__(281),
+	    ElevationStore = __webpack_require__(273);
 	
 	var RideInfo = React.createClass({
 	  displayName: 'RideInfo',
@@ -34973,7 +34913,7 @@
 	module.exports = RideInfo;
 
 /***/ },
-/* 283 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34983,10 +34923,10 @@
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory;
 	
-	var ApiUtil = __webpack_require__(267),
-	    RidesStore = __webpack_require__(270),
-	    SessionStore = __webpack_require__(241),
-	    DirectionsStore = __webpack_require__(277);
+	var ApiUtil = __webpack_require__(264),
+	    RidesStore = __webpack_require__(267),
+	    SessionStore = __webpack_require__(232),
+	    DirectionsStore = __webpack_require__(274);
 	
 	var CreateRideForm = React.createClass({
 	  displayName: 'CreateRideForm',
@@ -35195,15 +35135,15 @@
 	module.exports = CreateRideForm;
 
 /***/ },
-/* 284 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    CommentForm = __webpack_require__(285),
-	    RidesStore = __webpack_require__(270),
-	    CommentIndexItem = __webpack_require__(286);
+	    CommentForm = __webpack_require__(282),
+	    RidesStore = __webpack_require__(267),
+	    CommentIndexItem = __webpack_require__(283);
 	
 	var CommentIndex = React.createClass({
 	  displayName: 'CommentIndex',
@@ -35243,14 +35183,14 @@
 	module.exports = CommentIndex;
 
 /***/ },
-/* 285 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ApiUtil = __webpack_require__(267),
-	    SessionStore = __webpack_require__(241);
+	    ApiUtil = __webpack_require__(264),
+	    SessionStore = __webpack_require__(232);
 	
 	var CommentForm = React.createClass({
 	  displayName: 'CommentForm',
@@ -35303,7 +35243,7 @@
 	module.exports = CommentForm;
 
 /***/ },
-/* 286 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -35333,65 +35273,7 @@
 	module.exports = CommentIndexItem;
 
 /***/ },
-/* 287 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	
-	var ElevationChart = __webpack_require__(275),
-	    RideMap = __webpack_require__(280),
-	    ApiUtil = __webpack_require__(267),
-	    RidesStore = __webpack_require__(270),
-	    OldRideStore = __webpack_require__(281),
-	    RideInfo = __webpack_require__(282);
-	
-	var CreateRide = React.createClass({
-	  displayName: 'CreateRide',
-	  getInitialState: function getInitialState() {
-	    return { ride: RidesStore.findOldRide(parseInt(this.props.params.rideId)) };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    ApiUtil.showOldRide(this.state.ride);
-	  },
-	  render: function render() {
-	    var ride = this.state.ride;
-	    return React.createElement(
-	      'div',
-	      { className: 'create-ride-page clear-fix' },
-	      React.createElement(
-	        'div',
-	        { className: 'instructions clear-fix' },
-	        React.createElement(
-	          'h5',
-	          null,
-	          ride.ride_name
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'block-for-map' },
-	        React.createElement(RideMap, { ride: ride })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'ride-info-pane' },
-	        React.createElement(RideInfo, { rideStatus: 'old', ride: ride })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'elev-chart' },
-	        React.createElement(ElevationChart, { ride: ride })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = CreateRide;
-
-/***/ },
-/* 288 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -35401,9 +35283,9 @@
 	var React = __webpack_require__(1),
 	    Link = __webpack_require__(168).Link,
 	    hashHistory = __webpack_require__(168).hashHistory;
-	var SessionActions = __webpack_require__(232),
-	    SessionStore = __webpack_require__(241),
-	    ErrorStore = __webpack_require__(260);
+	var SessionActions = __webpack_require__(256),
+	    SessionStore = __webpack_require__(232),
+	    ErrorStore = __webpack_require__(285);
 	
 	var SignupForm = React.createClass({
 	  displayName: 'SignupForm',
@@ -35636,6 +35518,122 @@
 	});
 	
 	module.exports = SignupForm;
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var Store = __webpack_require__(237).Store;
+	var AppDispatcher = __webpack_require__(233);
+	var ErrorConstants = __webpack_require__(259);
+	
+	var ErrorStore = new Store(AppDispatcher);
+	
+	var _errors = {};
+	var _form = "";
+	
+	function setErrors(payload) {
+	  _errors = payload.errors;
+	  _form = payload.form;
+	  ErrorStore.__emitChange();
+	}
+	
+	function clearErrors() {
+	  _errors = {};
+	  _form = "";
+	  ErrorStore.__emitChange();
+	}
+	
+	ErrorStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case ErrorConstants.SET_ERRORS:
+	      setErrors(payload);
+	      break;
+	    case ErrorConstants.CLEAR_ERRORS:
+	      clearErrors();
+	      break;
+	  }
+	};
+	
+	ErrorStore.formErrors = function (form) {
+	  if (form !== _form) {
+	    return {};
+	  }
+	
+	  // copies the _errors object into a new object
+	  var result = {};
+	  for (var field in _errors) {
+	    result[field] = Array.from(_errors[field]);
+	  }
+	
+	  return result;
+	};
+	
+	ErrorStore.form = function () {
+	  return _form;
+	};
+	
+	module.exports = ErrorStore;
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var ElevationChart = __webpack_require__(272),
+	    RideMap = __webpack_require__(277),
+	    ApiUtil = __webpack_require__(264),
+	    RidesStore = __webpack_require__(267),
+	    OldRideStore = __webpack_require__(278),
+	    RideInfo = __webpack_require__(279);
+	
+	var CreateRide = React.createClass({
+	  displayName: 'CreateRide',
+	  getInitialState: function getInitialState() {
+	    return { ride: RidesStore.findOldRide(parseInt(this.props.params.rideId)) };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    ApiUtil.showOldRide(this.state.ride);
+	  },
+	  render: function render() {
+	    var ride = this.state.ride;
+	    return React.createElement(
+	      'div',
+	      { className: 'create-ride-page clear-fix' },
+	      React.createElement(
+	        'div',
+	        { className: 'instructions clear-fix' },
+	        React.createElement(
+	          'h5',
+	          null,
+	          ride.ride_name
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'block-for-map' },
+	        React.createElement(RideMap, { ride: ride })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'ride-info-pane' },
+	        React.createElement(RideInfo, { rideStatus: 'old', ride: ride })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'elev-chart' },
+	        React.createElement(ElevationChart, { ride: ride })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CreateRide;
 
 /***/ }
 /******/ ]);
