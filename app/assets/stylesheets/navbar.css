@@ -151,31 +151,32 @@ nav {
   border-left: 2px solid black;
   margin-left: 10px;
   width: 5em;*/
-  margin: 20px;
+  /*margin: 20px;*/
 }
 
-#create_ride {
-  height: inherit;
-  line-height: inherit;
-  position: absolute;
-  right: 46.5%;
-  top: 0;
+
+#create-ride-link {
+  display: flex;
+  align-self: flex-end;
   font-size: 1.3em;
   font-weight: 200;
-}
-
-#create-ride-button {
   padding: 10px;
   border: 1px solid white;
   border-radius: 3px;
+  margin-bottom: 2px;
+}
+
+#create-ride-link:hover {
+  background-color: white;
+  color: rgb(48, 87, 145);
 }
 
 #nav {
 			height: inherit;
 			line-height: inherit;
-			position: absolute;
+			/*position: absolute;
 			right: 0;
-			top: 0;
+			top: 0;*/
 		}
 
 			#header nav > ul {
@@ -224,19 +225,29 @@ nav {
                   display: none;
                 }
 
+                #header nav > ul > li > span {
+                  padding: 0 0 0 1.5em;
+                }
+
+                #create-ride-link {
+                  display: none;
+                }
+
             }
 
-          @media screen and (max-width: 736px) {
-
-            #header nav > ul > li > span {
-              padding: 0 0 0 1.5em;
-            }
-
-          }
 
         #header nav > ul > li:first-child {
           margin-left: 0;
         }
+
+
+#header {
+  margin: 30px;
+  /*position: relative;*/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 
 #menu-hide {
@@ -285,4 +296,16 @@ i::before {
 
 i:hover {
   cursor: pointer;
+}
+
+#title {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.6em;
+}
+
+
+
+nav h3 {
+ font-size: 1.3em;
+ font-weight: 200;
 }

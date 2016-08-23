@@ -42,14 +42,38 @@ const NavBar = React.createClass({
     }
   },
 
+  populateLeftNav(){
+    let leftNav;
+    if (this.props.loc === "/") {
+      leftNav = <h3>Welcome to <span id="title">Cycl</span></h3>;
+    } else {
+      leftNav = <h3><a onClick={this._goHome}><span id="title">Cycl</span></a></h3>;
+    }
+    return leftNav;
+  },
+
+  populateCenterNav(){
+    let centerNav;
+    if (this.props.loc === "/create_ride"){
+      centerNav = "";
+    } else {
+      centerNav = <a id="create-ride-link" onClick={this._createRide}>Create a Ride</a>;
+    }
+    return centerNav;
+  },
+
+
   render(){
+    let leftNav = this.populateLeftNav();
+    let centerNav = this.populateCenterNav();
     return(
-      <header id="header" className="alt">
+      <header id="header">
         <nav>
+          {leftNav}
         </nav>
-        <nav id="create_ride">
-          <a id="create-ride-button" onClick={this._createRide}>Create a Ride</a>
-        </nav>
+
+          {centerNav}
+
 				<nav id="nav">
 					<ul>
 						<li className="special">

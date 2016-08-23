@@ -25983,40 +25983,15 @@
 	  _handleLogOut: function _handleLogOut() {
 	    SessionActions.logOut();
 	  },
-	
-	
-	  // greeting() {
-	  //   if (SessionStore.isUserLoggedIn()) {
-	  //   	return (
-	  //   		<hgroup className="header-group">
-	  //   			<h2 className="header-name">Hi, {SessionStore.currentUser().username}!</h2>
-	  //   			<input className="header-button" type="submit" value="logout" onClick={ this._handleLogOut } />
-	  //   		</hgroup>
-	  //   	);
-	  //   } else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
-	  //     return (
-	  //       <nav className="login-signup">
-	  //         <Link to="/login" activeClassName="current">Login</Link>
-	  //         &nbsp;or&nbsp;
-	  //         <Link to="/signup" activeClassName="current">Sign up!</Link>
-	  //       </nav>
-	  //     );
-	  //   }
-	  // },
-	
 	  render: function render() {
 	    var navbar = '';
 	    if (SessionStore.isUserLoggedIn()) {
-	      navbar = React.createElement(NavBar, null);
+	      navbar = React.createElement(NavBar, { loc: this.props.location.pathname.slice(0) });
 	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'app-container' },
-	      React.createElement(
-	        'nav',
-	        null,
-	        navbar
-	      ),
+	      navbar,
 	      this.props.children
 	    );
 	  }
@@ -26067,20 +26042,61 @@
 	      this.setState({ menuClicked: false });
 	    }
 	  },
-	  render: function render() {
-	    return React.createElement(
-	      'header',
-	      { id: 'header', className: 'alt' },
-	      React.createElement('nav', null),
-	      React.createElement(
-	        'nav',
-	        { id: 'create_ride' },
+	  populateLeftNav: function populateLeftNav() {
+	    var leftNav = void 0;
+	    if (this.props.loc === "/") {
+	      leftNav = React.createElement(
+	        'h3',
+	        null,
+	        'Welcome to ',
+	        React.createElement(
+	          'span',
+	          { id: 'title' },
+	          'Cycl'
+	        )
+	      );
+	    } else {
+	      leftNav = React.createElement(
+	        'h3',
+	        null,
 	        React.createElement(
 	          'a',
-	          { id: 'create-ride-button', onClick: this._createRide },
-	          'Create a Ride'
+	          { onClick: this._goHome },
+	          React.createElement(
+	            'span',
+	            { id: 'title' },
+	            'Cycl'
+	          )
 	        )
+	      );
+	    }
+	    return leftNav;
+	  },
+	  populateCenterNav: function populateCenterNav() {
+	    var centerNav = void 0;
+	    if (this.props.loc === "/create_ride") {
+	      centerNav = "";
+	    } else {
+	      centerNav = React.createElement(
+	        'a',
+	        { id: 'create-ride-link', onClick: this._createRide },
+	        'Create a Ride'
+	      );
+	    }
+	    return centerNav;
+	  },
+	  render: function render() {
+	    var leftNav = this.populateLeftNav();
+	    var centerNav = this.populateCenterNav();
+	    return React.createElement(
+	      'header',
+	      { id: 'header' },
+	      React.createElement(
+	        'nav',
+	        null,
+	        leftNav
 	      ),
+	      centerNav,
 	      React.createElement(
 	        'nav',
 	        { id: 'nav' },
@@ -33236,16 +33252,6 @@
 	    return React.createElement(
 	      'div',
 	      { id: 'feed-container' },
-	      React.createElement(
-	        'h3',
-	        null,
-	        'Welcome to ',
-	        React.createElement(
-	          'span',
-	          { id: 'title' },
-	          'Cycl'
-	        )
-	      ),
 	      React.createElement(
 	        'div',
 	        { id: 'feed-rides-index' },

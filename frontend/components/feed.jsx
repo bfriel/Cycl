@@ -46,7 +46,7 @@ const Feed = React.createClass({
     });
     return (
       <div id="feed-container">
-          <h3>Welcome to <span id="title">Cycl</span></h3>
+
         <div id="feed-rides-index">
           {rides}
         </div>
