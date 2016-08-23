@@ -39,6 +39,10 @@ input {
   font-family: inherit;
 }
 
+a {
+  cursor: pointer;
+}
+
 .app-container {
   height: 100%;
   width: 100%;

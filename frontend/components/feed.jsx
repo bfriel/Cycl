@@ -3,8 +3,8 @@ const UserInfoPane = require('./user_info'),
       RidesStore = require('../stores/rides'),
       ApiUtil = require('../util/api_util'),
       RideItem = require('./ride_item'),
-      SessionStore = require('../stores/session_store'),
-      AllUsersPane = require('./all_users');
+      SessionStore = require('../stores/session_store');
+
 
 const Feed = React.createClass({
   getInitialState(){
@@ -28,6 +28,10 @@ const Feed = React.createClass({
     });
   },
 
+  _createRide(){
+    hashHistory.push("create_ride");
+  },
+
   componentWillReceiveProps() {
     this.setState({
       rides: RidesStore.rides()
@@ -42,9 +46,7 @@ const Feed = React.createClass({
     });
     return (
       <div id="feed-container">
-            <h3>Welcome to Cycl!</h3>
-            <p>As a warmup, check out some recent rides from the Cycl community below.</p>
-            <p>When you are ready to start mapping, click on the Create a Ride button above!</p>
+          <h3>Welcome to <span id="title">Cycl</span></h3>
         <div id="feed-rides-index">
           {rides}
         </div>
@@ -52,6 +54,9 @@ const Feed = React.createClass({
     );
   }
 });
+
+// <p>As a warmup, check out some recent rides from the Cycl community below.</p>
+// <p>When you are ready to start mapping, click on the Create a Ride button above!</p>
 // <div className="feed-side-bar">
 //   <div className="feed-side-bar-item">
 //     <AllUsersPane />

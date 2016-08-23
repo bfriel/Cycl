@@ -24,8 +24,12 @@
 }
 
 .completed-ride:hover {
-  // box-shadow: 5px 5px 5px rgba(255, 255, 255, .8);
+  box-shadow: 2px 2px 2px rgb(244, 244, 244);
   cursor: pointer;
+}
+
+.completed-ride h5:hover {
+  text-decoration: underline;
 }
 //
 // #completed-ride-info {
