@@ -55,16 +55,32 @@ const AllUsers = React.createClass({
   _followings(){
     let followings = this.state.followings;
     if (Object.keys(followings).length === 0) {
-      return <div id="no-friends">Nobody! :( Click on another user's name to check out their profile</div>;
+      return <div id="no-friends">Nobody! :( <br></br>
+                Click on another user's name <br></br>
+                to check out their profile
+              </div>;
     }
-    let yourFollowings = followings.map(function (user) {
+    let allFollowings = followings.map( (user) => {
       return <button key={user.id}
                   className="followed-user"
                   data-userid={user.id}
                   onClick={this._goToUsersPage}>{user.username}</button>;
-    }.bind(this));
-    return yourFollowings;
-    },
+    });
+    for ( let i = 0; i < allFollowings.length; i += 2) {
+      if (allFollowings[i + 1]) {
+        allFollowings[i] = <div key={i} className="followings-row">
+                              {allFollowings[i]}
+                              {allFollowings[i + 1]}
+                            </div>;
+        allFollowings[i + 1] = "";
+      } else {
+        allFollowings[i] = <div key={i} className="followings-row">
+                              {allFollowings[i]}
+                            </div>;
+      }
+    }
+    return allFollowings;
+  },
 
   _allUsers() {
     this.state.users.map( (user) => {
@@ -79,7 +95,7 @@ const AllUsers = React.createClass({
     let followings = this._followings();
     let allUsers = this._allUsers();
     return(
-      <div>
+      <div id="followings-index">
         <h3>Cyclists You Follow</h3>
         <div>
           {followings}

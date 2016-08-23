@@ -26091,11 +26091,7 @@
 	    return React.createElement(
 	      'header',
 	      { id: 'header' },
-	      React.createElement(
-	        'nav',
-	        null,
-	        leftNav
-	      ),
+	      leftNav,
 	      centerNav,
 	      React.createElement(
 	        'nav',
@@ -26117,33 +26113,22 @@
 	              React.createElement(
 	                'ul',
 	                { id: this.state.menuClicked ? "menu-show" : "menu-hide" },
+	                React.createElement('i', { id: 'menu-close', className: 'fa fa-times', 'aria-hidden': 'true' }),
 	                React.createElement(
 	                  'li',
-	                  null,
-	                  React.createElement(
-	                    'a',
-	                    { onClick: this._goHome },
-	                    'Feed'
-	                  )
+	                  { onClick: this._goHome },
+	                  'Feed'
 	                ),
 	                React.createElement(
 	                  'li',
-	                  null,
-	                  React.createElement(
-	                    'a',
-	                    { onClick: this._createRide },
-	                    'Create Ride'
-	                  )
+	                  { onClick: this._createRide },
+	                  'Create Ride'
 	                ),
 	                React.createElement(AllUsersPane, null),
 	                React.createElement(
 	                  'li',
-	                  null,
-	                  React.createElement(
-	                    'a',
-	                    { onClick: this._handleLogOut },
-	                    'Log Out'
-	                  )
+	                  { onClick: this._handleLogOut },
+	                  'Log Out'
 	                )
 	              )
 	            )
@@ -33892,28 +33877,51 @@
 	    }
 	  },
 	  _followings: function _followings() {
+	    var _this = this;
+	
 	    var followings = this.state.followings;
 	    if (Object.keys(followings).length === 0) {
 	      return React.createElement(
 	        'div',
 	        { id: 'no-friends' },
-	        'Nobody! :( Click on another user\'s name to check out their profile'
+	        'Nobody! :( ',
+	        React.createElement('br', null),
+	        'Click on another user\'s name ',
+	        React.createElement('br', null),
+	        'to check out their profile'
 	      );
 	    }
-	    var yourFollowings = followings.map(function (user) {
+	    var allFollowings = followings.map(function (user) {
 	      return React.createElement(
 	        'button',
 	        { key: user.id,
 	          className: 'followed-user',
 	          'data-userid': user.id,
-	          onClick: this._goToUsersPage },
+	          onClick: _this._goToUsersPage },
 	        user.username
 	      );
-	    }.bind(this));
-	    return yourFollowings;
+	    });
+	    for (var i = 0; i < allFollowings.length; i += 2) {
+	      if (allFollowings[i + 1]) {
+	        allFollowings[i] = React.createElement(
+	          'div',
+	          { key: i, className: 'followings-row' },
+	          allFollowings[i],
+	          allFollowings[i + 1]
+	        );
+	        allFollowings[i + 1] = "";
+	      } else {
+	        allFollowings[i] = React.createElement(
+	          'div',
+	          { key: i, className: 'followings-row' },
+	          allFollowings[i]
+	        );
+	      }
+	    }
+	    return allFollowings;
 	  },
 	  _allUsers: function _allUsers() {
-	    var _this = this;
+	    var _this2 = this;
 	
 	    this.state.users.map(function (user) {
 	      return React.createElement(
@@ -33921,7 +33929,7 @@
 	        { key: user.id,
 	          className: 'all-user-item',
 	          'data-userid': user.id,
-	          onClick: _this._goToUsersPage },
+	          onClick: _this2._goToUsersPage },
 	        user.username
 	      );
 	    });
@@ -33931,7 +33939,7 @@
 	    var allUsers = this._allUsers();
 	    return React.createElement(
 	      'div',
-	      null,
+	      { id: 'followings-index' },
 	      React.createElement(
 	        'h3',
 	        null,

@@ -68,26 +68,21 @@ const NavBar = React.createClass({
     let centerNav = this.populateCenterNav();
     return(
       <header id="header">
-        <nav>
           {leftNav}
-        </nav>
-
-          {centerNav}
-
+        {centerNav}
 				<nav id="nav">
 					<ul>
 						<li className="special">
 							<span className="menuToggle" onClick={this._goProfile}>{SessionStore.currentUser().username}</span>
-                <i id="menu" className={this.state.menuClicked ? "is-menu-show fa fa-bars" : "is-menu-hide fa fa-bars"} aria-hidden="true" onClick={this._toggleMenu}>
-                  <ul id={this.state.menuClicked ? "menu-show" : "menu-hide"}>
-
-                    <li><a onClick={this._goHome}>Feed</a></li>
-                    <li><a onClick={this._createRide}>Create Ride</a></li>
-                    <AllUsersPane />
-                    <li><a onClick={this._handleLogOut}>Log Out</a></li>
-                  </ul>
-                </i>
-
+              <i id="menu" className={this.state.menuClicked ? "is-menu-show fa fa-bars" : "is-menu-hide fa fa-bars"} aria-hidden="true" onClick={this._toggleMenu}>
+                <ul id={this.state.menuClicked ? "menu-show" : "menu-hide"}>
+                  <i id="menu-close" className="fa fa-times" aria-hidden="true"></i>
+                  <li onClick={this._goHome}>Feed</li>
+                  <li onClick={this._createRide}>Create Ride</li>
+                  <AllUsersPane />
+                  <li onClick={this._handleLogOut}>Log Out</li>
+                </ul>
+              </i>
 						</li>
 					</ul>
 				</nav>
