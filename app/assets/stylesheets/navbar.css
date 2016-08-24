@@ -147,6 +147,7 @@ header h3 {
     #followings-index {
       height: 40vh;
     }
+  }
 
     @media (min-height: 860px) {
       #followings-index {
@@ -171,6 +172,7 @@ header h3 {
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }
+
 .hvr-sweep-to-right:before {
   content: "";
   position: absolute;
