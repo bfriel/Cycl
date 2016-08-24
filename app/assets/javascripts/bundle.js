@@ -26112,7 +26112,7 @@
 	              { id: 'menu', className: this.state.menuClicked ? "is-menu-show fa fa-bars" : "is-menu-hide fa fa-bars", 'aria-hidden': 'true', onClick: this._toggleMenu },
 	              React.createElement(
 	                'ul',
-	                { id: this.state.menuClicked ? "menu-show" : "menu-hide" },
+	                { id: 'menu-show' },
 	                React.createElement('i', { id: 'menu-close', className: 'fa fa-times', 'aria-hidden': 'true' }),
 	                React.createElement(
 	                  'li',

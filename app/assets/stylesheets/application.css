@@ -48,24 +48,6 @@ a {
   width: 100%;
 }
 
- /*input[type=text] {
-   width: 65%;
-   font-size: 1.5em;
-   margin-bottom: 20px;
-   color: white;
-   font-family: inherit;
-   font-weight: inherit;
- }
-
- input[type=password] {
-   width: 65%;
-   font-size: 1.5em;
-   margin-bottom: 20px;
-   color: white;
-   font-family: inherit;
-   font-weight: inherit;
- }*/
-
 input[type="submit"] {
   display: flex;
   justify-content: center;

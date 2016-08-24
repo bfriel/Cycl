@@ -75,7 +75,7 @@ const NavBar = React.createClass({
 						<li className="special">
 							<span className="menuToggle" onClick={this._goProfile}>{SessionStore.currentUser().username}</span>
               <i id="menu" className={this.state.menuClicked ? "is-menu-show fa fa-bars" : "is-menu-hide fa fa-bars"} aria-hidden="true" onClick={this._toggleMenu}>
-                <ul id={this.state.menuClicked ? "menu-show" : "menu-hide"}>
+                <ul id="menu-show">
                   <i id="menu-close" className="fa fa-times" aria-hidden="true"></i>
                   <li className="hvr-sweep-to-right" onClick={this._goHome}>Feed</li>
                   <li className="hvr-sweep-to-right" onClick={this._createRide}>Create Ride</li>

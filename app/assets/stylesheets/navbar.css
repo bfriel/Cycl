@@ -43,15 +43,11 @@
   margin: 30px;
 }
 
-#menu-hide {
-  display: none;
-}
-
 #menu-show {
-  -moz-transform: translateX(16em);
-  -webkit-transform: translateX(16em);
-  -ms-transform: translateX(16em);
-  transform: translateX(16em);
+  -moz-transform: translateX(20em);
+  -webkit-transform: translateX(20em);
+  -ms-transform: translateX(20em);
+  transform: translateX(20em);
   -moz-transition: -moz-transform 0.5s ease;
   -webkit-transition: -webkit-transform 0.5s ease;
   -ms-transition: -ms-transform 0.5s ease;
