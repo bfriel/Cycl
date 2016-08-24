@@ -74,6 +74,21 @@
   -ms-transform: translateX(0);
   transform: translateX(0);
 }
+  @media (min-width: 1024px) {
+    .is-menu-show #menu-show {
+      -moz-transform: none;
+      -webkit-transform: none;
+      -ms-transform: none;
+      transform: none;
+    }
+
+    .is-menu-show:hover #menu-show, .is-menu-hide:hover #menu-show {
+      -moz-transform: translateX(0);
+      -webkit-transform: translateX(0);
+      -ms-transform: translateX(0);
+      transform: translateX(0);
+    }
+  }
 
 #menu {
   margin: 10px;
