@@ -14,15 +14,15 @@ const App = React.createClass({
   _handleLogOut(){
     SessionActions.logOut();
   },
-  
+
   render() {
-    let navbar = '';
+    let navBar;
     if (SessionStore.isUserLoggedIn()) {
-      navbar = <NavBar loc={this.props.location.pathname.slice(0)} />;
+      navBar = <NavBar loc={this.props.location.pathname.slice(1)} />;
     }
     return (
       <div className="app-container">
-        {navbar}
+        {navBar}
         {this.props.children}
       </div>
     );

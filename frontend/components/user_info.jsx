@@ -80,16 +80,16 @@ const UserInfo = React.createClass({
 
       return (
         <div className="user-info-container">
-            <h2>{PageUserInfo.user.username}</h2>
-            <div> {button}</div>
-            <h4>Lifetime Stats</h4>
+          <h2>{PageUserInfo.user.username}</h2>
+          {button}
+          <h4>Lifetime Stats</h4>
 
-            <div id="lifetime-stats">
-              <p>{UserTotals.rideCount} rides</p>
-              <p>{UserTotals.totalDistance} miles</p>
-              <p>{UserTotals.totalCalories} calories burned</p>
-              <p>{hours} hours {minutes} minutes {seconds} seconds</p>
-            </div>
+          <div id="lifetime-stats">
+            <p>{UserTotals.rideCount} rides</p>
+            <p>{UserTotals.totalDistance} miles</p>
+            <p>{UserTotals.totalCalories} calories burned</p>
+            <p>{hours} hours {minutes} minutes {seconds} seconds</p>
+          </div>
         </div>
       );
     } else {

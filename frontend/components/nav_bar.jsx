@@ -6,10 +6,6 @@ const SessionStore = require('../stores/session_store'),
       SessionActions = require('../actions/session_actions'),
       AllUsersPane = require('./all_users');
 
-const Button = require('react-bootstrap').Button;
-const Glyphicon = require('react-bootstrap').Glyphicon;
-
-
 const NavBar = React.createClass({
 
   getInitialState(){
@@ -44,7 +40,7 @@ const NavBar = React.createClass({
 
   populateLeftNav(){
     let leftNav;
-    if (this.props.loc === "/") {
+    if (this.props.loc === "") {
       leftNav = <h3>Welcome to <span id="title">Cycl</span></h3>;
     } else {
       leftNav = <h3><a onClick={this._goHome}><span id="title">Cycl</span></a></h3>;
@@ -54,7 +50,7 @@ const NavBar = React.createClass({
 
   populateCenterNav(){
     let centerNav;
-    if (this.props.loc === "/create_ride"){
+    if (this.props.loc === "create_ride"){
       centerNav = "";
     } else {
       centerNav = <a id="create-ride-link" onClick={this._createRide}>Create a Ride</a>;
@@ -62,17 +58,16 @@ const NavBar = React.createClass({
     return centerNav;
   },
 
-
   render(){
     let leftNav = this.populateLeftNav();
     let centerNav = this.populateCenterNav();
     return(
       <header id="header">
-          {leftNav}
+        {leftNav}
         {centerNav}
 				<nav id="nav">
 					<ul>
-						<li className="special">
+						<li>
 							<span className="menuToggle" onClick={this._goProfile}>{SessionStore.currentUser().username}</span>
               <i id="menu" className={this.state.menuClicked ? "is-menu-show fa fa-bars" : "is-menu-hide fa fa-bars"} aria-hidden="true" onClick={this._toggleMenu}>
                 <ul id="menu-show">
@@ -90,29 +85,5 @@ const NavBar = React.createClass({
     );
   }
 });
-
-// <nav>
-//   <div id="nav-title" onClick={this._goHome}>
-//   </div>
-// </nav>
-// <div id="navbar-buttons">
-//   <a onClick={this._createRide}>Create a Ride</a>
-//   <a onClick={this._goHome}>Feed</a>
-//   <a onClick={this._goProfile} id="nav-profile">{SessionStore.currentUser().username}</a>
-// </div>
-// <div id="dropdown">
-//   <button id="dropbtn">
-//     <div id='menu'>
-//       <img src="http://res.cloudinary.com/ddyl8ojhn/image/upload/v1467853219/whitearrowdown1_abyhs8.png" />
-//     </div>
-//   </button>
-//   <div id="dropdown-content">
-//     <a onClick={this._goProfile}>PROFILE</a>
-//     <a onClick={this._handleLogOut}>LOGOUT</a>
-//   </div>
-// </div>
-
-
-
 
 module.exports = NavBar;
