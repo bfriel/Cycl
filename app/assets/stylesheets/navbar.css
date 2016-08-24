@@ -74,12 +74,13 @@
   -ms-transform: translateX(0);
   transform: translateX(0);
 }
+
   @media (min-width: 1024px) {
-    .is-menu-show #menu-show {
-      -moz-transform: none;
-      -webkit-transform: none;
-      -ms-transform: none;
-      transform: none;
+    .is-menu-show #menu-show, .is-menu-hide #menu-show {
+      -moz-transform: translateX(20em);
+      -webkit-transform: translateX(20em);
+      -ms-transform: translateX(20em);
+      transform: translateX(20em);
     }
 
     .is-menu-show:hover #menu-show, .is-menu-hide:hover #menu-show {
