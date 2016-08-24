@@ -88,6 +88,10 @@
       -ms-transform: translateX(0);
       transform: translateX(0);
     }
+
+    #menu-close {
+      visibility: hidden;
+    }
   }
 
 #menu {
