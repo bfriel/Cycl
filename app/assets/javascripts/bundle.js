@@ -26116,18 +26116,18 @@
 	                React.createElement('i', { id: 'menu-close', className: 'fa fa-times', 'aria-hidden': 'true' }),
 	                React.createElement(
 	                  'li',
-	                  { onClick: this._goHome },
+	                  { className: 'hvr-sweep-to-right', onClick: this._goHome },
 	                  'Feed'
 	                ),
 	                React.createElement(
 	                  'li',
-	                  { onClick: this._createRide },
+	                  { className: 'hvr-sweep-to-right', onClick: this._createRide },
 	                  'Create Ride'
 	                ),
 	                React.createElement(AllUsersPane, null),
 	                React.createElement(
 	                  'li',
-	                  { onClick: this._handleLogOut },
+	                  { className: 'hvr-sweep-to-right', onClick: this._handleLogOut },
 	                  'Log Out'
 	                )
 	              )
@@ -33222,9 +33222,6 @@
 	      rides: RidesStore.rides()
 	    });
 	  },
-	  _createRide: function _createRide() {
-	    hashHistory.push("create_ride");
-	  },
 	  componentWillReceiveProps: function componentWillReceiveProps() {
 	    this.setState({
 	      rides: RidesStore.rides()
@@ -33236,12 +33233,8 @@
 	    });
 	    return React.createElement(
 	      'div',
-	      { id: 'feed-container' },
-	      React.createElement(
-	        'div',
-	        { id: 'feed-rides-index' },
-	        rides
-	      )
+	      { id: 'feed-rides-index' },
+	      rides
 	    );
 	  }
 	});
@@ -34065,13 +34058,9 @@
 	      null,
 	      React.createElement(
 	        'div',
-	        null,
-	        React.createElement(
-	          'div',
-	          { className: 'feed' },
-	          header,
-	          rides
-	        )
+	        { id: 'user-page', className: 'col col-2-3' },
+	        header,
+	        rides
 	      ),
 	      React.createElement(
 	        'div',

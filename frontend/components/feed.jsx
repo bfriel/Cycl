@@ -28,10 +28,6 @@ const Feed = React.createClass({
     });
   },
 
-  _createRide(){
-    hashHistory.push("create_ride");
-  },
-
   componentWillReceiveProps() {
     this.setState({
       rides: RidesStore.rides()
@@ -45,11 +41,8 @@ const Feed = React.createClass({
       );
     });
     return (
-      <div id="feed-container">
-
-        <div id="feed-rides-index">
-          {rides}
-        </div>
+      <div id="feed-rides-index">
+        {rides}
       </div>
     );
   }

@@ -77,10 +77,10 @@ const NavBar = React.createClass({
               <i id="menu" className={this.state.menuClicked ? "is-menu-show fa fa-bars" : "is-menu-hide fa fa-bars"} aria-hidden="true" onClick={this._toggleMenu}>
                 <ul id={this.state.menuClicked ? "menu-show" : "menu-hide"}>
                   <i id="menu-close" className="fa fa-times" aria-hidden="true"></i>
-                  <li onClick={this._goHome}>Feed</li>
-                  <li onClick={this._createRide}>Create Ride</li>
+                  <li className="hvr-sweep-to-right" onClick={this._goHome}>Feed</li>
+                  <li className="hvr-sweep-to-right" onClick={this._createRide}>Create Ride</li>
                   <AllUsersPane />
-                  <li onClick={this._handleLogOut}>Log Out</li>
+                  <li className="hvr-sweep-to-right" onClick={this._handleLogOut}>Log Out</li>
                 </ul>
               </i>
 						</li>

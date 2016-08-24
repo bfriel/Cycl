@@ -3,7 +3,6 @@
   margin: 20px;
 }
 
-
 .feed-side-bar {
   position: fixed;
   top: 30%;
@@ -20,4 +19,22 @@
   text-align: center;
   display: block;
   box-sizing: border-box;
+}
+
+@media (max-width: 1165px) {
+  .feed-side-bar {
+    left: 68%;
+  }
+}
+
+@media (max-width: 1165px) {
+  .feed-side-bar {
+    left: 65%;
+  }
+}
+
+@media (max-width: 775px) {
+  .feed-side-bar {
+    display: none;
+  }
 }

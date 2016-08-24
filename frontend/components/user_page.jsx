@@ -86,11 +86,9 @@ const UserPage = React.createClass({
 
     return (
       <div>
-        <div>
-          <div className="feed">
-            {header}
-            {rides}
-          </div>
+        <div id="user-page" className="col col-2-3">
+          {header}
+          {rides}
         </div>
         <div className="feed-side-bar">
           <div className="feed-side-bar-item">

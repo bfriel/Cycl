@@ -66,7 +66,7 @@ const AllUsers = React.createClass({
                   data-userid={user.id}
                   onClick={this._goToUsersPage}>{user.username}</button>;
     });
-    for ( let i = 0; i < allFollowings.length; i += 2) {
+    for (let i = 0; i < allFollowings.length; i += 2) {
       if (allFollowings[i + 1]) {
         allFollowings[i] = <div key={i} className="followings-row">
                               {allFollowings[i]}
