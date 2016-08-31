@@ -33589,14 +33589,6 @@
 	  }
 	});
 	
-	// <p>As a warmup, check out some recent rides from the Cycl community below.</p>
-	// <p>When you are ready to start mapping, click on the Create a Ride button above!</p>
-	// <div className="feed-side-bar">
-	//   <div className="feed-side-bar-item">
-	//     <AllUsersPane />
-	//   </div>
-	// </div>
-	
 	module.exports = Feed;
 
 /***/ },
@@ -33801,7 +33793,7 @@
 	  var result = [];
 	  _rides.forEach(function (ride) {
 	    if (ride.user_id === userId) {
-	      result.unshift(ride);
+	      result.push(ride);
 	    }
 	  });
 	
@@ -33867,11 +33859,7 @@
 	    hashHistory.push('ride/' + this.props.ride.ride_id);
 	  },
 	  render: function render() {
-	    var currentUser = SessionStore.currentUser();
 	    var ride = this.props.ride;
-	    var hours = (ride.duration / 3600).toFixed(0);
-	    var minutes = (ride.duration % 3600 / 60).toFixed(0);
-	    var seconds = ride.duration % 60;
 	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=300x300&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
 	    return React.createElement(
 	      'div',
@@ -33894,29 +33882,6 @@
 	    );
 	  }
 	});
-	
-	// <div id="completed-ride-details">
-	//   <table className="table" id="feed-table">
-	//     <tbody>
-	//       <tr>
-	//         <td className="completed-ride-th">Distance</td>
-	//         <td className="completed-ride-tb">{ride.distance} miles</td>
-	//       </tr>
-	//       <tr>
-	//         <td className="completed-ride-th">Duration</td>
-	//         <td className="completed-ride-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
-	//       </tr>
-	//       <tr>
-	//         <td className="completed-ride-th">Elevation</td>
-	//         <td className="completed-ride-tb">{ride.elevation_gain} feet</td>
-	//       </tr>
-	//       <tr>
-	//         <td className="completed-ride-th">Calories</td>
-	//         <td className="completed-ride-tb">{ride.calories_burned}</td>
-	//       </tr>
-	//     </tbody>
-	//   </table>
-	// </div>
 	
 	module.exports = RideItem;
 
@@ -33946,7 +33911,6 @@
 	  componentDidMount: function componentDidMount() {
 	    ApiUtil.fetchRides();
 	    this.rideListener = RidesStore.addListener(this._onChange);
-	
 	    this.currentUserListener = SessionStore.addListener(this._currentUser);
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
@@ -33998,7 +33962,7 @@
 	
 	    var rides = void 0;
 	    if (this.state.rides.length > 0) {
-	      rides = this.state.rides.reverse().map(function (ride) {
+	      rides = this.state.rides.map(function (ride) {
 	        return React.createElement(RideItem, { ride: ride, key: ride.ride_name });
 	      });
 	    } else if (parseInt(this.props.params.userId) === this.state.currentUser.id) {

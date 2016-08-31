@@ -14,7 +14,7 @@ RidesStore.find = function (userId) {
   let result = [];
   _rides.forEach( (ride) => {
     if (ride.user_id === userId) {
-      result.unshift(ride);
+      result.push(ride);
     }
   });
 

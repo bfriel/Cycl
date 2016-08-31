@@ -18,7 +18,6 @@ const UserPage = React.createClass({
   componentDidMount() {
     ApiUtil.fetchRides();
     this.rideListener = RidesStore.addListener(this._onChange);
-
     this.currentUserListener = SessionStore.addListener(this._currentUser);
   },
 
@@ -67,7 +66,7 @@ const UserPage = React.createClass({
 
     let rides;
     if (this.state.rides.length > 0) {
-      rides= this.state.rides.reverse().map( (ride) => {
+      rides= this.state.rides.map( (ride) => {
         return (
           <RideItem ride={ride} key={ride.ride_name} />
         );

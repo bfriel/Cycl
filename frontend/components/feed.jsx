@@ -48,12 +48,4 @@ const Feed = React.createClass({
   }
 });
 
-// <p>As a warmup, check out some recent rides from the Cycl community below.</p>
-// <p>When you are ready to start mapping, click on the Create a Ride button above!</p>
-// <div className="feed-side-bar">
-//   <div className="feed-side-bar-item">
-//     <AllUsersPane />
-//   </div>
-// </div>
-
 module.exports = Feed;
