@@ -33435,6 +33435,7 @@
 	      method: "POST",
 	      data: { comment: comment },
 	      success: function success(newComment) {
+	        debugger;
 	        ApiActions.createComment(newComment);
 	        resetFormCallback();
 	      }
@@ -35108,12 +35109,16 @@
 	    };
 	  },
 	  _updateComment: function _updateComment(e) {
-	    this.setState({ body: e.target.value });
+	    this.setState({
+	      body: e.target.value
+	    });
 	  },
 	  _submitWithEnterKey: function _submitWithEnterKey(e) {
 	    if (e.keyCode === 13) {
 	      this.handleSubmit(e);
-	      this.setState({ body: "" });
+	      this.setState({
+	        body: ""
+	      });
 	    }
 	  },
 	  handleSubmit: function handleSubmit(e) {
@@ -35125,7 +35130,9 @@
 	      user_id: this.state.currentUser.id,
 	      ride_id: this.props.ride.ride_id };
 	    ApiUtil.createComment(comment, function () {
-	      _this.setState({ body: "" });
+	      _this.setState({
+	        body: ""
+	      });
 	    });
 	  },
 	  render: function render() {

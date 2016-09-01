@@ -12,13 +12,17 @@ const CommentForm = React.createClass({
   },
 
   _updateComment(e) {
-    this.setState({ body: e.target.value });
+    this.setState({
+      body: e.target.value
+    });
    },
 
  _submitWithEnterKey(e) {
    if (e.keyCode === 13) {
      this.handleSubmit(e);
-     this.setState( {body: ""} );
+     this.setState({
+       body: ""
+     });
    }
  },
 
@@ -28,26 +32,26 @@ const CommentForm = React.createClass({
                    author: this.state.currentUser.username,
                    user_id: this.state.currentUser.id,
                    ride_id: this.props.ride.ride_id };
-    ApiUtil.createComment(comment, () => {this.setState( {body: ""} );} );
+    ApiUtil.createComment(comment, () => {
+      this.setState({
+        body: ""
+      });
+    });
   },
 
   render() {
     return(
-
       <div className="new-comment-form-container">
-
         <form className="new-comment-form"
               onSubmit={this.handleSubmit}>
-
-            <input type="text"
-                  value={this.state.body}
-                  placeholder="Write a comment..."
-                  onChange={this._updateComment}
-                  onKeyDown={this._submitWithEnterKey}
-                  id="new-comment-input" >
-            </input>
+          <input type="text"
+                value={this.state.body}
+                placeholder="Write a comment..."
+                onChange={this._updateComment}
+                onKeyDown={this._submitWithEnterKey}
+                id="new-comment-input" >
+          </input>
         </form>
-
       </div>
     );
   }
