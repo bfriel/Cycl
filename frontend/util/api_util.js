@@ -88,7 +88,6 @@ const ApiUtil = {
       method: "POST",
       data: {comment: comment},
       success(newComment) {
-        debugger;
         ApiActions.createComment(newComment);
         resetFormCallback();
       }

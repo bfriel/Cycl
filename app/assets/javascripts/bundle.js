@@ -33435,7 +33435,6 @@
 	      method: "POST",
 	      data: { comment: comment },
 	      success: function success(newComment) {
-	        debugger;
 	        ApiActions.createComment(newComment);
 	        resetFormCallback();
 	      }
