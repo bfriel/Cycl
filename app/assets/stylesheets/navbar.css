@@ -14,17 +14,42 @@
   color: rgb(48, 87, 145);
 }
 
-.menuToggle {
+.user-name {
 	font-size: 1.1em;
 	letter-spacing: 0.225em;
-	padding: 0 1.5em;
+	margin: 0 1.5em;
 	text-transform: uppercase;
   cursor: pointer;
+  position: relative;
+  padding-bottom: 3px;
 }
+
+.user-name:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: .1em;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.user-name:hover:after {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
+
 
   @media screen and (max-width: 736px) {
 
-    .menuToggle {
+    .user-name {
       display: none;
       padding: 0 1.5em;
       padding: 0 0 0 1.5em;
@@ -40,7 +65,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 30px;
+  padding: 30px;
 }
 
 #menu-show {
@@ -53,8 +78,7 @@
   -ms-transition: -ms-transform 0.5s ease;
   transition: transform 0.5s ease;
   -webkit-overflow-scrolling: touch;
-  background: whitesmoke;
-  color: rgb(40, 130, 185);
+  background: rgb(245, 245, 245);
   color: rgb(48, 87, 145);
   font-family: 'Roboto', sans-serif;
   height: 100%;

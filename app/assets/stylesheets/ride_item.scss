@@ -3,8 +3,9 @@
   max-width: 100%;
   height: auto;
   margin: 20px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, .8);
+  border-radius: 5px;
+  background-color: #edefed;
+  border: 1px solid #484848;
   text-align: center;
 }
 
@@ -32,6 +33,5 @@
 .mini-map {
   max-width: 100%;
   height: auto;
-  border-radius: 9px;
   overflow: hidden;
 }
