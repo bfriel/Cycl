@@ -26,10 +26,12 @@ const RideItem = React.createClass({
                    window.GOOGLE_KEYS.GOOGLE_MAPS;
     return(
       <div className="completed-ride">
-        <h2 onClick={this._goToShow}>{ride.ride_name}</h2>
-        <h5 onClick={this._goToUsersPage}>{ride.rider}</h5>
-        <div className='mini-map' onClick={this._goToShow}>
-          <img src={startImg} />
+        <div className="completed-ride-info">
+          <h2 onClick={this._goToShow}>{ride.ride_name}</h2>
+          <h5 onClick={this._goToUsersPage}>{ride.rider}</h5>
+          <div className="mini-map" onClick={this._goToShow}>
+            <img src={startImg}  />
+          </div>
         </div>
       </div>
     );

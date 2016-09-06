@@ -33877,19 +33877,23 @@
 	      'div',
 	      { className: 'completed-ride' },
 	      React.createElement(
-	        'h2',
-	        { onClick: this._goToShow },
-	        ride.ride_name
-	      ),
-	      React.createElement(
-	        'h5',
-	        { onClick: this._goToUsersPage },
-	        ride.rider
-	      ),
-	      React.createElement(
 	        'div',
-	        { className: 'mini-map', onClick: this._goToShow },
-	        React.createElement('img', { src: startImg })
+	        { className: 'completed-ride-info' },
+	        React.createElement(
+	          'h2',
+	          { onClick: this._goToShow },
+	          ride.ride_name
+	        ),
+	        React.createElement(
+	          'h5',
+	          { onClick: this._goToUsersPage },
+	          ride.rider
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'mini-map', onClick: this._goToShow },
+	          React.createElement('img', { src: startImg })
+	        )
 	      )
 	    );
 	  }
