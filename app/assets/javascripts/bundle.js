@@ -26101,7 +26101,7 @@
 	            null,
 	            React.createElement(
 	              'span',
-	              { className: 'user-name', onClick: this._goProfile },
+	              { className: 'user-name underline-l-r', onClick: this._goProfile },
 	              SessionStore.currentUser().username
 	            ),
 	            React.createElement(
@@ -35339,7 +35339,7 @@
 	        'New to Cycl? ',
 	        React.createElement(
 	          'a',
-	          { onClick: this._switchForm.bind(null, "signup") },
+	          { className: 'underline-l-r', onClick: this._switchForm.bind(null, "signup") },
 	          'Sign Up!'
 	        )
 	      );
@@ -35351,7 +35351,7 @@
 	        'Already have an account? ',
 	        React.createElement(
 	          'a',
-	          { onClick: this._switchForm.bind(null, "login") },
+	          { className: 'underline-l-r', onClick: this._switchForm.bind(null, "login") },
 	          'Log In!'
 	        )
 	      );

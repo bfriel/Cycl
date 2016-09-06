@@ -96,12 +96,12 @@ const SignupForm = React.createClass({
     let formButtonText;
     if (this.state.type === "login") {
       otherFormLink = <div className="switch-form">
-                        New to Cycl? <a onClick={this._switchForm.bind(null, "signup")}>Sign Up!</a>
+                        New to Cycl? <a className="underline-l-r" onClick={this._switchForm.bind(null, "signup")}>Sign Up!</a>
                       </div>;
       formButtonText = "Log In!";
     } else {
       otherFormLink = <div className="switch-form">
-                        Already have an account? <a onClick={this._switchForm.bind(null, "login")}>Log In!</a>
+                        Already have an account? <a className="underline-l-r" onClick={this._switchForm.bind(null, "login")}>Log In!</a>
                       </div>;
       formButtonText = "Sign Up!";
     }

@@ -53,7 +53,9 @@
 }
 
 .switch-form a {
-  font-weight: 400
+  font-weight: 400;
+  padding-bottom: 3px;
+  position: relative;
 }
 
 @media (max-width: 525px) {
