@@ -33885,9 +33885,33 @@
 	          ride.ride_name
 	        ),
 	        React.createElement(
-	          'h5',
-	          { onClick: this._goToUsersPage },
-	          ride.rider
+	          'div',
+	          { className: 'completed-ride-info-details' },
+	          React.createElement(
+	            'h5',
+	            { onClick: this._goToUsersPage },
+	            ride.rider
+	          ),
+	          ' ',
+	          React.createElement('span', { className: 'small-bar' }),
+	          ' ',
+	          React.createElement(
+	            'span',
+	            null,
+	            ride.distance,
+	            ' mi'
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { id: 'completed-ride-details' },
+	          React.createElement(
+	            'span',
+	            null,
+	            'Distance: ',
+	            ride.distance,
+	            ' miles'
+	          )
 	        ),
 	        React.createElement(
 	          'div',
@@ -33899,28 +33923,26 @@
 	  }
 	});
 	
-	// <div id="completed-ride-details">
-	//   <table className="table" id="feed-table">
-	//     <tbody>
-	//       <tr>
-	//         <td className="completed-ride-th">Distance</td>
-	//         <td className="completed-ride-tb">{ride.distance} miles</td>
-	//       </tr>
-	//       <tr>
-	//         <td className="completed-ride-th">Duration</td>
-	//         <td className="completed-ride-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
-	//       </tr>
-	//       <tr>
-	//         <td className="completed-ride-th">Elevation</td>
-	//         <td className="completed-ride-tb">{ride.elevation_gain} feet</td>
-	//       </tr>
-	//       <tr>
-	//         <td className="completed-ride-th">Calories</td>
-	//         <td className="completed-ride-tb">{ride.calories_burned}</td>
-	//       </tr>
-	//     </tbody>
-	//   </table>
-	// </div>
+	// <table className="table" id="feed-table">
+	//   <tbody>
+	//     <tr>
+	//       <td className="completed-ride-th">Distance</td>
+	//       <td className="completed-ride-tb">{ride.distance} miles</td>
+	//     </tr>
+	//     <tr>
+	//       <td className="completed-ride-th">Duration</td>
+	//       <td className="completed-ride-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
+	//     </tr>
+	//     <tr>
+	//       <td className="completed-ride-th">Elevation</td>
+	//       <td className="completed-ride-tb">{ride.elevation_gain} feet</td>
+	//     </tr>
+	//     <tr>
+	//       <td className="completed-ride-th">Calories</td>
+	//       <td className="completed-ride-tb">{ride.calories_burned}</td>
+	//     </tr>
+	//   </tbody>
+	// </table>
 	
 	module.exports = RideItem;
 

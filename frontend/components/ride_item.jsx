@@ -28,7 +28,17 @@ const RideItem = React.createClass({
       <div className="completed-ride">
         <div className="completed-ride-info">
           <h2 onClick={this._goToShow}>{ride.ride_name}</h2>
-          <h5 onClick={this._goToUsersPage}>{ride.rider}</h5>
+          <div className="completed-ride-info-details">
+            <h5 onClick={this._goToUsersPage}>{ride.rider}</h5>
+            {' '}
+            <span className="small-bar"></span>
+            {' '}
+            <span>{ride.distance} mi</span>
+          </div>
+
+          <div id="completed-ride-details">
+            <span>Distance: {ride.distance} miles</span>
+          </div>
           <div className="mini-map" onClick={this._goToShow}>
             <img src={startImg}  />
           </div>
@@ -38,27 +48,25 @@ const RideItem = React.createClass({
   }
 });
 
-// <div id="completed-ride-details">
-//   <table className="table" id="feed-table">
-//     <tbody>
-//       <tr>
-//         <td className="completed-ride-th">Distance</td>
-//         <td className="completed-ride-tb">{ride.distance} miles</td>
-//       </tr>
-//       <tr>
-//         <td className="completed-ride-th">Duration</td>
-//         <td className="completed-ride-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
-//       </tr>
-//       <tr>
-//         <td className="completed-ride-th">Elevation</td>
-//         <td className="completed-ride-tb">{ride.elevation_gain} feet</td>
-//       </tr>
-//       <tr>
-//         <td className="completed-ride-th">Calories</td>
-//         <td className="completed-ride-tb">{ride.calories_burned}</td>
-//       </tr>
-//     </tbody>
-//   </table>
-// </div>
+// <table className="table" id="feed-table">
+//   <tbody>
+//     <tr>
+//       <td className="completed-ride-th">Distance</td>
+//       <td className="completed-ride-tb">{ride.distance} miles</td>
+//     </tr>
+//     <tr>
+//       <td className="completed-ride-th">Duration</td>
+//       <td className="completed-ride-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
+//     </tr>
+//     <tr>
+//       <td className="completed-ride-th">Elevation</td>
+//       <td className="completed-ride-tb">{ride.elevation_gain} feet</td>
+//     </tr>
+//     <tr>
+//       <td className="completed-ride-th">Calories</td>
+//       <td className="completed-ride-tb">{ride.calories_burned}</td>
+//     </tr>
+//   </tbody>
+// </table>
 
 module.exports = RideItem;

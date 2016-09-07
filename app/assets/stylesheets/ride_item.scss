@@ -13,22 +13,13 @@
 
 .completed-ride h2 {
   margin: 0;
+  font-family: 'Roboto Condensed', sans-serif;
   padding-top: 8px;
   text-align: left;
   font-weight: 600;
   font-size: 2.45em;
 }
 
-.completed-ride h5 {
-  padding: 8px 0px;
-  font-weight: 100;
-  margin: 0;
-  color: #b1b1b2;
-  font-size: 1em;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-align: left;
-}
 
 .completed-ride:hover {
   cursor: pointer;
@@ -41,6 +32,36 @@
 .completed-ride-info {
   display: block;
   padding: 30px 48% 40px 35px;
+}
+
+.completed-ride-info-details {
+  padding: 8px 0px;
+  font-weight: 100;
+  margin: 0;
+  color: #b1b1b2;
+  font-size: 1em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: left;
+}
+
+.completed-ride-info-details h5 {
+  display: inline;
+  font-weight: 100;
+  margin: 0;
+  color: #b1b1b2;
+  font-size: 1em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: left;
+}
+
+.small-bar {
+  background: #b1b1b2;
+  height: 1px;
+  width: 30px;;
+  display: inline-block;
+  margin-bottom: 5px;
 }
 
 .mini-map {
