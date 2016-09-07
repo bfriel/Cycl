@@ -12,6 +12,10 @@ const RideItem = React.createClass({
     hashHistory.push('ride/' + this.props.ride.ride_id);
   },
 
+  getComments() {
+    let comments = this.props.ride.comments;
+  },
+
   render(){
     let currentUser = SessionStore.currentUser();
     let ride = this.props.ride;
@@ -20,10 +24,11 @@ const RideItem = React.createClass({
     let seconds = (ride.duration % 60);
     let startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" +
                    ride.start_pos +
-                   "&size=300x300&zoom=15&markers=color:blue%7Clabel:S%7C" +
+                   "&size=500x500&zoom=15&markers=color:blue%7Clabel:S%7C" +
                    ride.start_pos +
                    "&key=" +
                    window.GOOGLE_KEYS.GOOGLE_MAPS;
+    let comments = this.getComments();
     return(
       <div className="completed-ride">
         <div className="completed-ride-info">
@@ -35,9 +40,8 @@ const RideItem = React.createClass({
             {' '}
             <span>{ride.distance} mi</span>
           </div>
-
           <div id="completed-ride-details">
-            <span>Distance: {ride.distance} miles</span>
+            {comments}
           </div>
           <div className="mini-map" onClick={this._goToShow}>
             <img src={startImg}  />

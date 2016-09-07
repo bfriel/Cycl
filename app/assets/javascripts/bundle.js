@@ -33866,13 +33866,17 @@
 	  _goToShow: function _goToShow() {
 	    hashHistory.push('ride/' + this.props.ride.ride_id);
 	  },
+	  getComments: function getComments() {
+	    var comments = this.props.ride.comments;
+	  },
 	  render: function render() {
 	    var currentUser = SessionStore.currentUser();
 	    var ride = this.props.ride;
 	    var hours = (ride.duration / 3600).toFixed(0);
 	    var minutes = (ride.duration % 3600 / 60).toFixed(0);
 	    var seconds = ride.duration % 60;
-	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=300x300&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
+	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=500x500&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
+	    var comments = this.getComments();
 	    return React.createElement(
 	      'div',
 	      { className: 'completed-ride' },
@@ -33905,13 +33909,7 @@
 	        React.createElement(
 	          'div',
 	          { id: 'completed-ride-details' },
-	          React.createElement(
-	            'span',
-	            null,
-	            'Distance: ',
-	            ride.distance,
-	            ' miles'
-	          )
+	          comments
 	        ),
 	        React.createElement(
 	          'div',
