@@ -13,34 +13,43 @@ const RideItem = React.createClass({
   },
 
   getComments() {
-    let comments = this.props.ride.comments;
+    let comments = this.props.ride.comments.slice(0, 5).map( (comment) => {
+      return (
+        <div key={comment.id} className="ride-item-comment-item">
+          <span className="underline" onClick={this._goToUsersPage}>{comment.author}</span>
+          :{' '}
+          <span>{comment.body}</span>
+        </div>
+      );
+    });
+    return comments;
   },
 
   render(){
     let currentUser = SessionStore.currentUser();
     let ride = this.props.ride;
-    let hours = (ride.duration / 3600).toFixed(0);
-    let minutes = ((ride.duration % 3600) / 60 ).toFixed(0);
-    let seconds = (ride.duration % 60);
+    let comments = this.getComments();
+    // let hours = (ride.duration / 3600).toFixed(0);
+    // let minutes = ((ride.duration % 3600) / 60 ).toFixed(0);
+    // let seconds = (ride.duration % 60);
     let startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" +
                    ride.start_pos +
                    "&size=500x500&zoom=15&markers=color:blue%7Clabel:S%7C" +
                    ride.start_pos +
                    "&key=" +
                    window.GOOGLE_KEYS.GOOGLE_MAPS;
-    let comments = this.getComments();
     return(
-      <div className="completed-ride">
-        <div className="completed-ride-info">
-          <h2 onClick={this._goToShow}>{ride.ride_name}</h2>
-          <div className="completed-ride-info-details">
-            <h5 onClick={this._goToUsersPage}>{ride.rider}</h5>
+      <div className="ride-item">
+        <div className="ride-item-info">
+          <h2 className="underline" onClick={this._goToShow}>{ride.ride_name}</h2>
+          <div className="ride-item-info-details">
+            <h5 className="underline" onClick={this._goToUsersPage}>{ride.rider}</h5>
             {' '}
             <span className="small-bar"></span>
             {' '}
             <span>{ride.distance} mi</span>
           </div>
-          <div id="completed-ride-details">
+          <div className="ride-item-comments">
             {comments}
           </div>
           <div className="mini-map" onClick={this._goToShow}>
@@ -55,20 +64,20 @@ const RideItem = React.createClass({
 // <table className="table" id="feed-table">
 //   <tbody>
 //     <tr>
-//       <td className="completed-ride-th">Distance</td>
-//       <td className="completed-ride-tb">{ride.distance} miles</td>
+//       <td className="ride-item-th">Distance</td>
+//       <td className="ride-item-tb">{ride.distance} miles</td>
 //     </tr>
 //     <tr>
-//       <td className="completed-ride-th">Duration</td>
-//       <td className="completed-ride-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
+//       <td className="ride-item-th">Duration</td>
+//       <td className="ride-item-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
 //     </tr>
 //     <tr>
-//       <td className="completed-ride-th">Elevation</td>
-//       <td className="completed-ride-tb">{ride.elevation_gain} feet</td>
+//       <td className="ride-item-th">Elevation</td>
+//       <td className="ride-item-tb">{ride.elevation_gain} feet</td>
 //     </tr>
 //     <tr>
-//       <td className="completed-ride-th">Calories</td>
-//       <td className="completed-ride-tb">{ride.calories_burned}</td>
+//       <td className="ride-item-th">Calories</td>
+//       <td className="ride-item-tb">{ride.calories_burned}</td>
 //     </tr>
 //   </tbody>
 // </table>

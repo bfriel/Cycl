@@ -64,7 +64,6 @@ const NavBar = React.createClass({
     return(
       <header id="header">
         {leftNav}
-        {centerNav}
 				<nav id="nav">
 					<ul>
 						<li>

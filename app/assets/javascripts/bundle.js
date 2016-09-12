@@ -26089,7 +26089,6 @@
 	      'header',
 	      { id: 'header' },
 	      leftNav,
-	      centerNav,
 	      React.createElement(
 	        'nav',
 	        { id: 'nav' },
@@ -33867,33 +33866,53 @@
 	    hashHistory.push('ride/' + this.props.ride.ride_id);
 	  },
 	  getComments: function getComments() {
-	    var comments = this.props.ride.comments;
+	    var _this = this;
+	
+	    var comments = this.props.ride.comments.slice(0, 5).map(function (comment) {
+	      return React.createElement(
+	        'div',
+	        { key: comment.id, className: 'ride-item-comment-item' },
+	        React.createElement(
+	          'span',
+	          { className: 'underline', onClick: _this._goToUsersPage },
+	          comment.author
+	        ),
+	        ':',
+	        ' ',
+	        React.createElement(
+	          'span',
+	          null,
+	          comment.body
+	        )
+	      );
+	    });
+	    return comments;
 	  },
 	  render: function render() {
 	    var currentUser = SessionStore.currentUser();
 	    var ride = this.props.ride;
-	    var hours = (ride.duration / 3600).toFixed(0);
-	    var minutes = (ride.duration % 3600 / 60).toFixed(0);
-	    var seconds = ride.duration % 60;
-	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=500x500&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
 	    var comments = this.getComments();
+	    // let hours = (ride.duration / 3600).toFixed(0);
+	    // let minutes = ((ride.duration % 3600) / 60 ).toFixed(0);
+	    // let seconds = (ride.duration % 60);
+	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=500x500&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
 	    return React.createElement(
 	      'div',
-	      { className: 'completed-ride' },
+	      { className: 'ride-item' },
 	      React.createElement(
 	        'div',
-	        { className: 'completed-ride-info' },
+	        { className: 'ride-item-info' },
 	        React.createElement(
 	          'h2',
-	          { onClick: this._goToShow },
+	          { className: 'underline', onClick: this._goToShow },
 	          ride.ride_name
 	        ),
 	        React.createElement(
 	          'div',
-	          { className: 'completed-ride-info-details' },
+	          { className: 'ride-item-info-details' },
 	          React.createElement(
 	            'h5',
-	            { onClick: this._goToUsersPage },
+	            { className: 'underline', onClick: this._goToUsersPage },
 	            ride.rider
 	          ),
 	          ' ',
@@ -33908,7 +33927,7 @@
 	        ),
 	        React.createElement(
 	          'div',
-	          { id: 'completed-ride-details' },
+	          { className: 'ride-item-comments' },
 	          comments
 	        ),
 	        React.createElement(
@@ -33924,20 +33943,20 @@
 	// <table className="table" id="feed-table">
 	//   <tbody>
 	//     <tr>
-	//       <td className="completed-ride-th">Distance</td>
-	//       <td className="completed-ride-tb">{ride.distance} miles</td>
+	//       <td className="ride-item-th">Distance</td>
+	//       <td className="ride-item-tb">{ride.distance} miles</td>
 	//     </tr>
 	//     <tr>
-	//       <td className="completed-ride-th">Duration</td>
-	//       <td className="completed-ride-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
+	//       <td className="ride-item-th">Duration</td>
+	//       <td className="ride-item-tb">{hours} hours {minutes} minutes {seconds} seconds</td>
 	//     </tr>
 	//     <tr>
-	//       <td className="completed-ride-th">Elevation</td>
-	//       <td className="completed-ride-tb">{ride.elevation_gain} feet</td>
+	//       <td className="ride-item-th">Elevation</td>
+	//       <td className="ride-item-tb">{ride.elevation_gain} feet</td>
 	//     </tr>
 	//     <tr>
-	//       <td className="completed-ride-th">Calories</td>
-	//       <td className="completed-ride-tb">{ride.calories_burned}</td>
+	//       <td className="ride-item-th">Calories</td>
+	//       <td className="ride-item-tb">{ride.calories_burned}</td>
 	//     </tr>
 	//   </tbody>
 	// </table>
