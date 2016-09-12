@@ -33855,7 +33855,9 @@
 	
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    SessionStore = __webpack_require__(232);
+	    SessionStore = __webpack_require__(232),
+	    CommentIndex = __webpack_require__(281),
+	    CommentForm = __webpack_require__(282);
 	
 	var RideItem = React.createClass({
 	  displayName: 'RideItem',
@@ -33928,16 +33930,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'ride-item-comments' },
-	          React.createElement(
-	            'div',
-	            { className: 'comment-index' },
-	            comments
-	          ),
-	          React.createElement(
-	            'div',
-	            null,
-	            'Add a comment'
-	          )
+	          React.createElement(CommentIndex, { ride: ride })
 	        )
 	      ),
 	      React.createElement(

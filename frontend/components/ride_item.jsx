@@ -1,6 +1,8 @@
 const React = require('react'),
       hashHistory = require('react-router').hashHistory,
-      SessionStore = require('../stores/session_store');
+      SessionStore = require('../stores/session_store'),
+      CommentIndex = require('./comment_index'),
+      CommentForm = require('./comment_form');
 
 const RideItem = React.createClass({
 
@@ -50,12 +52,7 @@ const RideItem = React.createClass({
             <span>{ride.distance} mi</span>
           </div>
           <div className="ride-item-comments">
-            <div className="comment-index">
-              {comments}
-            </div>
-            <div>
-              Add a comment
-            </div>
+            <CommentIndex ride={ride} />
           </div>
         </div>
         <div className="mini-map" onClick={this._goToShow}>
