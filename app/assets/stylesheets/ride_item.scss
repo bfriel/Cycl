@@ -6,11 +6,10 @@
   min-height: 400px;
   overflow: hidden;
   margin: 0 auto 40px;
-  // position: relative;
   background: #ffffff;
   border: 0;
   border-radius: 4px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2)
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .ride-item h2 {
@@ -70,7 +69,7 @@
 
 .ride-item-comments {
   margin: 20px 0px;
-  padding: 10px 0px;
+  padding: 10px;
   height: 300px;
   background: rgb(246, 247, 249);
 }

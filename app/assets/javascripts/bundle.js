@@ -33868,7 +33868,7 @@
 	  getComments: function getComments() {
 	    var _this = this;
 	
-	    var comments = this.props.ride.comments.slice(0, 5).map(function (comment) {
+	    var comments = this.props.ride.comments.map(function (comment) {
 	      return React.createElement(
 	        'div',
 	        { key: comment.id, className: 'ride-item-comment-item' },
@@ -33928,7 +33928,16 @@
 	        React.createElement(
 	          'div',
 	          { className: 'ride-item-comments' },
-	          comments
+	          React.createElement(
+	            'div',
+	            { className: 'comment-index' },
+	            comments
+	          ),
+	          React.createElement(
+	            'div',
+	            null,
+	            'Add a comment'
+	          )
 	        )
 	      ),
 	      React.createElement(

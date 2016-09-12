@@ -13,7 +13,7 @@ const RideItem = React.createClass({
   },
 
   getComments() {
-    let comments = this.props.ride.comments.slice(0, 5).map( (comment) => {
+    let comments = this.props.ride.comments.map( (comment) => {
       return (
         <div key={comment.id} className="ride-item-comment-item">
           <span className="underline" onClick={this._goToUsersPage}>{comment.author}</span>
@@ -50,7 +50,12 @@ const RideItem = React.createClass({
             <span>{ride.distance} mi</span>
           </div>
           <div className="ride-item-comments">
-            {comments}
+            <div className="comment-index">
+              {comments}
+            </div>
+            <div>
+              Add a comment
+            </div>
           </div>
         </div>
         <div className="mini-map" onClick={this._goToShow}>
