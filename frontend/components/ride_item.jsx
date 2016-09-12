@@ -52,9 +52,9 @@ const RideItem = React.createClass({
           <div className="ride-item-comments">
             {comments}
           </div>
-          <div className="mini-map" onClick={this._goToShow}>
-            <img src={startImg}  />
-          </div>
+        </div>
+        <div className="mini-map" onClick={this._goToShow}>
+          <img src={startImg}  />
         </div>
       </div>
     );

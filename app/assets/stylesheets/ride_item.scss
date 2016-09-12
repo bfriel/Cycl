@@ -4,7 +4,7 @@
   min-height: 400px;
   overflow: hidden;
   margin: 0 auto 40px;
-  position: relative;
+  // position: relative;
   background: #ffffff;
   border: 0;
   border-radius: 4px;
@@ -30,8 +30,8 @@
 }
 
 .ride-item-info {
-  display: block;
-  padding: 30px 48% 40px 35px;
+  display: inline-block;
+  padding: 5px;
   text-align: left;
 }
 
@@ -72,16 +72,16 @@
 }
 
 .mini-map {
-  // display: block;
+  display: inline-block;
   // position: absolute;
   // max-width: 100%;
   // height: auto;
   // overflow: hidden;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 46%;
-  height: 100%;
+  // position: absolute;
+  // top: 0;
+  // right: 0;
+  // width: 46%;
+  // height: 100%;
   // z-index: 9;
 }
 

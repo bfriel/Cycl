@@ -33929,12 +33929,12 @@
 	          'div',
 	          { className: 'ride-item-comments' },
 	          comments
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'mini-map', onClick: this._goToShow },
-	          React.createElement('img', { src: startImg })
 	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'mini-map', onClick: this._goToShow },
+	        React.createElement('img', { src: startImg })
 	      )
 	    );
 	  }
