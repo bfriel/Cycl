@@ -1,5 +1,7 @@
 .ride-item {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   max-width: 1100px;
   min-height: 400px;
   overflow: hidden;
@@ -31,7 +33,9 @@
 
 .ride-item-info {
   display: inline-block;
-  padding: 5px;
+  padding: 10px;
+  padding-left: 20px;
+  width: 300px;
   text-align: left;
 }
 
