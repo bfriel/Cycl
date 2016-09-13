@@ -85,8 +85,8 @@ const UserPage = React.createClass({
 
 
     return (
-      <div>
-        <div id="user-page" className="col col-2-3">
+      <div id="user-container">
+        <div >
           {header}
           {rides}
         </div>

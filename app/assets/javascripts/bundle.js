@@ -34071,10 +34071,10 @@
 	
 	    return React.createElement(
 	      'div',
-	      null,
+	      { id: 'user-container' },
 	      React.createElement(
 	        'div',
-	        { id: 'user-page', className: 'col col-2-3' },
+	        null,
 	        header,
 	        rides
 	      ),
@@ -35207,24 +35207,30 @@
 /* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
-	var React = __webpack_require__(1);
+	var React = __webpack_require__(1),
+	    hashHistory = __webpack_require__(168).hashHistory;
 	
 	var CommentIndexItem = React.createClass({
-	  displayName: "CommentIndexItem",
+	  displayName: 'CommentIndexItem',
+	  _goToUsersPage: function _goToUsersPage() {
+	    hashHistory.push('user/' + this.props.comment.user_id);
+	  },
 	  render: function render() {
 	    return React.createElement(
-	      "li",
-	      { className: "comment-item" },
+	      'li',
+	      { className: 'comment-item' },
 	      React.createElement(
-	        "div",
-	        { className: "comment-author" },
+	        'span',
+	        { className: 'comment-author underline', onClick: this._goToUsersPage },
 	        this.props.comment.author
 	      ),
+	      ':',
+	      ' ',
 	      React.createElement(
-	        "div",
-	        { className: "comment-body" },
+	        'span',
+	        { className: 'comment-body' },
 	        this.props.comment.body
 	      )
 	    );
@@ -35289,7 +35295,7 @@
 	      SessionActions.logIn(this.state);
 	    }
 	  },
-	  _guestLogin: function _guestLogin(e) {
+	  _demoLogin: function _demoLogin(e) {
 	    e.preventDefault();
 	    var demoUser = { username: 'Haley', password: 'password' };
 	    SessionActions.logIn(demoUser);
@@ -35348,6 +35354,8 @@
 	    });
 	  },
 	  render: function render() {
+	    var _this2 = this;
+	
 	    var otherFormLink = void 0;
 	    var formButtonText = void 0;
 	    if (this.state.type === "login") {
@@ -35357,7 +35365,9 @@
 	        'New to Cycl? ',
 	        React.createElement(
 	          'a',
-	          { className: 'underline-l-r', onClick: this._switchForm.bind(null, "signup") },
+	          { className: 'underline-l-r', onClick: function onClick() {
+	              return _this2._switchForm("signup");
+	            } },
 	          'Sign Up!'
 	        )
 	      );
@@ -35369,7 +35379,9 @@
 	        'Already have an account? ',
 	        React.createElement(
 	          'a',
-	          { className: 'underline-l-r', onClick: this._switchForm.bind(null, "login") },
+	          { className: 'underline-l-r', onClick: function onClick() {
+	              return _this2._switchForm("login");
+	            } },
 	          'Log In!'
 	        )
 	      );
@@ -35422,7 +35434,7 @@
 	          }),
 	          React.createElement('br', null),
 	          React.createElement('input', { type: 'submit', value: formButtonText }),
-	          React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin }),
+	          React.createElement('input', { type: 'submit', value: 'Demo Login', onClick: this._demoLogin }),
 	          otherFormLink
 	        )
 	      )

@@ -1,13 +1,11 @@
-.feed {
-  width: 800px;
-  float: left;
-  margin-left: 40px;
-  margin-top: 20px;
+#user-container {
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 300px;
+  background: #f4f4f6;
+  color: #484848;
 }
 
-#user-page {
-  text-align: center;
-}
 #no-rides-message {
   margin-top: 30px;
 }
@@ -43,4 +41,44 @@
 
 #follow-button:hover {
     background: linear-gradient(#578843, #67ae55);
+}
+
+.feed-side-bar {
+  position: fixed;
+  top: 30%;
+  left: 72%;
+  min-width: 100px;
+}
+
+.feed-side-bar-item {
+  width: 300px;
+  height: 270px;
+  margin: 20px;
+  border-radius: 10px;
+  border: 1px solid white;
+  text-align: center;
+  display: block;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1165px) {
+  .feed-side-bar {
+    left: 68%;
+  }
+}
+
+@media (max-width: 1165px) {
+  .feed-side-bar {
+    left: 65%;
+  }
+}
+
+@media (max-width: 775px) {
+  .feed-side-bar {
+    display: none;
+  }
+
+  #user-page {
+    width: 100%;
+  }
 }

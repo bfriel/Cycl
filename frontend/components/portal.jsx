@@ -52,7 +52,7 @@ const SignupForm = React.createClass({
     }
 	},
 
-	_guestLogin(e) {
+	_demoLogin(e) {
 		e.preventDefault();
 		const demoUser = {username: 'Haley', password: 'password'};
 		SessionActions.logIn(demoUser);
@@ -96,12 +96,12 @@ const SignupForm = React.createClass({
     let formButtonText;
     if (this.state.type === "login") {
       otherFormLink = <div className="switch-form">
-                        New to Cycl? <a className="underline-l-r" onClick={this._switchForm.bind(null, "signup")}>Sign Up!</a>
+                        New to Cycl? <a className="underline-l-r" onClick={ () => this._switchForm("signup")}>Sign Up!</a>
                       </div>;
       formButtonText = "Log In!";
     } else {
       otherFormLink = <div className="switch-form">
-                        Already have an account? <a className="underline-l-r" onClick={this._switchForm.bind(null, "login")}>Log In!</a>
+                        Already have an account? <a className="underline-l-r" onClick={ () => this._switchForm("login")}>Log In!</a>
                       </div>;
       formButtonText = "Sign Up!";
     }
@@ -135,7 +135,7 @@ const SignupForm = React.createClass({
             />
             <br />
             <input type="submit" value={formButtonText} />
-            <input type="submit" value="Guest Login" onClick={this._guestLogin} />
+            <input type="submit" value="Demo Login" onClick={this._demoLogin} />
             {otherFormLink}
           </form>
         </div>
