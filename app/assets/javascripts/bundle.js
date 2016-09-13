@@ -26100,6 +26100,11 @@
 	            null,
 	            React.createElement(
 	              'span',
+	              { id: 'crl', onClick: this._createRide },
+	              React.createElement('i', { className: 'fa fa-plus-circle', 'aria-hidden': 'true' })
+	            ),
+	            React.createElement(
+	              'span',
 	              { className: 'user-name underline-l-r', onClick: this._goProfile },
 	              SessionStore.currentUser().username
 	            ),

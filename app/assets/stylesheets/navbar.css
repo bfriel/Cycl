@@ -222,3 +222,44 @@ header h3 {
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
 }
+
+#crl .fa-plus-circle {
+  position: relative;
+  transition: all .8s ease;
+  -webkit-transition: all .8s ease;
+}
+
+#crl .fa-plus-circle:after {
+  content: "Create Ride";
+  font-size: 1.3em;
+  /*letter-spacing: 0.225em;*/
+  /*text-transform: uppercase;*/
+  font-family: 'Roboto';
+  font-weight: 400;
+  position: absolute;
+  min-width: 150px;
+  opacity: 0;
+  top: -2px;
+  right: -35px;
+  padding: 5px;
+  transition: right 2.5s ease-out;
+  -webkit-transition: right 2.5s ease-out;
+  transition: opacity .5s;
+  -webkit-transition: opacity .5s;
+}
+
+#crl:hover .fa-plus-circle {
+  padding-right: 150px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  border-radius: 10px;
+
+}
+
+#crl:hover .fa-plus-circle:after {
+  opacity: 1;
+  right: -25px;
+  transition: opacity 1.2s ease-in;
+  -webkit-transition: opacity 1.2s ease-in;
+}
