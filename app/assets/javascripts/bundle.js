@@ -35130,36 +35130,18 @@
 	
 	var React = __webpack_require__(1),
 	    CommentForm = __webpack_require__(282),
-	    RidesStore = __webpack_require__(268),
 	    CommentIndexItem = __webpack_require__(283);
 	
 	var CommentIndex = React.createClass({
 	  displayName: 'CommentIndex',
-	  getInitialState: function getInitialState() {
-	    return {
-	      ride: this.props.ride,
-	      rideId: this.props.ride.ride_id
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.ridesListener = RidesStore.addListener(this._onChange);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.ridesListener.remove();
-	  },
-	  _onChange: function _onChange() {
-	    this.setState({
-	      ride: RidesStore.findOldRide(this.state.rideId)
-	    });
-	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { id: 'all-comment-container' },
+	      null,
 	      React.createElement(
 	        'ul',
 	        { className: 'comment-index' },
-	        this.state.ride.comments.map(function (comment) {
+	        this.props.ride.comments.map(function (comment) {
 	          return React.createElement(CommentIndexItem, { comment: comment, key: comment.id });
 	        })
 	      ),
@@ -35192,38 +35174,29 @@
 	    this.setState({ body: e.target.value });
 	  },
 	  _submitWithEnterKey: function _submitWithEnterKey(e) {
-	    if (e.keyCode === 13) {
-	      this.handleSubmit(e);
-	      this.setState({ body: "" });
-	    }
-	  },
-	  handleSubmit: function handleSubmit(e) {
 	    var _this = this;
 	
-	    e.preventDefault();
-	    var comment = { body: this.state.body,
-	      author: this.state.currentUser.username,
-	      user_id: this.state.currentUser.id,
-	      ride_id: this.props.ride.ride_id };
-	    ApiUtil.createComment(comment, function () {
-	      _this.setState({ body: "" });
-	    });
+	    if (e.keyCode === 13) {
+	      e.preventDefault();
+	      var comment = { body: this.state.body,
+	        author: this.state.currentUser.username,
+	        user_id: this.state.currentUser.id,
+	        ride_id: this.props.ride.ride_id };
+	      ApiUtil.createComment(comment, function () {
+	        _this.setState({ body: "" });
+	      });
+	    }
 	  },
 	  render: function render() {
 	    return React.createElement(
-	      'div',
-	      { className: 'new-comment-form-container' },
-	      React.createElement(
-	        'form',
-	        { className: 'new-comment-form',
-	          onSubmit: this.handleSubmit },
-	        React.createElement('input', { type: 'text',
-	          value: this.state.body,
-	          placeholder: 'Write a comment...',
-	          onChange: this._updateComment,
-	          onKeyDown: this._submitWithEnterKey,
-	          id: 'new-comment-input' })
-	      )
+	      'form',
+	      { className: 'new-comment-form' },
+	      React.createElement('input', { type: 'text',
+	        value: this.state.body,
+	        placeholder: 'Write a comment...',
+	        onChange: this._updateComment,
+	        onKeyDown: this._submitWithEnterKey,
+	        id: 'new-comment-input' })
 	    );
 	  }
 	});
