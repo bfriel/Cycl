@@ -79,7 +79,9 @@
   transition: transform 0.5s ease;
   -webkit-overflow-scrolling: touch;
   background: rgb(245, 245, 245);
+  /*color: rgb(245, 245, 245);*/
   color: rgb(48, 87, 145);
+  /*background: rgb(48, 87, 145);*/
   font-family: 'Roboto', sans-serif;
   height: 100%;
   max-width: 20%;
@@ -129,6 +131,7 @@
 
     #menu ul li, #menu ul #followings-index  {
       border-top: 1px solid rgb(48, 87, 145);
+      /*border-top: 1px solid rgb(245, 245, 245);*/
     }
 
     #menu ul li:last-child {
@@ -204,6 +207,7 @@ header h3 {
   right: 0;
   bottom: 0;
   background: rgb(48, 87, 145);
+  /*background: rgb(245, 245, 245);*/
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
   -webkit-transform-origin: 0 50%;
@@ -217,6 +221,7 @@ header h3 {
 }
 .hvr-sweep-to-right:hover, .hvr-sweep-to-right:focus, .hvr-sweep-to-right:active {
   color: white;
+  /*color: rgb(48, 87, 145);*/
 }
 .hvr-sweep-to-right:hover:before, .hvr-sweep-to-right:focus:before, .hvr-sweep-to-right:active:before {
   -webkit-transform: scaleX(1);
@@ -232,8 +237,6 @@ header h3 {
 #crl .fa-plus-circle:after {
   content: "Create Ride";
   font-size: 1.3em;
-  /*letter-spacing: 0.225em;*/
-  /*text-transform: uppercase;*/
   font-family: 'Roboto';
   font-weight: 400;
   position: absolute;
@@ -242,10 +245,8 @@ header h3 {
   top: -2px;
   right: -35px;
   padding: 5px;
-  transition: right 2.5s ease-out;
-  -webkit-transition: right 2.5s ease-out;
-  transition: opacity .5s;
-  -webkit-transition: opacity .5s;
+  transition: right 2.5s ease-out, opacity .5s;
+  -webkit-transition: right 2.5s ease-out, opacity .5s;
 }
 
 #crl:hover .fa-plus-circle {

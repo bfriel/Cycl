@@ -34079,7 +34079,7 @@
 	      { id: 'user-container' },
 	      React.createElement(
 	        'div',
-	        null,
+	        { className: 'user-rides' },
 	        header,
 	        rides
 	      ),
