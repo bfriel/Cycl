@@ -33554,7 +33554,7 @@
 	var UserInfoPane = __webpack_require__(266),
 	    RidesStore = __webpack_require__(268),
 	    ApiUtil = __webpack_require__(262),
-	    RideItem = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./ride_item\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
+	    RideItem = __webpack_require__(269),
 	    SessionStore = __webpack_require__(232);
 	
 	var Feed = React.createClass({
@@ -33845,14 +33845,81 @@
 	module.exports = RidesStore;
 
 /***/ },
-/* 269 */,
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
+	    hashHistory = __webpack_require__(168).hashHistory,
+	    SessionStore = __webpack_require__(232),
+	    CommentIndex = __webpack_require__(270);
+	
+	var RideItem = React.createClass({
+	  displayName: 'RideItem',
+	  _goToUsersPage: function _goToUsersPage() {
+	    hashHistory.push('user/' + this.props.ride.user_id);
+	  },
+	  _goToShow: function _goToShow() {
+	    hashHistory.push('ride/' + this.props.ride.ride_id);
+	  },
+	  render: function render() {
+	    var ride = this.props.ride;
+	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=500x500&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
+	    return React.createElement(
+	      'div',
+	      { className: 'ride-item' },
+	      React.createElement(
+	        'div',
+	        { className: 'ride-item-info' },
+	        React.createElement(
+	          'h2',
+	          { className: 'underline', onClick: this._goToShow },
+	          ride.ride_name
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'ride-item-info-details' },
+	          React.createElement(
+	            'h5',
+	            { className: 'underline', onClick: this._goToUsersPage },
+	            ride.rider
+	          ),
+	          ' ',
+	          React.createElement('span', { className: 'small-bar' }),
+	          ' ',
+	          React.createElement(
+	            'span',
+	            null,
+	            ride.distance,
+	            ' mi'
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'ride-item-comments' },
+	          React.createElement(CommentIndex, { ride: ride })
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'mini-map', onClick: this._goToShow },
+	        React.createElement('img', { src: startImg })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = RideItem;
+
+/***/ },
 /* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    CommentForm = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./comment_form\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
+	    CommentForm = __webpack_require__(271),
 	    CommentIndexItem = __webpack_require__(272);
 	
 	var CommentIndex = React.createClass({
@@ -33876,7 +33943,63 @@
 	module.exports = CommentIndex;
 
 /***/ },
-/* 271 */,
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
+	    ApiUtil = __webpack_require__(262),
+	    SessionStore = __webpack_require__(232);
+	
+	var CommentForm = React.createClass({
+	  displayName: 'CommentForm',
+	  getInitialState: function getInitialState() {
+	    return {
+	      body: "",
+	      currentUser: SessionStore.currentUser()
+	    };
+	  },
+	  _updateComment: function _updateComment(e) {
+	    this.setState({
+	      body: e.target.value
+	    });
+	  },
+	  _submitWithEnterKey: function _submitWithEnterKey(e) {
+	    var _this = this;
+	
+	    e.preventDefault();
+	    if (e.keyCode === 13) {
+	      var comment = { body: this.state.body,
+	        author: this.state.currentUser.username,
+	        user_id: this.state.currentUser.id,
+	        ride_id: this.props.ride.ride_id };
+	      ApiUtil.createComment(comment, function () {
+	        _this.setState({ body: "" });
+	      });
+	    }
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'new-comment-form-container' },
+	      React.createElement(
+	        'form',
+	        { className: 'new-comment-form' },
+	        React.createElement('input', { type: 'text',
+	          value: this.state.body,
+	          placeholder: 'Write a comment...',
+	          onChange: this._updateComment,
+	          onKeyDown: this._submitWithEnterKey,
+	          id: 'new-comment-input' })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CommentForm;
+
+/***/ },
 /* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -33920,7 +34043,7 @@
 	
 	var React = __webpack_require__(1),
 	    ApiUtil = __webpack_require__(262),
-	    RideItem = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./ride_item\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
+	    RideItem = __webpack_require__(269),
 	    UserInfo = __webpack_require__(266),
 	    hashHistory = __webpack_require__(168).hashHistory,
 	    SessionStore = __webpack_require__(232),
