@@ -1,9 +1,20 @@
 #user-container {
+  // display: flex;
+  // flex-direction: column;
   text-align: center;
   padding: 20px;
   margin-bottom: 300px;
   background: #f4f4f6;
   color: #484848;
+}
+
+.user-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: auto;
+  margin-bottom: 30px;
 }
 
 #no-rides-message {
@@ -13,7 +24,7 @@
 #my-rides {
   font-size: 64px;
   text-align: center;
-  margin-bottom: 69px;
+  // margin-bottom: 69px;
   font-family: 'Roboto Condensed';
 }
 
@@ -22,7 +33,11 @@
 }
 
 .user-info-container {
-  padding-top: 17px;
+  background: #fff;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  padding: 10px;
 }
 
 #follow-button {
@@ -62,46 +77,46 @@
 //   box-sizing: border-box;
 // }
 
-.feed-side-bar {
-  position: fixed;
-  top: 30%;
-  right: 0;
-  min-width: 300px;
-}
-
-.feed-side-bar-item {
-  width: 300px;
-  height: 270px;
-  margin: 20px;
-  border-radius: 10px;
-  border: 1px solid white;
-  text-align: center;
-  display: block;
-  box-sizing: border-box;
-}
+// .feed-side-bar {
+//   position: fixed;
+//   top: 30%;
+//   right: 0;
+//   min-width: 300px;
+// }
+//
+// .feed-side-bar-item {
+//   width: 300px;
+//   height: 270px;
+//   margin: 20px;
+//   border-radius: 10px;
+//   border: 1px solid white;
+//   text-align: center;
+//   display: block;
+//   box-sizing: border-box;
+// }
 
 // .user-container {
 //   display: inline-block;
 // }
 
-@media (max-width: 1165px) {
-  .feed-side-bar {
-    left: 68%;
-  }
-}
-
-@media (max-width: 1165px) {
-  .feed-side-bar {
-    left: 65%;
-  }
-}
-
-@media (max-width: 775px) {
-  .feed-side-bar {
-    display: none;
-  }
-
-  #user-page {
-    width: 100%;
-  }
-}
+// @media (max-width: 1165px) {
+//   .feed-side-bar {
+//     left: 68%;
+//   }
+// }
+//
+// @media (max-width: 1165px) {
+//   .feed-side-bar {
+//     left: 65%;
+//   }
+// }
+//
+// @media (max-width: 775px) {
+//   .feed-side-bar {
+//     display: none;
+//   }
+//
+//   #user-page {
+//     width: 100%;
+//   }
+// }

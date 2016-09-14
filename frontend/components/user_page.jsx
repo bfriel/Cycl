@@ -86,15 +86,11 @@ const UserPage = React.createClass({
 
     return (
       <div id="user-container">
-        <div className="user-rides">
+        <div className="user-header">
           {header}
-          {rides}
+          <UserInfo user={parseInt(this.props.params.userId)} />
         </div>
-        <div className="feed-side-bar">
-          <div className="feed-side-bar-item">
-            <UserInfo user={parseInt(this.props.params.userId)}/>
-          </div>
-        </div>
+        {rides}
       </div>
     );
   }

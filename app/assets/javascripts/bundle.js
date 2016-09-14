@@ -34196,19 +34196,11 @@
 	      { id: 'user-container' },
 	      React.createElement(
 	        'div',
-	        { className: 'user-rides' },
+	        { className: 'user-header' },
 	        header,
-	        rides
+	        React.createElement(UserInfo, { user: parseInt(this.props.params.userId) })
 	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'feed-side-bar' },
-	        React.createElement(
-	          'div',
-	          { className: 'feed-side-bar-item' },
-	          React.createElement(UserInfo, { user: parseInt(this.props.params.userId) })
-	        )
-	      )
+	      rides
 	    );
 	  }
 	});
