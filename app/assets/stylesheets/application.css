@@ -34,7 +34,6 @@ body {
 }
 
 input {
-  color: white;
   font-size: 1.5em;
 }
 
@@ -72,21 +71,21 @@ input[type="submit"]:hover {
   background: linear-gradient( #578843, #67ae55);
 }
 
-::-webkit-input-placeholder {
+/*::-webkit-.portal-input-placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 
-:-moz-placeholder {
+:-moz-.portal-input-placeholder {
    color: rgba(255, 255, 255, 0.5);
 }
 
-::-moz-placeholder {
+::-moz-.portal-input-placeholder {
    color: rgba(255, 255, 255, 0.5);
 }
 
-:-ms-input-placeholder {
+:-ms-.portal-input-placeholder {
    color: rgba(255, 255, 255, 0.5);
-}
+}*/
 
 .app-container {
   height: 100%;

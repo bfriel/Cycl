@@ -6,6 +6,7 @@
   float: left;
   margin-left: 5px;
   padding-bottom: 5px;
+  color: #484848;
 }
 
 .ride-form input {
@@ -53,6 +54,10 @@
   font-size: 16px;
 }
 
+#time-form {
+  padding: 10px 0px;
+}
+
 #ride-duration-hour {
   width: 30px;
   text-align: center;
@@ -76,10 +81,13 @@
   border-radius: 3px;
   padding: 5px;
   resize: none;
+  color: #484848;
 }
 
 #create-ride-button {
   margin-left: 70px;
+  color: white;
+  padding: 10px;
 }
 
 .table {

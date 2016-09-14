@@ -1,12 +1,12 @@
 .comment-index {
-  height: 250px;
+  height: 275px;
   overflow: hidden;
   overflow-y: auto;
 }
 
 .comment-item {
-  margin: 5px;
-  padding-left: 5px;
+  margin: 10px;
+  color: #484848;
 }
 
 .comment-author {
@@ -22,4 +22,7 @@
   font-size: 16px;
   margin-bottom: 0px;
   margin-left: 5px;
+  color: #484848;
+  border-top: 1px solid rgb(173, 178, 181);
+  padding-top: 5px;
 }

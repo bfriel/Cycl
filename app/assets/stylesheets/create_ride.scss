@@ -1,7 +1,16 @@
 .create-ride-page {
+  padding: 20px;
+  margin-bottom: 300px;
+  background: #f4f4f6;
+  color: #484848;
+  // combine with feed-rides-index
+
+}
+
+.create-ride-container {
  width: 1200px;
  margin: auto;
- margin-top: 50px;
+ background: white;
 }
 
 .block-for-map {
@@ -11,7 +20,9 @@
   margin-left: 20px;
   margin-top: 20px;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, .7);
+  // background-color: rgba(0, 0, 0, .7);
+  background: #f4f4f6;
+  color: #484848;
 }
 
 .ride-info-pane {
@@ -23,17 +34,21 @@
   width: 300px;
   background: #fff;
   margin: 20px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px black;
-  background-color: rgba(0, 0, 0, .7);
-  padding-top: 15px;
+  border-radius: 5px;
+  // box-shadow: 5px 5px 5px black;
+  // background-color: rgba(0, 0, 0, .7);
+  background: #f4f4f6;
+  color: #484848;
   padding-bottom: 15px;
 }
 
 .ride-stats h3 {
   text-align: center;
-  margin-top: 10px;
-  margin-bottom: 15px;
+  padding: 10px;
+  background: rgb(203, 208, 211);
+  margin-bottom: 10px;
+  font-family: 'Roboto Condensed';
+  text-transform: uppercase;
 }
 
 .elev-chart {
@@ -43,7 +58,9 @@
   margin: 20px;
   border-radius: 10px;
   background: #fff;
-  background-color: rgba(0, 0, 0, .7);
+  // background-color: rgba(0, 0, 0, .7);
+  background: #f4f4f6;
+  color: #484848;
   overflow: hidden;
 }
 
@@ -82,15 +99,18 @@
 }
 
 .instructions {
+  background: #f4f4f6;
   width: 1160px;
   float: left;
   margin: 20px;
-  height: 70px;
-  color: white;
+  color: #484848;
 }
 
 .instructions h5 {
   text-align: center;
   margin-left: 15px;
   font-size: 22px;
+  margin: 0;
+  padding: 10px;
+  font-family: 'Roboto Condensed';
 }

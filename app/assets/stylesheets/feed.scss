@@ -1,44 +1,7 @@
 #feed-rides-index {
   text-align: center;
-  margin: 20px;
-}
-
-.feed-side-bar {
-  position: fixed;
-  top: 30%;
-  left: 72%;
-  min-width: 100px;
-}
-
-.feed-side-bar-item {
-  width: 300px;
-  height: 270px;
-  margin: 20px;
-  border-radius: 10px;
-  border: 1px solid white;
-  text-align: center;
-  display: block;
-  box-sizing: border-box;
-}
-
-@media (max-width: 1165px) {
-  .feed-side-bar {
-    left: 68%;
-  }
-}
-
-@media (max-width: 1165px) {
-  .feed-side-bar {
-    left: 65%;
-  }
-}
-
-@media (max-width: 775px) {
-  .feed-side-bar {
-    display: none;
-  }
-
-  #user-page {
-    width: 100%;
-  }
+  padding: 20px;
+  margin-bottom: 300px;
+  background: #f4f4f6;
+  color: #484848;
 }

@@ -26089,7 +26089,6 @@
 	      'header',
 	      { id: 'header' },
 	      leftNav,
-	      centerNav,
 	      React.createElement(
 	        'nav',
 	        { id: 'nav' },
@@ -26101,7 +26100,12 @@
 	            null,
 	            React.createElement(
 	              'span',
-	              { className: 'menuToggle', onClick: this._goProfile },
+	              { id: 'crl', onClick: this._createRide },
+	              React.createElement('i', { className: 'fa fa-plus-circle', 'aria-hidden': 'true' })
+	            ),
+	            React.createElement(
+	              'span',
+	              { className: 'user-name underline-l-r', onClick: this._goProfile },
 	              SessionStore.currentUser().username
 	            ),
 	            React.createElement(
@@ -33550,7 +33554,7 @@
 	var UserInfoPane = __webpack_require__(266),
 	    RidesStore = __webpack_require__(268),
 	    ApiUtil = __webpack_require__(262),
-	    RideItem = __webpack_require__(269),
+	    RideItem = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./ride_item\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
 	    SessionStore = __webpack_require__(232);
 	
 	var Feed = React.createClass({
@@ -33841,88 +33845,26 @@
 	module.exports = RidesStore;
 
 /***/ },
-/* 269 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1),
-	    hashHistory = __webpack_require__(168).hashHistory,
-	    SessionStore = __webpack_require__(232);
-	
-	var RideItem = React.createClass({
-	  displayName: 'RideItem',
-	  _goToUsersPage: function _goToUsersPage() {
-	    hashHistory.push('user/' + this.props.ride.user_id);
-	  },
-	  _goToShow: function _goToShow() {
-	    hashHistory.push('ride/' + this.props.ride.ride_id);
-	  },
-	  render: function render() {
-	    var ride = this.props.ride;
-	    var startImg = "https://maps.googleapis.com/maps/api/staticmap?center=" + ride.start_pos + "&size=300x300&zoom=15&markers=color:blue%7Clabel:S%7C" + ride.start_pos + "&key=" + window.GOOGLE_KEYS.GOOGLE_MAPS;
-	    return React.createElement(
-	      'div',
-	      { className: 'completed-ride' },
-	      React.createElement(
-	        'h2',
-	        { onClick: this._goToShow },
-	        ride.ride_name
-	      ),
-	      React.createElement(
-	        'h5',
-	        { onClick: this._goToUsersPage },
-	        ride.rider
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'mini-map', onClick: this._goToShow },
-	        React.createElement('img', { src: startImg })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = RideItem;
-
-/***/ },
+/* 269 */,
 /* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    CommentForm = __webpack_require__(271),
-	    RidesStore = __webpack_require__(268),
+	    CommentForm = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./comment_form\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
 	    CommentIndexItem = __webpack_require__(272);
 	
 	var CommentIndex = React.createClass({
 	  displayName: 'CommentIndex',
-	  getInitialState: function getInitialState() {
-	    return {
-	      ride: this.props.ride,
-	      rideId: this.props.ride.ride_id
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.ridesListener = RidesStore.addListener(this._onChange);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.ridesListener.remove();
-	  },
-	  _onChange: function _onChange() {
-	    this.setState({
-	      ride: RidesStore.findOldRide(this.state.rideId)
-	    });
-	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { id: 'all-comment-container' },
+	      null,
 	      React.createElement(
 	        'ul',
 	        { className: 'comment-index' },
-	        this.state.ride.comments.map(function (comment) {
+	        this.props.ride.comments.map(function (comment) {
 	          return React.createElement(CommentIndexItem, { comment: comment, key: comment.id });
 	        })
 	      ),
@@ -33934,93 +33876,34 @@
 	module.exports = CommentIndex;
 
 /***/ },
-/* 271 */
+/* 271 */,
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ApiUtil = __webpack_require__(262),
-	    SessionStore = __webpack_require__(232);
-	
-	var CommentForm = React.createClass({
-	  displayName: 'CommentForm',
-	  getInitialState: function getInitialState() {
-	    return {
-	      body: "",
-	      currentUser: SessionStore.currentUser()
-	    };
-	  },
-	  _updateComment: function _updateComment(e) {
-	    this.setState({
-	      body: e.target.value
-	    });
-	  },
-	  _submitWithEnterKey: function _submitWithEnterKey(e) {
-	    if (e.keyCode === 13) {
-	      this.handleSubmit(e);
-	      this.setState({
-	        body: ""
-	      });
-	    }
-	  },
-	  handleSubmit: function handleSubmit(e) {
-	    var _this = this;
-	
-	    e.preventDefault();
-	    var comment = { body: this.state.body,
-	      author: this.state.currentUser.username,
-	      user_id: this.state.currentUser.id,
-	      ride_id: this.props.ride.ride_id };
-	    ApiUtil.createComment(comment, function () {
-	      _this.setState({
-	        body: ""
-	      });
-	    });
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'new-comment-form-container' },
-	      React.createElement(
-	        'form',
-	        { className: 'new-comment-form',
-	          onSubmit: this.handleSubmit },
-	        React.createElement('input', { type: 'text',
-	          value: this.state.body,
-	          placeholder: 'Write a comment...',
-	          onChange: this._updateComment,
-	          onKeyDown: this._submitWithEnterKey,
-	          id: 'new-comment-input' })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = CommentForm;
-
-/***/ },
-/* 272 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var React = __webpack_require__(1);
+	    hashHistory = __webpack_require__(168).hashHistory;
 	
 	var CommentIndexItem = React.createClass({
-	  displayName: "CommentIndexItem",
+	  displayName: 'CommentIndexItem',
+	  _goToUsersPage: function _goToUsersPage() {
+	    hashHistory.push('user/' + this.props.comment.user_id);
+	  },
 	  render: function render() {
 	    return React.createElement(
-	      "li",
-	      { className: "comment-item" },
+	      'li',
+	      { className: 'comment-item' },
 	      React.createElement(
-	        "div",
-	        { className: "comment-author" },
+	        'span',
+	        { className: 'comment-author underline', onClick: this._goToUsersPage },
 	        this.props.comment.author
 	      ),
+	      ':',
+	      ' ',
 	      React.createElement(
-	        "div",
-	        { className: "comment-body" },
+	        'span',
+	        { className: 'comment-body' },
 	        this.props.comment.body
 	      )
 	    );
@@ -34037,7 +33920,7 @@
 	
 	var React = __webpack_require__(1),
 	    ApiUtil = __webpack_require__(262),
-	    RideItem = __webpack_require__(269),
+	    RideItem = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./ride_item\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())),
 	    UserInfo = __webpack_require__(266),
 	    hashHistory = __webpack_require__(168).hashHistory,
 	    SessionStore = __webpack_require__(232),
@@ -34134,22 +34017,14 @@
 	
 	    return React.createElement(
 	      'div',
-	      null,
+	      { id: 'user-container' },
 	      React.createElement(
 	        'div',
-	        { id: 'user-page', className: 'col col-2-3' },
+	        { className: 'user-header' },
 	        header,
-	        rides
+	        React.createElement(UserInfo, { user: parseInt(this.props.params.userId) })
 	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'feed-side-bar' },
-	        React.createElement(
-	          'div',
-	          { className: 'feed-side-bar-item' },
-	          React.createElement(UserInfo, { user: parseInt(this.props.params.userId) })
-	        )
-	      )
+	      rides
 	    );
 	  }
 	});
@@ -34173,30 +34048,34 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'create-ride-page clear-fix' },
+	      { className: 'create-ride-page' },
 	      React.createElement(
 	        'div',
-	        { className: 'instructions clear-fix' },
+	        { className: 'create-ride-container clear-fix' },
 	        React.createElement(
-	          'h5',
-	          null,
-	          'Click on the map below to start mapping your ride!'
+	          'div',
+	          { className: 'instructions clear-fix' },
+	          React.createElement(
+	            'h5',
+	            null,
+	            'Click on the map below to start mapping your ride!'
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'block-for-map' },
+	          React.createElement(CreateRideMap, null)
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'ride-info-pane' },
+	          React.createElement(RideInfo, { rideStatus: 'new' })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'elev-chart' },
+	          React.createElement(ElevationChart, null)
 	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'block-for-map' },
-	        React.createElement(CreateRideMap, null)
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'ride-info-pane' },
-	        React.createElement(RideInfo, { rideStatus: 'new' })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'elev-chart' },
-	        React.createElement(ElevationChart, null)
 	      )
 	    );
 	  }
@@ -35241,7 +35120,7 @@
 	      SessionActions.logIn(this.state);
 	    }
 	  },
-	  _guestLogin: function _guestLogin(e) {
+	  _demoLogin: function _demoLogin(e) {
 	    e.preventDefault();
 	    var demoUser = { username: 'Haley', password: 'password' };
 	    SessionActions.logIn(demoUser);
@@ -35300,6 +35179,8 @@
 	    });
 	  },
 	  render: function render() {
+	    var _this2 = this;
+	
 	    var otherFormLink = void 0;
 	    var formButtonText = void 0;
 	    if (this.state.type === "login") {
@@ -35309,7 +35190,9 @@
 	        'New to Cycl? ',
 	        React.createElement(
 	          'a',
-	          { onClick: this._switchForm.bind(null, "signup") },
+	          { className: 'underline-l-r', onClick: function onClick() {
+	              return _this2._switchForm("signup");
+	            } },
 	          'Sign Up!'
 	        )
 	      );
@@ -35321,7 +35204,9 @@
 	        'Already have an account? ',
 	        React.createElement(
 	          'a',
-	          { onClick: this._switchForm.bind(null, "login") },
+	          { className: 'underline-l-r', onClick: function onClick() {
+	              return _this2._switchForm("login");
+	            } },
 	          'Log In!'
 	        )
 	      );
@@ -35374,7 +35259,7 @@
 	          }),
 	          React.createElement('br', null),
 	          React.createElement('input', { type: 'submit', value: formButtonText }),
-	          React.createElement('input', { type: 'submit', value: 'Guest Login', onClick: this._guestLogin }),
+	          React.createElement('input', { type: 'submit', value: 'Demo Login', onClick: this._demoLogin }),
 	          otherFormLink
 	        )
 	      )

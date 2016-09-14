@@ -64,11 +64,11 @@ const NavBar = React.createClass({
     return(
       <header id="header">
         {leftNav}
-        {centerNav}
 				<nav id="nav">
 					<ul>
 						<li>
-							<span className="menuToggle" onClick={this._goProfile}>{SessionStore.currentUser().username}</span>
+              <span id="crl" onClick={this._createRide}><i className="fa fa-plus-circle" aria-hidden="true"></i></span>
+							<span className="user-name underline-l-r" onClick={this._goProfile}>{SessionStore.currentUser().username}</span>
               <i id="menu" className={this.state.menuClicked ? "is-menu-show fa fa-bars" : "is-menu-hide fa fa-bars"} aria-hidden="true" onClick={this._toggleMenu}>
                 <ul id="menu-show">
                   <i id="menu-close" className="fa fa-times" aria-hidden="true"></i>
