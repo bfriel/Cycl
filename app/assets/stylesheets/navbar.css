@@ -230,8 +230,8 @@ header h3 {
 
 #crl .fa-plus-circle {
   position: relative;
-  transition: all .8s ease;
-  -webkit-transition: all .8s ease;
+  transition: all .8s ease-out;
+  -webkit-transition: all .8s ease-out;
 }
 
 #crl .fa-plus-circle:after {
@@ -243,10 +243,10 @@ header h3 {
   min-width: 150px;
   opacity: 0;
   top: -2px;
-  right: -35px;
+  right: -50px;
   padding: 5px;
-  transition: right 2.5s ease-out, opacity .5s;
-  -webkit-transition: right 2.5s ease-out, opacity .5s;
+  transition: right .3s ease-out, opacity .5s;
+  -webkit-transition: right .3s ease-out, opacity .5s;
 }
 
 #crl:hover .fa-plus-circle {
@@ -261,6 +261,6 @@ header h3 {
 #crl:hover .fa-plus-circle:after {
   opacity: 1;
   right: -25px;
-  transition: opacity 1.2s ease-in;
-  -webkit-transition: opacity 1.2s ease-in;
+  transition: right 1.5s ease-out, opacity 1.2s ease-in;
+  -webkit-transition: right 1.5s ease-out, opacity 1.2s ease-in;
 }
