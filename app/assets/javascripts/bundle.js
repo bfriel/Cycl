@@ -56,8 +56,8 @@
 	//Components
 	var App = __webpack_require__(230),
 	    Feed = __webpack_require__(265),
-	    UserPage = __webpack_require__(270),
-	    CreateRide = __webpack_require__(271),
+	    UserPage = __webpack_require__(273),
+	    CreateRide = __webpack_require__(274),
 	    Portal = __webpack_require__(284),
 	    ShowRide = __webpack_require__(286);
 	//Flux
@@ -33892,6 +33892,150 @@
 	'use strict';
 	
 	var React = __webpack_require__(1),
+	    CommentForm = __webpack_require__(271),
+	    RidesStore = __webpack_require__(268),
+	    CommentIndexItem = __webpack_require__(272);
+	
+	var CommentIndex = React.createClass({
+	  displayName: 'CommentIndex',
+	  getInitialState: function getInitialState() {
+	    return {
+	      ride: this.props.ride,
+	      rideId: this.props.ride.ride_id
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.ridesListener = RidesStore.addListener(this._onChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.ridesListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({
+	      ride: RidesStore.findOldRide(this.state.rideId)
+	    });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { id: 'all-comment-container' },
+	      React.createElement(
+	        'ul',
+	        { className: 'comment-index' },
+	        this.state.ride.comments.map(function (comment) {
+	          return React.createElement(CommentIndexItem, { comment: comment, key: comment.id });
+	        })
+	      ),
+	      React.createElement(CommentForm, { ride: this.props.ride })
+	    );
+	  }
+	});
+	
+	module.exports = CommentIndex;
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
+	    ApiUtil = __webpack_require__(262),
+	    SessionStore = __webpack_require__(232);
+	
+	var CommentForm = React.createClass({
+	  displayName: 'CommentForm',
+	  getInitialState: function getInitialState() {
+	    return {
+	      body: "",
+	      currentUser: SessionStore.currentUser()
+	    };
+	  },
+	  _updateComment: function _updateComment(e) {
+	    this.setState({
+	      body: e.target.value
+	    });
+	  },
+	  _submitWithEnterKey: function _submitWithEnterKey(e) {
+	    if (e.keyCode === 13) {
+	      this.handleSubmit(e);
+	      this.setState({
+	        body: ""
+	      });
+	    }
+	  },
+	  handleSubmit: function handleSubmit(e) {
+	    var _this = this;
+	
+	    e.preventDefault();
+	    var comment = { body: this.state.body,
+	      author: this.state.currentUser.username,
+	      user_id: this.state.currentUser.id,
+	      ride_id: this.props.ride.ride_id };
+	    ApiUtil.createComment(comment, function () {
+	      _this.setState({
+	        body: ""
+	      });
+	    });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'new-comment-form-container' },
+	      React.createElement(
+	        'form',
+	        { className: 'new-comment-form',
+	          onSubmit: this.handleSubmit },
+	        React.createElement('input', { type: 'text',
+	          value: this.state.body,
+	          placeholder: 'Write a comment...',
+	          onChange: this._updateComment,
+	          onKeyDown: this._submitWithEnterKey,
+	          id: 'new-comment-input' })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CommentForm;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var CommentIndexItem = React.createClass({
+	  displayName: "CommentIndexItem",
+	  render: function render() {
+	    return React.createElement(
+	      "li",
+	      { className: "comment-item" },
+	      React.createElement(
+	        "div",
+	        { className: "comment-author" },
+	        this.props.comment.author
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "comment-body" },
+	        this.props.comment.body
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = CommentIndexItem;
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1),
 	    ApiUtil = __webpack_require__(262),
 	    RideItem = __webpack_require__(269),
 	    UserInfo = __webpack_require__(266),
@@ -34013,16 +34157,16 @@
 	module.exports = UserPage;
 
 /***/ },
-/* 271 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
 	
-	var ElevationChart = __webpack_require__(272),
-	    CreateRideMap = __webpack_require__(277),
-	    RideInfo = __webpack_require__(279);
+	var ElevationChart = __webpack_require__(275),
+	    CreateRideMap = __webpack_require__(280),
+	    RideInfo = __webpack_require__(282);
 	
 	var CreateRide = React.createClass({
 	  displayName: 'CreateRide',
@@ -34061,15 +34205,15 @@
 	module.exports = CreateRide;
 
 /***/ },
-/* 272 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
-	    ElevationStore = __webpack_require__(273),
-	    DirectionsStore = __webpack_require__(274),
-	    GoogleApiUtil = __webpack_require__(275);
+	    ElevationStore = __webpack_require__(276),
+	    DirectionsStore = __webpack_require__(277),
+	    GoogleApiUtil = __webpack_require__(278);
 	
 	var ElevationChart = React.createClass({
 	  displayName: 'ElevationChart',
@@ -34156,7 +34300,7 @@
 	module.exports = ElevationChart;
 
 /***/ },
-/* 273 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34218,7 +34362,7 @@
 	module.exports = ElevationStore;
 
 /***/ },
-/* 274 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34277,12 +34421,12 @@
 	module.exports = DirectionsStore;
 
 /***/ },
-/* 275 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var GoogleApiActions = __webpack_require__(276);
+	var GoogleApiActions = __webpack_require__(279);
 	
 	var GoogleApiUtil = {
 	  getDirections: function getDirections(start, end, waypoints) {
@@ -34323,7 +34467,7 @@
 	module.exports = GoogleApiUtil;
 
 /***/ },
-/* 276 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34362,7 +34506,7 @@
 	module.exports = GoogleApiActions;
 
 /***/ },
-/* 277 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34370,9 +34514,9 @@
 	var React = __webpack_require__(1),
 	    ReactDOM = __webpack_require__(38);
 	
-	var GoogleApiUtil = __webpack_require__(275),
-	    DirectionStore = __webpack_require__(274),
-	    OldRideStore = __webpack_require__(278);
+	var GoogleApiUtil = __webpack_require__(278),
+	    DirectionStore = __webpack_require__(277),
+	    OldRideStore = __webpack_require__(281);
 	
 	var CreateRideMap = React.createClass({
 	  displayName: 'CreateRideMap',
@@ -34569,7 +34713,7 @@
 	module.exports = CreateRideMap;
 
 /***/ },
-/* 278 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34614,18 +34758,18 @@
 	module.exports = OldRideStore;
 
 /***/ },
-/* 279 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1),
 	    hashHistory = __webpack_require__(168).hashHistory,
-	    ElevationChart = __webpack_require__(272),
-	    CreateRideForm = __webpack_require__(280),
-	    DirectionsStore = __webpack_require__(274),
-	    CommentsIndex = __webpack_require__(281),
-	    ElevationStore = __webpack_require__(273);
+	    ElevationChart = __webpack_require__(275),
+	    CreateRideForm = __webpack_require__(283),
+	    DirectionsStore = __webpack_require__(277),
+	    CommentsIndex = __webpack_require__(270),
+	    ElevationStore = __webpack_require__(276);
 	
 	var RideInfo = React.createClass({
 	  displayName: 'RideInfo',
@@ -34820,7 +34964,7 @@
 	module.exports = RideInfo;
 
 /***/ },
-/* 280 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34833,7 +34977,7 @@
 	var ApiUtil = __webpack_require__(262),
 	    RidesStore = __webpack_require__(268),
 	    SessionStore = __webpack_require__(232),
-	    DirectionsStore = __webpack_require__(274);
+	    DirectionsStore = __webpack_require__(277);
 	
 	var CreateRideForm = React.createClass({
 	  displayName: 'CreateRideForm',
@@ -35040,150 +35184,6 @@
 	});
 	
 	module.exports = CreateRideForm;
-
-/***/ },
-/* 281 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1),
-	    CommentForm = __webpack_require__(282),
-	    RidesStore = __webpack_require__(268),
-	    CommentIndexItem = __webpack_require__(283);
-	
-	var CommentIndex = React.createClass({
-	  displayName: 'CommentIndex',
-	  getInitialState: function getInitialState() {
-	    return {
-	      ride: this.props.ride,
-	      rideId: this.props.ride.ride_id
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.ridesListener = RidesStore.addListener(this._onChange);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.ridesListener.remove();
-	  },
-	  _onChange: function _onChange() {
-	    this.setState({
-	      ride: RidesStore.findOldRide(this.state.rideId)
-	    });
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { id: 'all-comment-container' },
-	      React.createElement(
-	        'ul',
-	        { className: 'comment-index' },
-	        this.state.ride.comments.map(function (comment) {
-	          return React.createElement(CommentIndexItem, { comment: comment, key: comment.id });
-	        })
-	      ),
-	      React.createElement(CommentForm, { ride: this.props.ride })
-	    );
-	  }
-	});
-	
-	module.exports = CommentIndex;
-
-/***/ },
-/* 282 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1),
-	    ApiUtil = __webpack_require__(262),
-	    SessionStore = __webpack_require__(232);
-	
-	var CommentForm = React.createClass({
-	  displayName: 'CommentForm',
-	  getInitialState: function getInitialState() {
-	    return {
-	      body: "",
-	      currentUser: SessionStore.currentUser()
-	    };
-	  },
-	  _updateComment: function _updateComment(e) {
-	    this.setState({
-	      body: e.target.value
-	    });
-	  },
-	  _submitWithEnterKey: function _submitWithEnterKey(e) {
-	    if (e.keyCode === 13) {
-	      this.handleSubmit(e);
-	      this.setState({
-	        body: ""
-	      });
-	    }
-	  },
-	  handleSubmit: function handleSubmit(e) {
-	    var _this = this;
-	
-	    e.preventDefault();
-	    var comment = { body: this.state.body,
-	      author: this.state.currentUser.username,
-	      user_id: this.state.currentUser.id,
-	      ride_id: this.props.ride.ride_id };
-	    ApiUtil.createComment(comment, function () {
-	      _this.setState({
-	        body: ""
-	      });
-	    });
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'new-comment-form-container' },
-	      React.createElement(
-	        'form',
-	        { className: 'new-comment-form',
-	          onSubmit: this.handleSubmit },
-	        React.createElement('input', { type: 'text',
-	          value: this.state.body,
-	          placeholder: 'Write a comment...',
-	          onChange: this._updateComment,
-	          onKeyDown: this._submitWithEnterKey,
-	          id: 'new-comment-input' })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = CommentForm;
-
-/***/ },
-/* 283 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var React = __webpack_require__(1);
-	
-	var CommentIndexItem = React.createClass({
-	  displayName: "CommentIndexItem",
-	  render: function render() {
-	    return React.createElement(
-	      "li",
-	      { className: "comment-item" },
-	      React.createElement(
-	        "div",
-	        { className: "comment-author" },
-	        this.props.comment.author
-	      ),
-	      React.createElement(
-	        "div",
-	        { className: "comment-body" },
-	        this.props.comment.body
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = CommentIndexItem;
 
 /***/ },
 /* 284 */
@@ -35450,12 +35450,12 @@
 	
 	var React = __webpack_require__(1);
 	
-	var ElevationChart = __webpack_require__(272),
-	    RideMap = __webpack_require__(277),
+	var ElevationChart = __webpack_require__(275),
+	    RideMap = __webpack_require__(280),
 	    ApiUtil = __webpack_require__(262),
 	    RidesStore = __webpack_require__(268),
-	    OldRideStore = __webpack_require__(278),
-	    RideInfo = __webpack_require__(279);
+	    OldRideStore = __webpack_require__(281),
+	    RideInfo = __webpack_require__(282);
 	
 	var CreateRide = React.createClass({
 	  displayName: 'CreateRide',
