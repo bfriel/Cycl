@@ -20,18 +20,20 @@ const CreateRide = React.createClass({
   render() {
     let ride = this.state.ride;
     return (
-      <div className="create-ride-page clear-fix">
-        <div className="instructions clear-fix">
-            <h5>{ride.ride_name}</h5>
-        </div>
-        <div className="block-for-map">
-          <RideMap ride={ride} />
-        </div>
-        <div className="ride-info-pane">
-          <RideInfo rideStatus="old" ride={ride} />
-        </div>
-        <div className="elev-chart">
-          <ElevationChart ride={ride} />
+      <div className="create-ride-page">
+        <div className="create-ride-container clear-fix">
+          <div className="instructions clear-fix">
+              <h5>{ride.ride_name}</h5>
+          </div>
+          <div className="block-for-map">
+            <RideMap ride={ride} />
+          </div>
+          <div className="ride-info-pane">
+            <RideInfo rideStatus="old" ride={ride} />
+          </div>
+          <div className="elev-chart">
+            <ElevationChart ride={ride} />
+          </div>
         </div>
       </div>
     );

@@ -33961,15 +33961,13 @@
 	    };
 	  },
 	  _updateComment: function _updateComment(e) {
-	    this.setState({
-	      body: e.target.value
-	    });
+	    this.setState({ body: e.target.value });
 	  },
 	  _submitWithEnterKey: function _submitWithEnterKey(e) {
 	    var _this = this;
 	
-	    e.preventDefault();
 	    if (e.keyCode === 13) {
+	      e.preventDefault();
 	      var comment = { body: this.state.body,
 	        author: this.state.currentUser.username,
 	        user_id: this.state.currentUser.id,
@@ -33981,18 +33979,14 @@
 	  },
 	  render: function render() {
 	    return React.createElement(
-	      'div',
-	      { className: 'new-comment-form-container' },
-	      React.createElement(
-	        'form',
-	        { className: 'new-comment-form' },
-	        React.createElement('input', { type: 'text',
-	          value: this.state.body,
-	          placeholder: 'Write a comment...',
-	          onChange: this._updateComment,
-	          onKeyDown: this._submitWithEnterKey,
-	          id: 'new-comment-input' })
-	      )
+	      'form',
+	      { className: 'new-comment-form' },
+	      React.createElement('input', { type: 'text',
+	        value: this.state.body,
+	        placeholder: 'Write a comment...',
+	        onChange: this._updateComment,
+	        onKeyDown: this._submitWithEnterKey,
+	        id: 'new-comment-input' })
 	    );
 	  }
 	});
@@ -35477,30 +35471,34 @@
 	    var ride = this.state.ride;
 	    return React.createElement(
 	      'div',
-	      { className: 'create-ride-page clear-fix' },
+	      { className: 'create-ride-page' },
 	      React.createElement(
 	        'div',
-	        { className: 'instructions clear-fix' },
+	        { className: 'create-ride-container clear-fix' },
 	        React.createElement(
-	          'h5',
-	          null,
-	          ride.ride_name
+	          'div',
+	          { className: 'instructions clear-fix' },
+	          React.createElement(
+	            'h5',
+	            null,
+	            ride.ride_name
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'block-for-map' },
+	          React.createElement(RideMap, { ride: ride })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'ride-info-pane' },
+	          React.createElement(RideInfo, { rideStatus: 'old', ride: ride })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'elev-chart' },
+	          React.createElement(ElevationChart, { ride: ride })
 	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'block-for-map' },
-	        React.createElement(RideMap, { ride: ride })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'ride-info-pane' },
-	        React.createElement(RideInfo, { rideStatus: 'old', ride: ride })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'elev-chart' },
-	        React.createElement(ElevationChart, { ride: ride })
 	      )
 	    );
 	  }
