@@ -49,6 +49,23 @@
   color: white;
 }
 
+.portal-input::placeholder {
+  color: white;
+}
+
+input.portal-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgba(255, 255, 255, .8);
+}
+input.portal-input::-moz-placeholder { /* Firefox 19+ */
+  color: rgba(255, 255, 255, .8);
+}
+input.portal-input:-ms-input-placeholder { /* IE 10+ */
+  color: rgba(255, 255, 255, .8);
+}
+input.portal-input:-moz-placeholder { /* Firefox 18- */
+  color: rgba(255, 255, 255, .8);
+}
+
 .switch-form {
   margin-top: 10px;
   font-size: 1em;

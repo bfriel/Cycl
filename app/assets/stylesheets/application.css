@@ -71,22 +71,6 @@ input[type="submit"]:hover {
   background: linear-gradient( #578843, #67ae55);
 }
 
-/*::-webkit-.portal-input-placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-:-moz-.portal-input-placeholder {
-   color: rgba(255, 255, 255, 0.5);
-}
-
-::-moz-.portal-input-placeholder {
-   color: rgba(255, 255, 255, 0.5);
-}
-
-:-ms-.portal-input-placeholder {
-   color: rgba(255, 255, 255, 0.5);
-}*/
-
 .app-container {
   height: 100%;
   width: 100%;
