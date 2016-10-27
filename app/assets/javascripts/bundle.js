@@ -35334,7 +35334,7 @@
 	      { className: 'portal-container' },
 	      React.createElement(
 	        'div',
-	        { className: 'portal-title col col-1-2' },
+	        { className: 'portal-title' },
 	        React.createElement(
 	          'h1',
 	          null,
@@ -35348,7 +35348,7 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'portal-form col col-1-2' },
+	        { className: 'portal-form' },
 	        React.createElement(
 	          'form',
 	          { onSubmit: this.handleSubmit },

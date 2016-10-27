@@ -22,8 +22,8 @@ const routes = (
     <IndexRoute component={Feed} onEnter={ _ensureLoggedIn }/>
     <Route path="/portal" component={Portal} type="signup" />
     <Route path="create_ride" component={CreateRide} />
-    <Route path="user/:userId" component={UserPage} onEnter={ _ensureLoggedIn } />
-    <Route path="ride/:rideId" component={ShowRide} onEnter={ _ensureLoggedIn } />
+    <Route path="user/:userId" component={UserPage} onEnter={_ensureLoggedIn} />
+    <Route path="ride/:rideId" component={ShowRide} onEnter={_ensureLoggedIn} />
   </Route>
 );
 

@@ -107,11 +107,11 @@ const SignupForm = React.createClass({
     }
 		return (
       <div className="portal-container">
-        <div className="portal-title col col-1-2">
+        <div className="portal-title">
           <h1>Cycl</h1>
           <p>Connect with friends and make the most of your rides</p>
         </div>
-        <div className="portal-form col col-1-2">
+        <div className="portal-form">
           <form onSubmit={this.handleSubmit}>
             <div id="portal-errors">
               { this.fieldErrors("base") }
